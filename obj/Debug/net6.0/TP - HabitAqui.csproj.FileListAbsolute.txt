@@ -1,0 +1,77 @@
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\appsettings.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.staticwebassets.runtime.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.exe
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.deps.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.runtimeconfig.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\TP - HabitAqui.pdb
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Humanizer.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Runtime.Caching.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.csproj.AssemblyReference.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.AssemblyInfoInputs.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.AssemblyInfo.cs
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.csproj.CoreCompileInputs.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.RazorAssemblyInfo.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.RazorAssemblyInfo.cs
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets\msbuild.TP - HabitAqui.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets\msbuild.build.TP - HabitAqui.props
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.TP - HabitAqui.props
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.TP - HabitAqui.props
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\scopedcss\bundle\TP - HabitAqui.styles.css
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\scopedcss\projectbundle\TP - HabitAqui.bundle.scp.css
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.csproj.CopyComplete
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\refint\TP - HabitAqui.dll
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.pdb
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\TP - HabitAqui.genruntimeconfig.cache
+C:\Users\Guilherme Camacho\Desktop\Trabalhos\3 ano\PWEB\TP - HabitAqui\obj\Debug\net6.0\ref\TP - HabitAqui.dll
