@@ -2460,11 +2460,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\TP - HabitAqui\\TP - HabitAqui.csproj",
-      "projectName": "TP - HabitAqui",
-      "projectPath": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\TP - HabitAqui\\TP - HabitAqui.csproj",
+      "projectUniqueName": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\HabitAqui\\HabitAqui.csproj",
+      "projectName": "HabitAqui",
+      "projectPath": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\HabitAqui\\HabitAqui.csproj",
       "packagesPath": "C:\\Users\\Guilherme Camacho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\TP - HabitAqui\\obj\\",
+      "outputPath": "C:\\Users\\Guilherme Camacho\\Desktop\\Trabalhos\\3 ano\\PWEB\\HabitAqui\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

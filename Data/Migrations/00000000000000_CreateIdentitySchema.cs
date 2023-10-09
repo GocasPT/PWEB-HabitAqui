@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace TP___HabitAqui.Data.Migrations
+namespace HabitAqui.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

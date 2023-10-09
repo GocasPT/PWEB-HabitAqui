@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TP___HabitAqui.Data
+namespace HabitAqui.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

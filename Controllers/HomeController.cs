@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using HabitAqui.Models;
 using Microsoft.AspNetCore.Mvc;
-using TP___HabitAqui.Models;
+using System.Diagnostics;
 
-namespace TP___HabitAqui.Controllers
+namespace HabitAqui.Controllers
 {
     public class HomeController : Controller
     {

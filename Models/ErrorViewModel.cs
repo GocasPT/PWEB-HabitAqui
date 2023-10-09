@@ -1,4 +1,4 @@
-namespace TP___HabitAqui.Models
+namespace HabitAqui.Models
 {
     public class ErrorViewModel
     {
