@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using HabitAqui.Models;
 
 namespace HabitAqui.Data
 {
@@ -9,5 +10,6 @@ namespace HabitAqui.Data
             : base(options)
         {
         }
+        public DbSet<HabitAqui.Models.Properties>? Properties { get; set; }
     }
 }
