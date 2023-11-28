@@ -1,8 +1,30 @@
-﻿@{
+﻿@model HabitAqui.ViewModel.HabitacaoSearchViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>HabitAqui</h1>
+
+    <form asp-action="Search" method="post">
+        <div class="form-group">
+            <label asp-for="Rua" class="control-label">Rua:</label>
+            <input asp-for="Rua" class="form-control" />
+            <span asp-validation-for="Rua" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CheckIn" class="control-label">Check-In Date:</label>
+            <input asp-for="CheckIn" class="form-control" type="date" />
+            <span asp-validation-for="CheckIn" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CheckOut" class="control-label">Check-Out Date:</label>
+            <input asp-for="CheckOut" class="form-control" type="date" />
+            <span asp-validation-for="CheckOut" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </form>
 </div>

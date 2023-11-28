@@ -1,0 +1,49 @@
+﻿@model HabitAqui.ViewModel.HabitacaoSearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+
+@{
+    var searchViewModel = new HabitAqui.ViewModel.HabitacaoSearchViewModel();
+    searchViewModel.CheckIn = Model.CheckIn;
+    searchViewModel.CheckOut = Model.CheckOut;
+    searchViewModel.Categoria = Model.Categoria;
+    searchViewModel.Rua = Model.Rua;
+}
+
+<table class="table">
+<thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rua)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustoPorNoite)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Habitacoes) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Rua)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CustoPorNoite)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
