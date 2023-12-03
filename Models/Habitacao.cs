@@ -9,8 +9,8 @@
         public bool Disponivel { get; set; }
         public int CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
-        //public int LocadorId { get; set; }
-        //public Locador Locador { get; set; }
-        //public ICollection<Aluguer> Alugueres { get; set; }
+        public int? LocadorId { get; set; }
+        public Locador Locador { get; set; }
+        public ICollection<Aluguer> Alugueres { get; set; }
     }
 }

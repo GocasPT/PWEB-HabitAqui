@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231130194852_PWEB_v0.5")]
+    partial class PWEB_v05
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Alugueres");
+                    b.ToTable("Aluguer");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
@@ -106,7 +108,7 @@ namespace HabitAqui.Migrations
                         .IsUnique()
                         .HasFilter("[AluguerId] IS NOT NULL");
 
-                    b.ToTable("CheckIns");
+                    b.ToTable("CheckIn");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
@@ -134,7 +136,7 @@ namespace HabitAqui.Migrations
                         .IsUnique()
                         .HasFilter("[AluguerId] IS NOT NULL");
 
-                    b.ToTable("CheckOuts");
+                    b.ToTable("CheckOut");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -188,7 +190,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locadores");
+                    b.ToTable("Locador");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -23,8 +23,8 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Habitacoes
-                .Include(h => h.Categoria);
-                /*.Include(h => h.Locador)*/;
+                .Include(h => h.Categoria)
+                .Include(h => h.Locador);
 
             return View(await applicationDbContext.ToListAsync());
         }
@@ -39,7 +39,7 @@ namespace HabitAqui.Controllers
 
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
-                //.Include(h => h.Locador)
+                .Include(h => h.Locador)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (habitacao == null)
@@ -54,7 +54,7 @@ namespace HabitAqui.Controllers
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id");
-            //ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id");
+            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id");
             return View();
         }
 
@@ -63,8 +63,12 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId")] Habitacao habitacao)
         {
+            ModelState.Remove(nameof(habitacao.Categoria));
+            ModelState.Remove(nameof(habitacao.Locador));
+            ModelState.Remove(nameof(habitacao.Alugueres));
+
             if (ModelState.IsValid)
             {
                 _context.Add(habitacao);
@@ -72,7 +76,7 @@ namespace HabitAqui.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            //ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
             return View(habitacao);
         }
 
@@ -90,7 +94,7 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
             ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            //ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
             return View(habitacao);
         }
 
@@ -99,7 +103,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId")] Habitacao habitacao)
         {
             if (id != habitacao.Id)
             {
@@ -127,7 +131,7 @@ namespace HabitAqui.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            //ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
             return View(habitacao);
         }
 
@@ -141,7 +145,7 @@ namespace HabitAqui.Controllers
 
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
-                //.Include(h => h.Locador)
+                .Include(h => h.Locador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {
