@@ -1,7 +1,7 @@
 ﻿using HabitAqui.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace HabitAqui.ViewModel
+namespace HabitAqui.ViewModels
 {
     public class HabitacaoSearchViewModel
     {

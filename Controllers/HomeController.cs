@@ -1,6 +1,6 @@
 ﻿using HabitAqui.Data;
 using HabitAqui.Models;
-using HabitAqui.ViewModel;
+using HabitAqui.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +19,13 @@ namespace HabitAqui.Controllers
             _context = context;
         }
 
-        //TODO: Listar todas as habitacoes e catogorias
         public IActionResult Index()
         {
-            //var habits = _context.Habitacao
-            //    .Select(h => h.Rua)
-            //    .Distinct()
-            //    .ToList();
-            //ViewData["Habitacoes"] = new SelectList(habits);
+            var habits = _context.Habitacoes
+                .Select(h => h.Rua)
+                .Distinct()
+                .ToList();
+            ViewData["Habitacoes"] = new SelectList(habits);
 
             var categorias = _context.Categorias
                 .Select(c => c.Nome)

@@ -1,4 +1,4 @@
-﻿@model HabitAqui.ViewModel.HabitacaoSearchViewModel
+﻿@model HabitAqui.ViewModels.HabitacaoSearchViewModel
 
 @{
     ViewData["Title"] = "Search";
@@ -7,7 +7,7 @@
 <h1>Search</h1>
 
 @{
-    var searchViewModel = new HabitAqui.ViewModel.HabitacaoSearchViewModel();
+    var searchViewModel = new HabitAqui.ViewModels.HabitacaoSearchViewModel();
     searchViewModel.CheckIn = Model.CheckIn;
     searchViewModel.CheckOut = Model.CheckOut;
     searchViewModel.Categoria = Model.Categoria;

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Models;
 using System.Reflection.Emit;
+using HabitAqui.ViewModels;
 
 namespace HabitAqui.Data
 {
@@ -33,5 +34,10 @@ namespace HabitAqui.Data
         public DbSet<Aluguer> Alugueres { get; set; }
         public DbSet<CheckIn> CheckIns { get; set; }
         public DbSet<CheckOut> CheckOuts { get; set; }
+        public DbSet<ApplicationUser> Administradores { get; set; }
+        public DbSet<ApplicationUser> Gestores { get; set; }
+        public DbSet<ApplicationUser> Funcionarios { get; set; }
+        public DbSet<ApplicationUser> Clientes { get; set; }
+        public DbSet<ApplicationUser> Utilizadores { get; set; }
     }
 }
