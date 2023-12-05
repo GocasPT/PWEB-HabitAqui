@@ -29,7 +29,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PrimeiroNome)
@@ -44,10 +45,10 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Roles)
+                @String.Join(", ", item.Roles)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                <a class="btn btn-warning" asp-action="Details" asp-route-userId="@item.UserId">Details</a>
             </td>
         </tr>
 }

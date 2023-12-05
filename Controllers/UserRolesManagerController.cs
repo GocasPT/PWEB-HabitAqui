@@ -47,8 +47,6 @@ namespace HabitAqui.Controllers
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
 
-        //TODO: Corrigir o erro de route (controlador mal configurado)
-        [Route("/UserRolesManager/Details/{userId}")]
         public async Task<IActionResult> Details(string userId)
         {
             if (userId == null || _userManager.Users == null)
@@ -60,17 +58,17 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            var roles = await GetUserRoles(user);
+            var roles = await _roleManager.Roles.ToListAsync();
 
-            var model = new UserRolesViewModel
+            var model = new List<ManageUserRolesViewModel>();
+            foreach (var role in roles)
             {
-                UserId = user.Id,
-                PrimeiroNome = user.PrimeiroNome,
-                UltimoNome = user.UltimoNome,
-                Email = user.Email,
-                UserName = user.UserName,
-                Roles = roles
-            };
+                ManageUserRolesViewModel manage = new ManageUserRolesViewModel();
+                manage.RoleId = role.Id;
+                manage.RoleName = role.Name;
+                manage.Selected = await _userManager.IsInRoleAsync(user, role.Name);
+                model.Add(manage);
+            }
 
             return View(model);
         }
@@ -79,26 +77,21 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> Details(List<ManageUserRolesViewModel> model, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
+            if (user != null)
             {
-
-                return NotFound();
+                foreach (var role in model)
+                {
+                    if (role.Selected)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.RoleName);
+                    }
+                    else
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                    }
+                }
             }
-
-            var selectedRoles = model.Where(r => r.Selected).Select(r => r.RoleName).ToList();
-
-            var result = await _userManager.AddToRolesAsync(user, selectedRoles);
-
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Failed to update user roles");
-                return View(model);
-            }
+            return RedirectToAction("Index");
         }
     }
 }
