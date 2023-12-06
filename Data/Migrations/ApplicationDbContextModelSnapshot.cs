@@ -62,7 +62,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Alugueres", (string)null);
+                    b.ToTable("Alugueres");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
@@ -83,7 +83,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
@@ -111,7 +111,7 @@ namespace HabitAqui.Migrations
                         .IsUnique()
                         .HasFilter("[AluguerId] IS NOT NULL");
 
-                    b.ToTable("CheckIns", (string)null);
+                    b.ToTable("CheckIns");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
@@ -139,7 +139,7 @@ namespace HabitAqui.Migrations
                         .IsUnique()
                         .HasFilter("[AluguerId] IS NOT NULL");
 
-                    b.ToTable("CheckOuts", (string)null);
+                    b.ToTable("CheckOuts");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -172,7 +172,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Habitacoes", (string)null);
+                    b.ToTable("Habitacoes");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
@@ -193,7 +193,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locadores", (string)null);
+                    b.ToTable("Locadores");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
