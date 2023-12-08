@@ -7,7 +7,7 @@
 <h1>Edit</h1>
 
 <h4>Habitacao</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -41,6 +41,40 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
+            <div class="form-group">
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </div>
+
+            @*
+            <input type="submit" value="Delete" class="btn btn-secondary btn-danger" data-toggle="modal" data-target="#deleteModal"/>
+            *@
+
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar #nome da propriedade</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>Tem a certeza que deseja eliminar a propriedade XXX ?</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary">Apagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
         </form>
     </div>
 </div>

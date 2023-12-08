@@ -1,6 +1,7 @@
 ﻿using HabitAqui.Data;
 using HabitAqui.Models;
 using HabitAqui.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
