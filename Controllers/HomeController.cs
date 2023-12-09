@@ -29,6 +29,7 @@ namespace HabitAqui.Controllers
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
                     .ToListAsync()
             };
 

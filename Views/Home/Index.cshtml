@@ -22,7 +22,7 @@
     </nav>
 </form>
 
-<table class="table">
+<table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -50,9 +50,6 @@
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().CustoPorNoite)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Disponivel)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Locador.Nome)
             </th>
             <th>
@@ -61,7 +58,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var habitacao in Model.Habitacoes)
+        @foreach (var habitacao in Model.Habitacoes.Where(h => h.Disponivel))
         {
             <tr>
                 <td>
@@ -86,21 +83,16 @@
                     @Html.DisplayFor(modelItem => habitacao.Rua)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => habitacao.CustoPorNoite)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => habitacao.Disponivel)
+                    @Html.DisplayFor(modelItem => habitacao.CustoPorNoite)€
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => habitacao.Locador.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)
+                    @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)⭐
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@habitacao.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@habitacao.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@habitacao.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
                 </td>
             </tr>
         }
@@ -109,7 +101,7 @@
 
 <h2>Bonito - Tiago</h2>
 
-@foreach (var item in Model.Habitacoes)
+@foreach (var item in Model.Habitacoes.Where(h => h.Disponivel))
 {
     <div class="card" style="width: 18rem;">
         <div class="card-body">
