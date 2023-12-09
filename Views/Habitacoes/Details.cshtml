@@ -69,6 +69,29 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Locador.Nome)
         </dd>
+        <dt class="col-sm-2">
+            Itens
+        </dt>
+        <dd class="col-sm-10">
+            @if (ViewBag.HabitacaoItens != null)
+            {
+                <ul>
+                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                    {
+                        <li>@habitacaoItem.Item.Description</li>
+                    }
+                </ul>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            ⭐
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Pontuacoes != null)
+            {
+                //TODO: DISPLAY EACH CATEGORY AVERAGE STARS? 
+            }
+        </dd>
     </dl>
 </div>
 <div>

@@ -47,6 +47,13 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
+            var habitacaoItens = await _context.Habitacoes_Itens
+            .Where(hi => hi.HabitacaoId == habitacao.Id)
+            .Include(hi => hi.Item)
+            .ToListAsync();
+
+            ViewBag.HabitacaoItens = habitacaoItens;
+
             return View(habitacao);
         }
 

@@ -50,7 +50,8 @@ namespace HabitAqui.Data
         public DbSet<Pontuacao> Pontuacoes { get; set; }
         public DbSet<Habitacao_Itens> Habitacoes_Itens { get; set; }
 
-        public DbSet<HabitAqui.Models.ModelTest>? ModelTest { get; set; }
+        public DbSet<HabitAqui.Models.ModelTest>? ModelTest { get; set; }
+
         public DbSet<Fotografia> Fotografias { get; set; }
     }
 }
