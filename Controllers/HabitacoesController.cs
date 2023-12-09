@@ -175,12 +175,41 @@ namespace HabitAqui.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Habitacoes/Search
+        public async Task<IActionResult> Search(string categoria)
+        {
+            if (categoria == "All")
+                categoria = null;
+
+            //ViewData["TextoAPesquisar"] = HttpContext.Request.Query["texto"];
+            var textoAPesquisar = TempData["TextoAPesquisar"].ToString();
+
+            var viewModelFilter = new HomeSearchViewModel
+            {
+                TextoAPesquisar = textoAPesquisar,
+                CategoriaFilter = categoria,
+                Categorias = await _context.Categorias.ToListAsync(),
+                Habitacoes = await _context.Habitacoes
+                    .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .Where(h => h.Name.Contains(textoAPesquisar))
+                    .ToListAsync()
+            };
+
+            if (categoria != null)
+                viewModelFilter.Habitacoes = viewModelFilter.Habitacoes.Where(h => h.Categoria.Nome.Equals(categoria)).ToList();
+
+            viewModelFilter.NumResultados = viewModelFilter.Habitacoes.Count();
+
+            TempData.Keep("TextoAPesquisar");
+
+            return View(viewModelFilter);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Search([Bind("TextoAPesquisar")] HomeSearchViewModel pesquisaHabitacao)
         {
-            ViewData["Title"] = "Pesquisar habitação";
-
             var habitacoesQuery = _context.Habitacoes.AsQueryable();
 
             if (!string.IsNullOrEmpty(pesquisaHabitacao.TextoAPesquisar))
@@ -199,8 +228,11 @@ namespace HabitAqui.Controllers
                     .OrderBy(h => h.Name);
             }
 
+            pesquisaHabitacao.Categorias = await _context.Categorias.ToListAsync();
             pesquisaHabitacao.Habitacoes = await habitacoesQuery.ToListAsync();
             pesquisaHabitacao.NumResultados = pesquisaHabitacao.Habitacoes.Count();
+
+            TempData.Keep("TextoAPesquisar");
 
             return View(pesquisaHabitacao);
         }

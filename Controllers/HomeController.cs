@@ -23,6 +23,9 @@ namespace HabitAqui.Controllers
         // GET: Home
         public async Task<IActionResult> Index(string categoria)
         {
+            if (categoria == "All")
+                categoria = null;
+
             var viewModel = new HomeIndexViewModel
             {
                 CategoriaFilter = categoria,
