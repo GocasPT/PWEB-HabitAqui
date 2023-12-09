@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.Models
@@ -56,6 +57,58 @@ namespace HabitAqui.Models
                             Pontuacoes.Sum(r => r.PontuacaoLocalizacao) +
                             Pontuacoes.Sum(r => r.PontuacaoQualidadePreco) +
                             Pontuacoes.Sum(r => r.PontuacaoEspaco)) / (4.0 * Pontuacoes.Count);
+                }
+                return 0.0; // Retorna 0 se não houver avaliações
+            }
+        }
+
+        public double mediaPontuacaoLimpeza
+        {
+            get
+            {
+                if (Pontuacoes != null && Pontuacoes.Any())
+                {
+                    // Calcula a média das quatro pontuações
+                    return (Pontuacoes.Sum(r => r.PontuacaoLimpeza) / (4.0 * Pontuacoes.Count));
+                }
+                return 0.0; // Retorna 0 se não houver avaliações
+            }
+        }
+
+        public double mediaPontuacaoLocalizacao
+        {
+            get
+            {
+                if (Pontuacoes != null && Pontuacoes.Any())
+                {
+                    // Calcula a média das quatro pontuações
+                    return (Pontuacoes.Sum(r => r.PontuacaoLocalizacao) / (4.0 * Pontuacoes.Count));
+                }
+                return 0.0; // Retorna 0 se não houver avaliações
+            }
+        }
+
+        public double mediaPontuacaoQualidadePreco
+        {
+            get
+            {
+                if (Pontuacoes != null && Pontuacoes.Any())
+                {
+                    // Calcula a média das quatro pontuações
+                    return (Pontuacoes.Sum(r => r.PontuacaoQualidadePreco) / (4.0 * Pontuacoes.Count));
+                }
+                return 0.0; // Retorna 0 se não houver avaliações
+            }
+        }
+
+        public double mediaPontuacaoEspaco
+        {
+            get
+            {
+                if (Pontuacoes != null && Pontuacoes.Any())
+                {
+                    // Calcula a média das quatro pontuações
+                    return (Pontuacoes.Sum(r => r.PontuacaoEspaco) / (4.0 * Pontuacoes.Count));
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
             }

@@ -97,7 +97,7 @@
                     @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)⭐
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
+                    <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
                 </td>
             </tr>
         }

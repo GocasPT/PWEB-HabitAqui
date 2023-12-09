@@ -1,4 +1,4 @@
-﻿using HabitAqui.Data;
+using HabitAqui.Data;
 using HabitAqui.Models;
 using HabitAqui.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +33,7 @@ namespace HabitAqui.Controllers
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
+                    .Include(h => h.Pontuacoes)
                     .ToListAsync()
             };
 
