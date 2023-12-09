@@ -1,0 +1,59 @@
+@model HabitAqui.ViewModels.HomeSearchViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>As nossas habitações</h1>
+
+@if (!string.IsNullOrEmpty(Model.TextoAPesquisar))
+{
+    <p>Pesquisa: "@Model.TextoAPesquisar"</p>
+}
+
+@if (Model.NumResultados > 0)
+{
+    @if (Model.NumResultados == 1)
+    {
+        <p>Existe @Model.NumResultados curso disponível</p>
+    }
+    else
+    {
+        <p>Existem @Model.NumResultados cursos disponíveis</p>
+    }
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        @foreach (Habitacao h in Model.Habitacoes)
+        {
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">
+                            @Html.DisplayFor(model => h.Name)
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">
+                            @h.CustoPorNoite<small class="text-muted fw-light"></small>€
+                        </h1>
+                        <p>@Html.Raw(h.Categoria.Nome) | @Html.Raw(h.Tipologia)</p>
+                        <p>Pais: @Html.Raw(h.Pais)</p>
+                        <p>Distrito: @Html.Raw(h.Distrito)</p>
+                        <p>Concelho: @Html.Raw(h.Concelho)</p>
+                        <p>Rua: @Html.Raw(h.Rua)</p>
+                        <p>Locador: @Html.Raw(h.Locador.Nome)</p>
+                        <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@h.Id"
+                           class="w-100 btn btn-lg btn-outline-primary">Saber mais</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="alert alert-warning">
+        Não foi possível encontrar cursos com os dados introduzidos.
+        <br />
+        Por favor, reveja a sua pesquisa!
+    </p>
+}

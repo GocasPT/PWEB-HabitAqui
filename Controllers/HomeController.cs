@@ -61,53 +61,6 @@ namespace HabitAqui.Controllers
             return View(filter);
         } 
 
-        //GET: Home/Search
-        public async Task<IActionResult> Search()
-        {
-            var viewModel = new HomeSearchViewModel
-            {
-                CategoriaFilter = null,
-                Categorias = await _context.Categorias.ToListAsync(),
-                Habitacoes = await _context.Habitacoes
-                    .Include(h => h.Categoria)
-                    .ToListAsync()
-            };
-
-            return View(viewModel);
-        }
-
-        // POST: Home/Search
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Search([Bind("Rua,CheckIn,CheckOut,CategoriaFilter")] HomeSearchViewModel search)
-        {
-            //TODO: validar datas + mensagem de erro em popup
-            //if (search.CheckIn.CompareTo(search.CheckOut) > 0)
-            //    return Problem("Data de check-in não pode ser superior à data de check-out");
-            ModelState.Remove(nameof(search.CategoriaFilter));
-            ModelState.Remove(nameof(search.Categorias));
-            ModelState.Remove(nameof(search.Habitacoes));
-
-            if (ModelState.IsValid)
-            {
-                var categorias = await _context.Categorias.ToListAsync();
-
-                //TODO: Filtrar habitacoes com datas disponiveis           
-                var habitacao = await _context.Habitacoes
-                    .Include(h => h.Categoria)
-                    .Where(h => h.Rua.Contains(search.Rua))
-                    .ToListAsync();
-
-                if (search.CategoriaFilter != null)
-                    habitacao = habitacao.Where(h => h.Categoria.Nome.Equals(search.CategoriaFilter)).ToList();
-
-                search.Categorias = categorias;
-                search.Habitacoes = habitacao;
-            }
-
-            return View(search);
-        }
-
         // GET Home/Privacy
         public IActionResult Privacy()
         {

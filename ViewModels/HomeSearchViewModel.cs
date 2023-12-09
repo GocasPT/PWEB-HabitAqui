@@ -5,13 +5,8 @@ namespace HabitAqui.ViewModels
 {
     public class HomeSearchViewModel
     {
-        public string Rua { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime CheckIn { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime CheckOut { get; set; }
-        public string CategoriaFilter { get; set; }
-        public List<Categoria> Categorias { get; set; }
-        public List<Habitacao> Habitacoes { get; set; }
+        public List<Habitacao>? Habitacoes { get; set; }
+        public String? TextoAPesquisar {  get; set; }
+        public int NumResultados { get; set; }
     }
 }

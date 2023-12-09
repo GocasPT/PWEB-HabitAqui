@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
+using HabitAqui.ViewModels;
 
 namespace HabitAqui.Controllers
 {
@@ -165,6 +166,36 @@ namespace HabitAqui.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Search([Bind("TextoAPesquisar")] HomeSearchViewModel pesquisaHabitacao)
+        {
+            ViewData["Title"] = "Pesquisar habitação";
+
+            var habitacoesQuery = _context.Habitacoes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(pesquisaHabitacao.TextoAPesquisar))
+            {
+                habitacoesQuery = habitacoesQuery
+                    .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .Where(h => h.Name.Contains(pesquisaHabitacao.TextoAPesquisar))
+                    .OrderBy(h => h.Name);
+            }
+            else
+            {
+                habitacoesQuery = habitacoesQuery
+                    .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .OrderBy(h => h.Name);
+            }
+
+            pesquisaHabitacao.Habitacoes = await habitacoesQuery.ToListAsync();
+            pesquisaHabitacao.NumResultados = pesquisaHabitacao.Habitacoes.Count();
+
+            return View(pesquisaHabitacao);
         }
 
         private bool HabitacaoExists(int id)

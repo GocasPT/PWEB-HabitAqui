@@ -1,10 +1,8 @@
-﻿@model HabitAqui.ViewModels.HomeSearchViewModel
-
-<form class="d-flex" role="search" method="post" asp-controller="Home" asp-action="Search">
-    <input asp-for="Rua" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-    <input asp-for="CheckIn" class="form-control me-2" type="date" />
-    <input asp-for="CheckOut" class="form-control me-2" type="date" />
-    <button class="btn btn-outline-success" type="submit">
-        Search
-    </button>
-</form>
+﻿@using (Html.BeginForm("Search", "Habitacoes", FormMethod.Post))
+{
+    <div class="form-inline d-flex ">
+        <input type="text" name="textoAPesquisar"
+               id="textoAPesquisar" placeholder="Nome da habitação"
+               class="form-control form-control-sm" />
+    </div>
+}

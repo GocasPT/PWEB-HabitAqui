@@ -28,12 +28,8 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="ModelTests" asp-action="Index">ModelsTest</a>
                 </li>
-            </ul
-            @* ESTA MERDA NAO FUNCIONA COM 2 VIEWMODELS E FAZER UM SUPER VIEWMODEL NAO *@
-            @* <partial name="_SearchPartial" /> *@
-            <div class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
-            </div>
+            </ul>
+            <partial name="_SearchPartial" />
             <partial name="_LoginPartial" />
         </div>
     </div>
