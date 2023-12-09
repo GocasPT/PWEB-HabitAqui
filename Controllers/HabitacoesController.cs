@@ -22,10 +22,7 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Habitacoes
-                .Include(h => h.Categoria)
-                .Include(h => h.Locador);
-
+            var applicationDbContext = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -41,7 +38,6 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
             if (habitacao == null)
             {
                 return NotFound();
@@ -53,8 +49,8 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id");
-            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id");
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
+            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
             return View();
         }
 
@@ -63,20 +59,18 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)
         {
-            ModelState.Remove(nameof(habitacao.Categoria));
-            ModelState.Remove(nameof(habitacao.Locador));
-            ModelState.Remove(nameof(habitacao.Alugueres));
-
             if (ModelState.IsValid)
             {
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
+
             return View(habitacao);
         }
 
@@ -93,8 +87,8 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             return View(habitacao);
         }
 
@@ -103,7 +97,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rua,CustoPorNoite,Disponivel,CategoriaId")] Habitacao habitacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)
         {
             if (id != habitacao.Id)
             {
@@ -130,8 +124,8 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Set<Categoria>(), "Id", "Id", habitacao.CategoriaId);
-            ViewData["LocadorId"] = new SelectList(_context.Set<Locador>(), "Id", "Id", habitacao.LocadorId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             return View(habitacao);
         }
 
@@ -162,21 +156,21 @@ namespace HabitAqui.Controllers
         {
             if (_context.Habitacoes == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Habitacao'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Habitacoes'  is null.");
             }
             var habitacao = await _context.Habitacoes.FindAsync(id);
             if (habitacao != null)
             {
                 _context.Habitacoes.Remove(habitacao);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool HabitacaoExists(int id)
         {
-          return (_context.Habitacoes?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Habitacoes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

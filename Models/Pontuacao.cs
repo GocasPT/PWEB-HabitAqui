@@ -9,5 +9,8 @@
         public double PontuacaoLocalizacao { get; set; }
         public double PontuacaoQualidadePreco { get; set; }
         public double PontuacaoEspaco { get; set; }
+
+        public int HabitacaoId { get; set; }
+        public Habitacao Habitacao { get; set; }
     }
 }

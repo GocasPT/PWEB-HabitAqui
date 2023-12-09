@@ -1,18 +1,46 @@
 ﻿@model HabitAqui.Models.Habitacao
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Habitação";
 }
 
-<h1>Edit</h1>
-
-<h4>Habitacao</h4>
-<hr/>
+<h1>@ViewData["Title"]</h1>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nome</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaId" class="control-label">Categoria</label>
+                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tipologia" class="control-label"></label>
+                <input asp-for="Tipologia" class="form-control" />
+                <span asp-validation-for="Tipologia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pais" class="control-label"></label>
+                <input asp-for="Pais" class="form-control" />
+                <span asp-validation-for="Pais" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Distrito" class="control-label"></label>
+                <input asp-for="Distrito" class="form-control" />
+                <span asp-validation-for="Distrito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Concelho" class="control-label"></label>
+                <input asp-for="Concelho" class="form-control" />
+                <span asp-validation-for="Concelho" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Rua" class="control-label"></label>
                 <input asp-for="Rua" class="form-control" />
@@ -29,60 +57,23 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
-                <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-            @* <div class="form-group">
-                <label asp-for="LocadorId" class="control-label"></label>
+                <label asp-for="LocadorId" class="control-label">Locador</label>
                 <select asp-for="LocadorId" class="form-control" asp-items="ViewBag.LocadorId"></select>
                 <span asp-validation-for="LocadorId" class="text-danger"></span>
-            </div> *@
+            </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
-
-            <div class="form-group">
-                <form asp-action="Delete">
-                    <input type="hidden" asp-for="Id" />
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                </form>
-            </div>
-
-            @*
-            <input type="submit" value="Delete" class="btn btn-secondary btn-danger" data-toggle="modal" data-target="#deleteModal"/>
-            *@
-
-
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Eliminar #nome da propriedade</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div>Tem a certeza que deseja eliminar a propriedade XXX ?</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Apagar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

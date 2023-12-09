@@ -157,6 +157,7 @@ namespace HabitAqui.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Concelho")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustoPorNoite")
@@ -166,15 +167,19 @@ namespace HabitAqui.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Distrito")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LocadorId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pais")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rua")
@@ -182,6 +187,7 @@ namespace HabitAqui.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tipologia")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -290,7 +296,7 @@ namespace HabitAqui.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HabitacaoId")
+                    b.Property<int>("HabitacaoId")
                         .HasColumnType("int");
 
                     b.Property<double>("PontuacaoEspaco")
@@ -599,7 +605,9 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.Locador", "Locador")
                         .WithMany("Habitacoes")
-                        .HasForeignKey("LocadorId");
+                        .HasForeignKey("LocadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
 
@@ -627,9 +635,13 @@ namespace HabitAqui.Migrations
 
             modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
                 {
-                    b.HasOne("HabitAqui.Models.Habitacao", null)
+                    b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
                         .WithMany("Pontuacoes")
-                        .HasForeignKey("HabitacaoId");
+                        .HasForeignKey("HabitacaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Habitacao");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

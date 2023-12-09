@@ -1,26 +1,45 @@
-﻿namespace HabitAqui.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HabitAqui.Models
 {
     public class Habitacao
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        [Display(Name = "Nome")]
         public string? Name { get; set; }
+
+        [Required(ErrorMessage = "A categoria é obrigatória.")]
+        [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
-        public Categoria Categoria { get; set; }
-        public string? Tipologia {  get; set; }
+        public Categoria? Categoria { get; set; }
+
+        [Required(ErrorMessage = "A tipologia é obrigatória.")]
+        public string? Tipologia { get; set; }
+        [Required(ErrorMessage = "O pais é obrigatório.")]
         public string? Pais { get; set; }
+        [Required(ErrorMessage = "O distrito é obrigatório.")]
         public string? Distrito { get; set; }
+        [Required(ErrorMessage = "O concelho é obrigatório.")]
         public string? Concelho { get; set; }
 
+        [Required(ErrorMessage = "A rua é obrigatória.")]
         public string Rua { get; set; }
         //TODO: Informação sobre a localização
+
+        [Display(Name = "Custo por noite")]
+        [Required(ErrorMessage = "O custo por noite é obrigatório.")]
         public int CustoPorNoite { get; set; }
         public bool Disponivel { get; set; }
-       
-        public int? LocadorId { get; set; }
-        public Locador Locador { get; set; }
-        public ICollection<Aluguer> Alugueres { get; set; }
 
-        public ICollection<Pontuacao> Pontuacoes { get; set; } = new List<Pontuacao>();
+        [Display(Name = "Locador")]
+        [Required(ErrorMessage = "O custo por noite é obrigatório.")]
+        public int? LocadorId { get; set; }
+        public Locador? Locador { get; set; }
+        public ICollection<Aluguer>? Alugueres { get; set; }
+
+        public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();
 
         // Propriedade de leitura somente para calcular a média das pontuações
         public double mediaPontuacoes

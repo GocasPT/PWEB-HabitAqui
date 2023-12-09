@@ -25,6 +25,12 @@ namespace HabitAqui.Data
                 .WithOne(a => a.CheckOut)
                 .HasForeignKey<CheckOut>(c => c.AluguerId);
 
+            modelBuilder.Entity<Habitacao>()
+                .HasMany(h => h.Pontuacoes)
+                .WithOne(p => p.Habitacao)
+                .HasForeignKey(p => p.HabitacaoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
 
