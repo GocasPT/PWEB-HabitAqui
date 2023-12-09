@@ -8,20 +8,6 @@ namespace HabitAqui.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Alugueres_AspNetUsers_ApplicationUserId",
-                table: "Alugueres");
-
-            migrationBuilder.RenameColumn(
-                name: "ApplicationUserId",
-                table: "Alugueres",
-                newName: "ClienteId");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Alugueres_ApplicationUserId",
-                table: "Alugueres",
-                newName: "IX_Alugueres_ClienteId");
-
             migrationBuilder.AlterColumn<string>(
                 name: "FuncionarioId",
                 table: "CheckOuts",
@@ -47,13 +33,6 @@ namespace HabitAqui.Migrations
                 name: "IX_CheckIns_FuncionarioId",
                 table: "CheckIns",
                 column: "FuncionarioId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Alugueres_AspNetUsers_ClienteId",
-                table: "Alugueres",
-                column: "ClienteId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CheckIns_AspNetUsers_FuncionarioId",

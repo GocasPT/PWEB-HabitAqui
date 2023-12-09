@@ -8,7 +8,7 @@ namespace HabitAqui.Models
         public DateTime DataDeEntrada { get; set; }
         public DateTime DataDeSaida { get; set; }
         public bool Confirmado { get; set; }
-        public string? ClienteId { get; set; }
+        public String? ClienteId { get; set; }
         public ApplicationUser Cliente { get; set; }
         public int? HabitacaoId { get; set; }
         public Habitacao Habitacao { get; set; }
