@@ -1,4 +1,6 @@
-﻿namespace HabitAqui.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HabitAqui.Models
 {
     public class Pontuacao
     {
@@ -10,6 +12,8 @@
         public double PontuacaoQualidadePreco { get; set; }
         public double PontuacaoEspaco { get; set; }
 
+        [Display(Name = "Criado a")]
+        public DateTime? DataCriacao { get; set; }
         public int HabitacaoId { get; set; }
         public Habitacao Habitacao { get; set; }
     }

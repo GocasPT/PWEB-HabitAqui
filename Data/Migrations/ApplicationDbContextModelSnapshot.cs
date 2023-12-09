@@ -194,6 +194,9 @@ namespace HabitAqui.Migrations
                     b.Property<int>("CustoPorNoite")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DataCriacao")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
@@ -300,6 +303,9 @@ namespace HabitAqui.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DataCriacao")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -340,6 +346,9 @@ namespace HabitAqui.Migrations
                     b.Property<string>("Comentario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("HabitacaoId")
                         .HasColumnType("int");

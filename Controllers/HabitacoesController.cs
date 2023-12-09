@@ -76,6 +76,7 @@ namespace HabitAqui.Controllers
         {
             if (ModelState.IsValid)
             {
+                habitacao.DataCriacao = DateTime.UtcNow;
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,6 +120,7 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
+                    habitacao.DataCriacao = _context.Habitacoes.AsNoTracking().FirstOrDefault(h => h.Id == id)?.DataCriacao ?? DateTime.UtcNow;
                     _context.Update(habitacao);
                     await _context.SaveChangesAsync();
                 }

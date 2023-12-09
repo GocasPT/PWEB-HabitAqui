@@ -52,6 +52,9 @@
                 @Html.DisplayNameFor(model => model.NumWC)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DataCriacao)
+            </th>
+            <th>
                 Operações
             </th>
         </tr>
@@ -98,6 +101,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumWC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCriacao)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

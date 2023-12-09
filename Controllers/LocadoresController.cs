@@ -63,6 +63,7 @@ namespace HabitAqui.Controllers
 
             if (ModelState.IsValid)
             {
+                locador.DataCriacao = DateTime.UtcNow;
                 _context.Add(locador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,6 +103,7 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
+                    locador.DataCriacao = _context.Locadores.AsNoTracking().FirstOrDefault(h => h.Id == id)?.DataCriacao ?? DateTime.UtcNow;
                     _context.Update(locador);
                     await _context.SaveChangesAsync();
                 }

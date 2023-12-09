@@ -12,7 +12,11 @@ namespace HabitAqui.Models
 
         [Display(Name = "Tipo de Locador")]
         public String? Tipo { get; set; }
+
+        [Display(Name = "Criado a")]
+        public DateTime? DataCriacao { get; set; } 
         public ICollection<Habitacao>? Habitacoes { get; set; }
         public ICollection<ApplicationUser>? GestoresFuncionarios { get; set; }
+
     }
 }

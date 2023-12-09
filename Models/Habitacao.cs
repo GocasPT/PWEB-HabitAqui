@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace HabitAqui.Models
 {
@@ -54,6 +55,8 @@ namespace HabitAqui.Models
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }
 
+        [Display(Name = "Criado a")]
+        public DateTime? DataCriacao { get; set; }
         public ICollection<Aluguer>? Alugueres { get; set; }
 
         public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();

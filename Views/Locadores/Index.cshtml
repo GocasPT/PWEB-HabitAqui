@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DataCriacao)
+            </th>
+            <th>
                 Operações
             </th>
         </tr>
@@ -37,6 +40,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

@@ -71,6 +71,7 @@
                         <p>Número de Pessoas: @Html.Raw(h.NumPessoas)</p>
                         <p>Número de WC: @Html.Raw(h.NumWC)</p>
                         <p>Locador: @Html.Raw(h.Locador.Nome)</p>
+                        <p>Data de Criação: @Html.Raw(h.DataCriacao)</p>
                         <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@h.Id"
                            class="w-100 btn btn-lg btn-outline-primary">Saber mais</a>
                     </div>
