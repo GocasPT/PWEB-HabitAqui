@@ -1,8 +1,6 @@
-﻿@using (Html.BeginForm("Search", "Habitacoes", FormMethod.Post))
-{
-    <div class="form-inline d-flex ">
-        <input type="text" name="textoAPesquisar"
-               id="textoAPesquisar" placeholder="Nome da habitação"
-               class="form-control form-control-sm" />
-    </div>
-}
+﻿<form asp-controller="Habitacoes" asp-action="Search" method="post" class="d-flex" role="search">
+    <input class="form-control me-2" type="search" name="textoAPesquisar" placeholder="Nome da habitação">
+    @* <input class="form-control me-2" type="date" name="checkIn" placeholder="CheckIn">
+    <input class="form-control me-2" type="date" name="checkOut" placeholder="checkOut"> *@
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>

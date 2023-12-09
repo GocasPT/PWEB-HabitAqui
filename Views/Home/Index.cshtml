@@ -9,13 +9,13 @@
 <h2>Funcionalidade - Camacho</h2>
 
 @* TODO: verificar se fica get ou post *@
-<form asp-action="Index" method="post">
+<form asp-action="Index" method="get">
     <nav>
         <ul class="pagination">
             @foreach (var categoria in Model.Categorias)
             {
                 <li class="page-item">
-                    <input type="submit" class="page-link" asp-action="Index" asp-for="CategoriaFilter" value="@categoria.Nome">
+                    <input type="submit" class="page-link" name="categoria" value="@categoria.Nome">
                 </li>
             }
         </ul>

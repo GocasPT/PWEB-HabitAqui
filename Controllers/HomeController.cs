@@ -21,11 +21,11 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Home
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string categoria)
         {
             var viewModel = new HomeIndexViewModel
             {
-                CategoriaFilter = null,
+                CategoriaFilter = categoria,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
@@ -33,36 +33,13 @@ namespace HabitAqui.Controllers
                     .ToListAsync()
             };
 
+            if (categoria != null)
+                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Nome.Equals(categoria)).ToList();
+
             return View(viewModel);
         }
 
-        // POST: Home
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index([Bind("CategoriaFilter")] HomeIndexViewModel filter)
-        {
-            ModelState.Remove(nameof(filter.Categorias));
-            ModelState.Remove(nameof(filter.Habitacoes));
-
-            if (ModelState.IsValid)
-            {
-                var categoria = await _context.Categorias.ToListAsync();
-
-                var habitacao = await _context.Habitacoes
-                    .Include(h => h.Categoria)
-                    .ToListAsync();
-
-                if (filter.CategoriaFilter != null)
-                    habitacao = habitacao.Where(h => h.Categoria.Nome.Equals(filter.CategoriaFilter)).ToList();
-
-                filter.Categorias = categoria;
-                filter.Habitacoes = habitacao;
-            }
-
-            return View(filter);
-        } 
-
-        // GET Home/Privacy
+        // GET: Home/Privacy
         public IActionResult Privacy()
         {
             return View();

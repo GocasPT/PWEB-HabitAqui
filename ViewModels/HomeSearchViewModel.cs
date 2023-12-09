@@ -5,8 +5,8 @@ namespace HabitAqui.ViewModels
 {
     public class HomeSearchViewModel
     {
-        public List<Habitacao>? Habitacoes { get; set; }
-        public String? TextoAPesquisar {  get; set; }
+        public string? TextoAPesquisar {  get; set; }
         public int NumResultados { get; set; }
+        public List<Habitacao> Habitacoes { get; set; }
     }
 }
