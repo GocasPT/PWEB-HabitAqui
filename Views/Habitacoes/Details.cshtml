@@ -87,10 +87,13 @@
             ⭐
         </dt>
         <dd class="col-sm-10">
-            @if (Model.Pontuacoes != null)
-            {
-                //TODO: DISPLAY EACH CATEGORY AVERAGE STARS? 
-            }
+            <ul>
+                <li>Total: @(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")</li>
+                <li>Limpeza: @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")</li>
+                <li>Localização: @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")</li>
+                <li>Qualidade/€: @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")</li>
+                <li>Espaço: @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")</li>
+            </ul>
         </dd>
     </dl>
 </div>

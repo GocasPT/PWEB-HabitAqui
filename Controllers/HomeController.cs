@@ -30,9 +30,9 @@ namespace HabitAqui.Controllers
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
+                    .Include(h => h.Pontuacoes)
                     .ToListAsync()
             };
-
             return View(viewModel);
         }
 

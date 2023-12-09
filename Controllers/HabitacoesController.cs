@@ -52,6 +52,10 @@ namespace HabitAqui.Controllers
             .Include(hi => hi.Item)
             .ToListAsync();
 
+            habitacao.Pontuacoes = await _context.Pontuacoes
+            .Where(p => p.HabitacaoId == habitacao.Id)
+            .ToListAsync();
+
             ViewBag.HabitacaoItens = habitacaoItens;
 
             return View(habitacao);
