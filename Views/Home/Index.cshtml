@@ -1,113 +1,43 @@
-﻿@model HabitAqui.ViewModels.HabitacaoSearchViewModel
-@*@model IEnumerable<HabitAqui.Models.Habitacao>*@
+﻿@*@model HabitAqui.ViewModels.HabitacaoSearchViewModel*@
+@model IEnumerable<HabitAqui.Models.Habitacao>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@*
-<div id="carouselExample" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        @foreach (var item in Model) {
-            <div class="carousel-item">
-                <div class="card">
-                    <img src="@item.ImageUrl" class="card-img-top" alt="Property Image">
-
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </h5>
-                        <p class="card-text">
-                            <span>
-                                @Html.DisplayFor(modelItem => item.mediaPontuacoes.ToString("0.00"))
-                                </span>
-                            <span>
-                                @Html.DisplayFor(modelItem => item.Concelho)
-                            </span>
-                        </p>
-                        <p class="card-text">
-                            <strong>Price per night:</strong>
-                            @Html.DisplayFor(modelItem => item.CustoPorNoite)
-                        </p>
-                        <button type="button" class="btn btn-primary">RESERVAR</button>
-                    </div>
-                </div>
-            </div>
-        }
+@foreach (var item in Model) {
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">
+                @Html.DisplayFor(modelItem => item.Name)
+            </h5>
+            <p class="card-text">
+                <span>
+                    @String.Format(("0.00"), item.mediaPontuacoes)
+                </span>
+                <span>
+                    @Html.DisplayFor(modelItem => item.Concelho)
+                </span>
+            </p>
+            <p class="card-text">
+            <strong>@Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite</strong>
+            </p>
+            <button type="button" class="btn btn-primary">RESERVAR</button>
+        </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-
-<div id="carouselDestaques" class="carousel slide m-0" data-bs-ride="carousel">
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselDestaques"
-            data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselDestaques"
-            data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-
-<div class="text-center">
-    <h1>HabitAqui</h1>
-
-    <form asp-action="Search" method="post">
-        <div class="form-group">
-            <label asp-for="Rua" class="control-label">Rua:</label>
-            <input asp-for="Rua" class="form-control" />
-            <span asp-validation-for="Rua" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CheckIn" class="control-label">Check-In Date:</label>
-            <input asp-for="CheckIn" class="form-control" type="date" />
-            <span asp-validation-for="CheckIn" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CheckOut" class="control-label">Check-Out Date:</label>
-            <input asp-for="CheckOut" class="form-control" type="date" />
-            <span asp-validation-for="CheckOut" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Search" class="btn btn-primary" />
-        </div>
-    </form>
-</div>
-*@
-
-@foreach (Habitacao h in Model.Habitacoes)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rua)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustoPorNoite)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Disponivel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria.Id)
-        </td>
-        @* <td>
-    @Html.DisplayFor(modelItem => item.Locador.Id)
-    </td> *@
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-        </td>
-    </tr>
 }
+
+<div id="map" style="height: 200px;">
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    </script>
+</div>
+
+<a class="weatherwidget-io" href="https://forecast7.com/en/40d72n8d11/vouzela/" data-label_1="VOUZELA" data-label_2="WEATHER" data-icons="Climacons Animated" data-mode="Forecast" data-theme="original">VOUZELA PREVISÃO</a>
+<script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+</script>

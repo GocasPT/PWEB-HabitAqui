@@ -34,7 +34,7 @@ namespace HabitAqui.Controllers
                 .ToList();
             ViewData["Categorias"] = new SelectList(categorias);
 
-            return View();
+            return View(_context.Habitacoes);
         }
 
         //TODO: Completar a função Details
