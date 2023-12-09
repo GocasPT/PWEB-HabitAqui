@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.ViewModels
 {
-    public class HabitacaoSearchViewModel
+    public class HomeSearchViewModel
     {
         public string Rua { get; set; }
-        public string Categoria { get; set; }
         [DataType(DataType.Date)]
         public DateTime CheckIn { get; set; }
         [DataType(DataType.Date)]
         public DateTime CheckOut { get; set; }
-        public int CustoPorNoite { get; set; }
+        public string CategoriaFilter { get; set; }
+        public List<Categoria> Categorias { get; set; }
         public List<Habitacao> Habitacoes { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace HabitAqui.Models
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HabitAqui.Models
 {
     public class Aluguer
     {
@@ -6,7 +8,7 @@
         public DateTime DataDeEntrada { get; set; }
         public DateTime DataDeSaida { get; set; }
         public bool Confirmado { get; set; }
-        public int ClienteId { get; set; }
+        public string? ClienteId { get; set; }
         public ApplicationUser Cliente { get; set; }
         public int? HabitacaoId { get; set; }
         public Habitacao Habitacao { get; set; }

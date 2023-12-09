@@ -21,12 +21,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.Confirmado)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Habitacao)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Locador)
-            </th> *@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckOut)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,10 +49,16 @@
                 @Html.DisplayFor(modelItem => item.Confirmado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Habitacao.Id)
+                @Html.DisplayFor(modelItem => item.Habitacao.Rua)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Locador.Id)
+                @Html.DisplayFor(modelItem => item.Locador.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

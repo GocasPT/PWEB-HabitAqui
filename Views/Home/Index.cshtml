@@ -1,11 +1,116 @@
-﻿@*@model HabitAqui.ViewModels.HabitacaoSearchViewModel*@
-@model IEnumerable<HabitAqui.Models.Habitacao>
+@model HabitAqui.ViewModels.HomeIndexViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@foreach (var item in Model) {
+<h1>HabitAqui</h1>
+
+<h2>Funcionalidade - Camacho</h2>
+
+@* TODO: verificar se fica get ou post *@
+<form asp-action="Index" method="post">
+    <nav>
+        <ul class="pagination">
+            @foreach (var categoria in Model.Categorias)
+            {
+                <li class="page-item">
+                    <input type="submit" class="page-link" asp-action="Index" asp-for="CategoriaFilter" value="@categoria.Nome">
+                </li>
+            }
+        </ul>
+    </nav>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Categoria.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Tipologia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Pais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Distrito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Concelho)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Rua)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().CustoPorNoite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Disponivel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Locador.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().mediaPontuacoes)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var habitacao in Model.Habitacoes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Categoria.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Tipologia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Pais)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Distrito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Concelho)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Rua)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.CustoPorNoite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Disponivel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Locador.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@habitacao.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@habitacao.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@habitacao.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Bonito - Tiago</h2>
+
+@foreach (var item in Model.Habitacoes)
+{
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">
@@ -20,7 +125,9 @@
                 </span>
             </p>
             <p class="card-text">
-            <strong>@Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite</strong>
+                <strong>
+                    @Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite
+                </strong>
             </p>
             <button type="button" class="btn btn-primary">RESERVAR</button>
         </div>

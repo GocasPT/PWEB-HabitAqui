@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.Models
 {
@@ -30,11 +30,13 @@ namespace HabitAqui.Models
 
         [Display(Name = "Custo por noite")]
         [Required(ErrorMessage = "O custo por noite é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O custo por noite deve ser maior que zero.")]
         public int CustoPorNoite { get; set; }
+
         public bool Disponivel { get; set; }
 
         [Display(Name = "Locador")]
-        [Required(ErrorMessage = "O custo por noite é obrigatório.")]
+        [Required(ErrorMessage = "O locador é obrigatório.")]
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }
         public ICollection<Aluguer>? Alugueres { get; set; }

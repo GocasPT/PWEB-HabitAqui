@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,8 +22,11 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador);
-            return View(await applicationDbContext.ToListAsync());
+            var habitacoes = _context.Habitacoes
+                .Include(h => h.Categoria)
+                .Include(h => h.Locador);
+
+            return View(await habitacoes.ToListAsync());
         }
 
         // GET: Habitacoes/Details/5
@@ -55,8 +58,6 @@ namespace HabitAqui.Controllers
         }
 
         // POST: Habitacoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)
@@ -93,8 +94,6 @@ namespace HabitAqui.Controllers
         }
 
         // POST: Habitacoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)

@@ -61,8 +61,9 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DataDeEntrada,DataDeSaida,Confirmado,HabitacaoId,LocadorId")] Aluguer aluguer)
         {
-            ModelState.Remove(nameof(aluguer.Locador));
+            ModelState.Remove(nameof(aluguer.Cliente));
             ModelState.Remove(nameof(aluguer.Habitacao));
+            ModelState.Remove(nameof(aluguer.Locador));
             ModelState.Remove(nameof(aluguer.CheckIn));
             ModelState.Remove(nameof(aluguer.CheckOut));
 
