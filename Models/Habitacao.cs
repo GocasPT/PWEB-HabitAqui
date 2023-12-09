@@ -36,10 +36,24 @@ namespace HabitAqui.Models
 
         public bool Disponivel { get; set; }
 
+        [Display(Name = "Casas de banho")]
+        [Required(ErrorMessage = "O número de casas de banho é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O número de casas de banho deve ser maior que zero.")]
+        public int? NumWC {  get; set; }
+
+        [Display(Name = "Número de Hóspedes")]
+        [Required(ErrorMessage = "O número de hóspedes é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O número de hóspedes deve ser maior que zero.")]
+        public int? NumPessoas { get; set; }
+
+        [Display(Name = "Descrição")]
+        public String? Descricao { get; set; }
+
         [Display(Name = "Locador")]
         [Required(ErrorMessage = "O locador é obrigatório.")]
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }
+
         public ICollection<Aluguer>? Alugueres { get; set; }
 
         public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();

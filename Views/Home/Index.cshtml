@@ -34,6 +34,9 @@
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Categoria.Nome)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Descricao)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Tipologia)
             </th>
             <th>
@@ -55,6 +58,12 @@
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().Locador.Nome)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().NumPessoas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().NumWC)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().mediaPontuacoes)
             </th>
             <th>
@@ -71,6 +80,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => habitacao.Categoria.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.Descricao)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => habitacao.Tipologia)
@@ -92,6 +104,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => habitacao.Locador.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.NumPessoas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => habitacao.NumWC)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)⭐

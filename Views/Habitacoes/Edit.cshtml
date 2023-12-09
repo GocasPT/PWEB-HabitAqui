@@ -12,12 +12,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Nome</label>
+                <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label">Categoria</label>
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaId" class="control-label"></label>
                 <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
             </div>
@@ -51,13 +56,23 @@
                 <input asp-for="CustoPorNoite" class="form-control" />
                 <span asp-validation-for="CustoPorNoite" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="NumPessoas" class="control-label"></label>
+                <input asp-for="NumPessoas" class="form-control" />
+                <span asp-validation-for="NumPessoas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumWC" class="control-label"></label>
+                <input asp-for="NumWC" class="form-control" />
+                <span asp-validation-for="NumWC" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Disponivel" /> @Html.DisplayNameFor(model => model.Disponivel)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="LocadorId" class="control-label">Locador</label>
+                <label asp-for="LocadorId" class="control-label"></label>
                 <select asp-for="LocadorId" class="form-control" asp-items="ViewBag.LocadorId"></select>
                 <span asp-validation-for="LocadorId" class="text-danger"></span>
             </div>

@@ -72,7 +72,7 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,Disponivel,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descricao,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
         {
             if (id != habitacao.Id)
             {

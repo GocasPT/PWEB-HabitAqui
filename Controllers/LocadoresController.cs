@@ -57,7 +57,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Contacto")] Locador locador)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Contacto,Tipo")] Locador locador)
         {
             ModelState.Remove(nameof(locador.Habitacoes));
 
@@ -91,7 +91,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Contacto")] Locador locador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Contacto,Tipo")] Locador locador)
         {
             if (id != locador.Id)
             {
