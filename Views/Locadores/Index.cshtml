@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<HabitAqui.Models.Locador>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Locadores";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar novo locador</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -18,7 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Contacto)
             </th>
-            <th></th>
+            <th>
+                Operações
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -31,9 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Contacto)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
             </td>
         </tr>
 }
