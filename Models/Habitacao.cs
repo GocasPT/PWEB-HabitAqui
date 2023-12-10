@@ -59,6 +59,9 @@ namespace HabitAqui.Models
         public DateTime? DataCriacao { get; set; }
         public ICollection<Aluguer>? Alugueres { get; set; }
 
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
         public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();
 
         [Display(Name = "Estrelas")]
@@ -70,10 +73,11 @@ namespace HabitAqui.Models
                 if (Pontuacoes != null && Pontuacoes.Any())
                 {
                     // Calcula a média das quatro pontuações
-                    return (Pontuacoes.Sum(r => r.PontuacaoLimpeza) +
+                    return  (Pontuacoes.Sum(r => r.PontuacaoLimpeza) +
                             Pontuacoes.Sum(r => r.PontuacaoLocalizacao) +
                             Pontuacoes.Sum(r => r.PontuacaoQualidadePreco) +
-                            Pontuacoes.Sum(r => r.PontuacaoEspaco)) / (4.0 * Pontuacoes.Count);
+                            Pontuacoes.Sum(r => r.PontuacaoEspaco)
+                            ) / (4 * Pontuacoes.Count);
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
             }
@@ -86,7 +90,7 @@ namespace HabitAqui.Models
                 if (Pontuacoes != null && Pontuacoes.Any())
                 {
                     // Calcula a média das quatro pontuações
-                    return (Pontuacoes.Sum(r => r.PontuacaoLimpeza) / (4.0 * Pontuacoes.Count));
+                    return (Pontuacoes.Sum(r => r.PontuacaoLimpeza) / Pontuacoes.Count);
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
             }
@@ -99,7 +103,7 @@ namespace HabitAqui.Models
                 if (Pontuacoes != null && Pontuacoes.Any())
                 {
                     // Calcula a média das quatro pontuações
-                    return (Pontuacoes.Sum(r => r.PontuacaoLocalizacao) / (4.0 * Pontuacoes.Count));
+                    return (Pontuacoes.Sum(r => r.PontuacaoLocalizacao) / Pontuacoes.Count);
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
             }
@@ -112,7 +116,7 @@ namespace HabitAqui.Models
                 if (Pontuacoes != null && Pontuacoes.Any())
                 {
                     // Calcula a média das quatro pontuações
-                    return (Pontuacoes.Sum(r => r.PontuacaoQualidadePreco) / (4.0 * Pontuacoes.Count));
+                    return (Pontuacoes.Sum(r => r.PontuacaoQualidadePreco) / Pontuacoes.Count);
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
             }
@@ -125,9 +129,21 @@ namespace HabitAqui.Models
                 if (Pontuacoes != null && Pontuacoes.Any())
                 {
                     // Calcula a média das quatro pontuações
-                    return (Pontuacoes.Sum(r => r.PontuacaoEspaco) / (4.0 * Pontuacoes.Count));
+                    return (Pontuacoes.Sum(r => r.PontuacaoEspaco) / Pontuacoes.Count);
                 }
                 return 0.0; // Retorna 0 se não houver avaliações
+            }
+        }
+
+
+        public string getLatitude
+        {
+            get
+            {
+                if (Latitude != null)
+                    return Latitude.ToString().Replace(',', '.');
+                else 
+                    return "0.0";
             }
         }
     }
