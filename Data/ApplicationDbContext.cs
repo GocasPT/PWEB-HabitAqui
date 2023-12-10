@@ -53,5 +53,7 @@ namespace HabitAqui.Data
         public DbSet<HabitAqui.Models.ModelTest>? ModelTest { get; set; }
 
         public DbSet<Fotografia> Fotografias { get; set; }
+
+        public DbSet<TipoLocador> TipoLocador { get; set; }
     }
 }

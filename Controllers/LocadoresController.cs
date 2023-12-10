@@ -25,9 +25,10 @@ namespace HabitAqui.Controllers
         // GET: Locadores
         public async Task<IActionResult> Index()
         {
-              return _context.Locadores != null ? 
-                          View(await _context.Locadores.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Locador'  is null.");
+            var locadores = _context.Locadores
+                .Include(h => h.TipoLocador);
+
+            return View(await locadores.ToListAsync());
         }
 
         // GET: Locadores/Details/5
@@ -39,6 +40,7 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
+                .Include(h => h.TipoLocador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (locador == null)
             {
@@ -51,6 +53,7 @@ namespace HabitAqui.Controllers
         // GET: Locadores/Create
         public IActionResult Create()
         {
+            ViewData["TipoLocadorId"] = new SelectList(_context.TipoLocador, "Id", "Nome");
             return View();
         }
 
@@ -59,7 +62,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Contacto,Tipo")] Locador locador)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Contacto,TipoLocadorId")] Locador locador)
         {
             ModelState.Remove(nameof(locador.Habitacoes));
 
@@ -86,6 +89,9 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["TipoLocadorId"] = new SelectList(_context.TipoLocador, "Id", "Nome", locador.TipoLocador);
+
             return View(locador);
         }
 
@@ -94,7 +100,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Contacto,Tipo")] Locador locador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Contacto,Tipo,TipoLocadorId")] Locador locador)
         {
             if (id != locador.Id)
             {
@@ -134,6 +140,7 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
+                .Include(h => h.TipoLocador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (locador == null)
             {

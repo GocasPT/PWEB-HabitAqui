@@ -13,7 +13,9 @@ namespace HabitAqui.Models
         public string Contacto { get; set; }
 
         [Display(Name = "Tipo de Locador")]
-        public string? Tipo { get; set; }
+        public int? TipoLocadorId { get; set; }
+        [Display(Name = "Tipo de Locador")]
+        public TipoLocador? TipoLocador { get; set; }
 
         [Display(Name = "Criado a")]
         public DateTime? DataCriacao { get; set; } 
