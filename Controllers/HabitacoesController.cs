@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using HabitAqui.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    //[Authorize(Roles = "Funcionario")] TIRAR ISTO DEPOIS (NAO TEMOS FUNCIONARIOS)
     public class HabitacoesController : Controller
     {
         private readonly ApplicationDbContext _context;

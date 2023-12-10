@@ -140,10 +140,11 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 user.Alugueres = new List<Aluguer>();
                 await _userManager.UpdateAsync(user);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                await _userManager.AddToRoleAsync(user, "Cliente");
+                
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Cliente");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
