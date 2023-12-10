@@ -230,22 +230,22 @@ namespace HabitAqui.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Pais")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rua")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tipologia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("TipologiaId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 
                     b.HasIndex("LocadorId");
+
+                    b.HasIndex("TipologiaId");
 
                     b.ToTable("Habitacoes");
                 });
@@ -399,6 +399,23 @@ namespace HabitAqui.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoLocador");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.Tipologia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tipologia");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -715,9 +732,15 @@ namespace HabitAqui.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HabitAqui.Models.Tipologia", "Tipologia")
+                        .WithMany()
+                        .HasForeignKey("TipologiaId");
+
                     b.Navigation("Categoria");
 
                     b.Navigation("Locador");
+
+                    b.Navigation("Tipologia");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao_Itens", b =>

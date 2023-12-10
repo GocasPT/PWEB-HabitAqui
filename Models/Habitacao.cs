@@ -16,10 +16,11 @@ namespace HabitAqui.Models
         [Display(Name = "Categoria")]
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
-
-        [Required(ErrorMessage = "A tipologia é obrigatória.")]
-        public string? Tipologia { get; set; }
-        [Required(ErrorMessage = "O pais é obrigatório.")]
+        
+        [Display(Name = "Tipologia")]
+        public int? TipologiaId { get; set; }
+        [Display(Name = "Tipologia")]
+        public Tipologia? Tipologia { get; set; }
         public string? Pais { get; set; }
         [Required(ErrorMessage = "O distrito é obrigatório.")]
         public string? Distrito { get; set; }

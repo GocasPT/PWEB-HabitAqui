@@ -27,7 +27,8 @@ namespace HabitAqui.Controllers
         {
             var habitacoes = _context.Habitacoes
                 .Include(h => h.Categoria)
-                .Include(h => h.Locador);
+                .Include(h => h.Locador)
+                .Include(h => h.Tipologia);
 
             return View(await habitacoes.ToListAsync());
         }
@@ -43,6 +44,7 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
+                .Include(h => h.Tipologia)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {
@@ -67,6 +69,7 @@ namespace HabitAqui.Controllers
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
+            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome");
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
             return View();
         }
@@ -74,7 +77,7 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
         {
             if (ModelState.IsValid)
             {
@@ -85,6 +88,7 @@ namespace HabitAqui.Controllers
             }
 
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
 
             return View(habitacao);
@@ -104,6 +108,7 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             return View(habitacao);
         }
@@ -111,7 +116,7 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descricao,CategoriaId,Tipologia,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
         {
             if (id != habitacao.Id)
             {
@@ -140,6 +145,7 @@ namespace HabitAqui.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
+            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             return View(habitacao);
         }
@@ -155,6 +161,7 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
+                .Include(h => h.Tipologia)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {

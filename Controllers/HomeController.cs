@@ -32,6 +32,7 @@ namespace HabitAqui.Controllers
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
                     .Include(h => h.Pontuacoes)
+                    .Include(h => h.Tipologia)
                     .ToListAsync()
             };
 

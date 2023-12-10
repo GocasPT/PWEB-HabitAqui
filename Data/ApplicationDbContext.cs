@@ -55,5 +55,6 @@ namespace HabitAqui.Data
         public DbSet<Fotografia> Fotografias { get; set; }
 
         public DbSet<TipoLocador> TipoLocador { get; set; }
+        public DbSet<Tipologia> Tipologia { get; set; }
     }
 }
