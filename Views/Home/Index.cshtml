@@ -8,20 +8,27 @@
 
 <h2>Funcionalidade - Camacho</h2>
 
-<form asp-action="Index" method="get">
-    <nav>
-        <ul class="pagination">
-            <li class="page-item">
-                <input type="submit" class="page-link" name="categoria" value="All">
-            </li>
-            @foreach (var categoria in Model.Categorias)
-            {
-                <li class="page-item">
-                    <input type="submit" class="page-link" name="categoria" value="@categoria.Nome">
-                </li>
-            }
-        </ul>
-    </nav>
+<form asp-action="Index" class="btn-group" role="group">
+    <input type="hidden" name="orderPrice" value="@Model.OrdemPreco" />
+    <input type="hidden" name="orderRating" value="@Model.OrdemRating" />
+    <button type="submit" class="btn btn-primary">All</button>
+    @foreach (var categoria in Model.Categorias)
+    {
+        <button type="submit" class="btn btn-primary" asp-route-categoriaId="@categoria.Id">@categoria.Nome</button>
+    }
+</form>
+
+@*TODO: fazer parte da filtragem*@
+<form asp-action="Index" class="form-check" role="group">
+    <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
+
+    <label>Preço</label>
+    <input type="submit" class="btn btn-primary" name="orderPrice" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" name="orderPrice" value="Descendente" />
+    <br />
+    <label>Rating</label>
+    <input type="submit" class="btn btn-primary" name="orderRating" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" name="orderRating" value="Descendente" />
 </form>
 
 <table class="table table-bordered table-striped table-hover">

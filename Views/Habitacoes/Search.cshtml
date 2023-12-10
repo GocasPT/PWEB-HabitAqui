@@ -5,29 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    TempData["TextoAPesquisar"] = Model.TextoAPesquisar;
-}
-
 <h1>As nossas habitações</h1>
 
-<form asp-action="Search" method="get">
-    @* @ViewData["CheckIn"] = Model.CheckIn;
-    @ViewData["CheckOut"] = Model.CheckOut; *@
-
-    <nav>
-        <ul class="pagination">
-            <li class="page-item">
-                <input type="submit" class="page-link" name="categoria" value="All">
-            </li>
-            @foreach (var categoria in Model.Categorias)
-            {
-                <li class="page-item">
-                    <input type="submit" class="page-link" name="categoria" value="@categoria.Nome">
-                </li>
-            }
-        </ul>
-    </nav>
+<form asp-action="Search" class="btn-group" role="group">
+    <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />
+    <button type="submit" class="btn btn-primary">All</button>
+    @foreach (var categoria in Model.Categorias)
+    {
+        <button type="submit" class="btn btn-primary" asp-route-categoriaId="@categoria.Id">@categoria.Nome</button>
+    }
 </form>
 
 @if (!string.IsNullOrEmpty(Model.TextoAPesquisar))

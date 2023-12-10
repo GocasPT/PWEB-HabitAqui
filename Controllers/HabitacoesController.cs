@@ -182,65 +182,27 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Habitacoes/Search
-        public async Task<IActionResult> Search(string categoria)
+        public async Task<IActionResult> Search(int? categoriaId, string searchString)
         {
-            if (categoria == "All")
-                categoria = null;
-
-            //ViewData["TextoAPesquisar"] = HttpContext.Request.Query["texto"];
-            var textoAPesquisar = TempData["TextoAPesquisar"].ToString();
-
-            var viewModelFilter = new HomeSearchViewModel
+            var viewModel = new HomeSearchViewModel
             {
-                TextoAPesquisar = textoAPesquisar,
-                CategoriaFilter = categoria,
+                TextoAPesquisar = searchString,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
-                    .Where(h => h.Name.Contains(textoAPesquisar))
+                    .Where(h => h.Name.Contains(searchString))
                     .ToListAsync()
             };
 
-            if (categoria != null)
-                viewModelFilter.Habitacoes = viewModelFilter.Habitacoes.Where(h => h.Categoria.Nome.Equals(categoria)).ToList();
+            if (categoriaId != null)
+                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Id == categoriaId).ToList();
 
-            viewModelFilter.NumResultados = viewModelFilter.Habitacoes.Count();
-
-            TempData.Keep("TextoAPesquisar");
-
-            return View(viewModelFilter);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Search([Bind("TextoAPesquisar")] HomeSearchViewModel pesquisaHabitacao)
-        {
-            var habitacoesQuery = _context.Habitacoes.AsQueryable();
-
-            if (!string.IsNullOrEmpty(pesquisaHabitacao.TextoAPesquisar))
-            {
-                habitacoesQuery = habitacoesQuery
-                    .Include(h => h.Categoria)
-                    .Include(h => h.Locador)
-                    .Where(h => h.Name.Contains(pesquisaHabitacao.TextoAPesquisar))
-                    .OrderBy(h => h.Name);
-            }
-            else
-            {
-                habitacoesQuery = habitacoesQuery
-                    .Include(h => h.Categoria)
-                    .Include(h => h.Locador)
-                    .OrderBy(h => h.Name);
-            }
-
-            pesquisaHabitacao.Categorias = await _context.Categorias.ToListAsync();
-            pesquisaHabitacao.Habitacoes = await habitacoesQuery.ToListAsync();
-            pesquisaHabitacao.NumResultados = pesquisaHabitacao.Habitacoes.Count();
+            viewModel.NumResultados = viewModel.Habitacoes.Count();
 
             TempData.Keep("TextoAPesquisar");
 
-            return View(pesquisaHabitacao);
+            return View(viewModel);
         }
 
         private bool HabitacaoExists(int id)

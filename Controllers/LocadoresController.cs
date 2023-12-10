@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class LocadoresController : Controller
     {
         private readonly ApplicationDbContext _context;

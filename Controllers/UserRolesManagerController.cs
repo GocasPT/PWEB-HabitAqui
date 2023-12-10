@@ -1,11 +1,13 @@
 ﻿using HabitAqui.Models;
 using HabitAqui.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UserRolesManagerController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -91,6 +93,40 @@ namespace HabitAqui.Controllers
                     }
                 }
             }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Disable(string userId)
+        {
+            if (userId == null || _userManager.Users == null)
+                return NotFound();
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Ativo = false;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Enable(string userId)
+        {
+            if (userId == null || _userManager.Users == null)
+                return NotFound();
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Ativo = true;
+            await _userManager.UpdateAsync(user);
+
             return RedirectToAction("Index");
         }
     }

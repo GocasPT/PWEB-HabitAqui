@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Administrador")]
+
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;

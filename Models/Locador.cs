@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HabitAqui.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.Models
 {
@@ -11,12 +13,11 @@ namespace HabitAqui.Models
         public string Contacto { get; set; }
 
         [Display(Name = "Tipo de Locador")]
-        public String? Tipo { get; set; }
+        public string? Tipo { get; set; }
 
         [Display(Name = "Criado a")]
         public DateTime? DataCriacao { get; set; } 
         public ICollection<Habitacao>? Habitacoes { get; set; }
         public ICollection<ApplicationUser>? GestoresFuncionarios { get; set; }
-
     }
 }

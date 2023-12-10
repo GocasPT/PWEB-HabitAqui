@@ -1,5 +1,7 @@
 ﻿using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.Data
 {

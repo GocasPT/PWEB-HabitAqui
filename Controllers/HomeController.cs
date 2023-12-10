@@ -21,14 +21,10 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Home
-        public async Task<IActionResult> Index(string categoria)
+        public async Task<IActionResult> Index(int? categoriaId, string orderPrice, string orderRating)
         {
-            if (categoria == "All")
-                categoria = null;
-
             var viewModel = new HomeIndexViewModel
             {
-                CategoriaFilter = categoria,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
@@ -37,8 +33,15 @@ namespace HabitAqui.Controllers
                     .ToListAsync()
             };
 
-            if (categoria != null)
-                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Nome.Equals(categoria)).ToList();
+            if (categoriaId != null)
+                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Id == categoriaId).ToList();
+
+            //TODO: fazer o filtro
+            //if (orderPrice != null)
+            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
+
+            //if (orderRating != null)
+            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.Pontuacoes).ToList();
 
             return View(viewModel);
         }

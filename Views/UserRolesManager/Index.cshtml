@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<HabitAqui.ViewModels.UserRolesViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Utilizadores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <table class="table">
     <thead>
@@ -48,6 +48,8 @@
                 @String.Join(", ", item.Roles)
             </td>
             <td>
+                <a class="btn btn-warning" asp-action="Disable" asp-route-userId="@item.UserId">Disable</a>
+                <a class="btn btn-warning" asp-action="Enable" asp-route-userId="@item.UserId">Enable</a>
                 <a class="btn btn-warning" asp-action="Details" asp-route-userId="@item.UserId">Details</a>
             </td>
         </tr>
