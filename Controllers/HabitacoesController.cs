@@ -182,11 +182,13 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Habitacoes/Search
-        public async Task<IActionResult> Search(int? categoriaId, string searchString)
+        public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
         {
             var viewModel = new HomeSearchViewModel
             {
                 TextoAPesquisar = searchString,
+                OrdemPreco = orderPrice,
+                OrdemRating = orderRating,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
@@ -198,9 +200,14 @@ namespace HabitAqui.Controllers
             if (categoriaId != null)
                 viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Id == categoriaId).ToList();
 
-            viewModel.NumResultados = viewModel.Habitacoes.Count();
+            //TODO: fazer o filtro
+            //if (orderPrice != null)
+            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
 
-            TempData.Keep("TextoAPesquisar");
+            //if (orderRating != null)
+            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.Pontuacoes).ToList();
+
+            viewModel.NumResultados = viewModel.Habitacoes.Count();
 
             return View(viewModel);
         }

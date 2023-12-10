@@ -16,6 +16,20 @@
     }
 </form>
 
+@*TODO: fazer parte da filtragem*@
+<form asp-action="Index" class="form-check" role="group">
+    <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />
+    <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
+
+    <label>Preço</label>
+    <input type="submit" class="btn btn-primary" name="orderPrice" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" name="orderPrice" value="Descendente" />
+    <br />
+    <label>Rating</label>
+    <input type="submit" class="btn btn-primary" name="orderRating" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" name="orderRating" value="Descendente" />
+</form>
+
 @if (!string.IsNullOrEmpty(Model.TextoAPesquisar))
 {
     <p>Pesquisa: "@Model.TextoAPesquisar"</p>

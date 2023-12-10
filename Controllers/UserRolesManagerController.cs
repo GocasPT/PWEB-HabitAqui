@@ -107,7 +107,7 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            user.Ativo = false;
+            //user.Ativo = false;
             await _userManager.UpdateAsync(user);
 
             return RedirectToAction("Index");
@@ -124,7 +124,7 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            user.Ativo = true;
+            //user.Ativo = true;
             await _userManager.UpdateAsync(user);
 
             return RedirectToAction("Index");

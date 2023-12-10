@@ -8,7 +8,7 @@ namespace HabitAqui.Models
         public string UltimoNome { get; set; }
         public DateTime DataNascimento { get; set; }
         //TODO: Informações adicionais do usuário
-        public bool Ativo { get; set; }
+        //public bool Ativo { get; set; }
         public ICollection<Aluguer>? Alugueres { get; set; }
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }

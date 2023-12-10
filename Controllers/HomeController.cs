@@ -25,6 +25,8 @@ namespace HabitAqui.Controllers
         {
             var viewModel = new HomeIndexViewModel
             {
+                OrdemPreco = orderPrice,
+                OrdemRating = orderRating,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
