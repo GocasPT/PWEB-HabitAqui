@@ -4,7 +4,198 @@
     ViewData["Title"] = "Detalhes da Habitação";
 }
 
-<h1>@ViewData["Title"]</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<div class="ad-containerImage">
+    <div class="row">
+        <div class="col-sm-7">
+            <img class="ad-MainImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+        </div>
+        <div class="col-sm-5" style="grid-row-gap: 20px">
+            <div class="row">
+                <div class="col-6 col-sm-6">
+                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                </div>
+                <div class="col-6 col-sm-6">
+                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6">
+                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                </div>
+                <div class="col-6 col-sm-6">
+                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ad-container">
+    <div class="row">
+        <div class="col-7">
+            <div class="ad-title">@Html.DisplayFor(model => model.Tipologia) em @Html.DisplayFor(model => model.Concelho)</div>
+            <div class="ad-description">
+                <p>
+                    Uma excelente @Html.DisplayFor(model => model.Tipologia) situado no distrito de
+                    @Html.DisplayFor(model => model.Distrito).
+                </p>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="ad-priceContainer">
+                <span style="font-size:23px;font-weight: bold;">@Html.DisplayFor(model => model.CustoPorNoite)€</span> / noite
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ad-divider"></div>
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle">Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
+        <div class="ad-subdescription">
+            X anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.Id)
+        </div>
+    </div>
+</div>
+
+<div class="ad-divider"></div>
+
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-description">
+            <p>O sítio Vale Encantado tem uma vista incrível para as montanhas,  em um dos locais mais belos e tranquilos da região, próximo de vários pontos turísticos.</p>
+            <p>A casa conta com toda a estrutura para receber até 6 hóspedes. Perfeito pra quem quer sossego e contato com a natureza...</p>
+            <p class="ad-linkText" data-toggle="modal" data-target="#habitacaoDescricao" style="margin-bottom:-0.8rem;">
+                Mostrar mais ...
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="ad-divider"></div>
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle">O que dispõe neste espaço</div>
+        <button type="button" class="btn btn-outline-dark">Mostrar todos os itens</button>
+    </div>
+</div>
+
+<div class="ad-divider"></div>
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle">Localização</div>
+        <div class="ad-subdescription">@Html.DisplayFor(model => model.Rua), @Html.DisplayFor(model => model.Concelho), @Html.DisplayFor(model => model.Distrito)</div>
+    </div>
+    <div class="row">
+        <div id="map"> 
+        <script>
+                var map = L.map('map').setView([40.723, -8.11], 13);
+
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+                var message = @Html.DisplayFor(model => model.Rua);
+
+                L.marker([40.724270, -8.111739]).addTo(map)
+                    .bindPopup(message);
+            </script>
+        </div>
+    </div>
+</div>
+
+<div class="ad-divider"></div>
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle">Avaliações</div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="ad-subtitle" style="text-align:center;">@(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")</div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-2  text-center">
+            <div class="row justify-content-md-center">
+                LIMPEZA
+            </div>
+            <div class="row justify-content-md-center">
+                @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")
+            </div>
+        </div>
+        <div class="col col-lg-2  text-center">
+            <div class="row justify-content-md-center">
+                Localização
+            </div>
+            <div class="row justify-content-md-center">
+                @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")
+            </div>
+        </div>
+        <div class="col col-lg-2  text-center">
+            <div class="row justify-content-md-center">
+                Qualidade/€
+            </div>
+            <div class="row justify-content-md-center">
+                @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")
+            </div>
+        </div>
+        <div class="col col-lg-2 text-center">
+            <div class="row justify-content-md-center">
+                Espaço
+            </div>
+            <div class="row justify-content-md-center">
+                @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="habitacaoDescricao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Sobre este espaço</h4>
+                <p>O sítio Vale Encantado tem uma vista incrível para as montanhas,  em um dos locais mais belos e tranquilos da região, próximo de vários pontos turísticos.</p>
+                <p>A casa conta com toda a estrutura para receber até 6 hóspedes. Perfeito pra quem quer sossego e contato com a natureza...</p>
+
+                <h4>A localização</h4>
+                <p>Estamos localizados no bairro Guanabara na cidade de Treviso/SC, à 30km da Serra do Rio do Rastro, 35km de Criciúma, 20km de Lauro Muller e à 10km do centro da cidade (Mercados, Restaurantes, Farmácias).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div>
     <hr />
