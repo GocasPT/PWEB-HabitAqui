@@ -39,20 +39,27 @@
                     @Html.DisplayFor(modelItem => item.Ativo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <form asp-action="ToggleCategoria" method="post">
-                    <input type="hidden" name="id" value="@item.Id" />
-                    <button type="submit">
-                        @if (item.Ativo)
-                        {
-                            <span class="text-danger">Desativar</span>
-                        }
-                        else
-                        {
-                            <span class="text-success">Ativar</span>
-                        }
+                @*TODO: ver se é possivel melhorar isto, em nível de makeup*@
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                            Editar
                     </button>
-                </form>
+                    <form asp-action="ToggleCategoria" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                            @if (item.Ativo)
+                            {
+                                <button type="submit" class="btn btn-danger">
+                                    Desativar
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success">
+                                    Ativar
+                                </button>
+                            }
+                    </form>
+                </div>
             </td>
         </tr>
 }
