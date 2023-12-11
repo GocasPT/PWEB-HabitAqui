@@ -158,6 +158,21 @@ namespace HabitAqui.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ToggleCategoria(int id)
+        {
+            var categoria = await _context.Categorias.FindAsync(id);
+
+            if (categoria != null)
+            {
+                categoria.Ativo = !categoria.Ativo;
+                _context.Update(categoria);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool CategoriaExists(int id)
         {
           return (_context.Categorias?.Any(e => e.Id == id)).GetValueOrDefault();

@@ -12,5 +12,6 @@ namespace HabitAqui.Models
         [Required(ErrorMessage = "A descrição é obrigatória.")]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        public bool Ativo { get; set; }
     }
 }

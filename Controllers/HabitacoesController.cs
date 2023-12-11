@@ -79,6 +79,7 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
         {
+            //TODO: receber a(s) foto(s)
             if (ModelState.IsValid)
             {
                 habitacao.DataCriacao = DateTime.UtcNow;
