@@ -107,16 +107,22 @@
     <div class="row">
         <div id="map">
             <script>
-                var map = L.map('map').setView([40.723, -8.11], 13);
+                var latitudeString = '@Model.Latitude';
+                var longitudeString = '@Model.Longitude';
 
+                var latitude = parseFloat(latitudeString.replace(",", "."));
+                var longitude = parseFloat(longitudeString.replace(",", "."));
+
+
+                var map = L.map('map').setView([latitude, longitude], 13);
+                
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 }).addTo(map);
 
 
-                L.marker([40.7241113, -8.111739]).addTo(map)
-                    .bindPopup('Tou');
+                L.marker([latitude, longitude]).addTo(map);
             </script>
         </div>
     </div>
