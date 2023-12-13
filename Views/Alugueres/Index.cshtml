@@ -1,71 +1,151 @@
 ﻿@model IEnumerable<HabitAqui.Models.Aluguer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Alugueres";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DataDeEntrada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataDeSaida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Confirmado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Habitacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Locador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CheckIn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CheckOut)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataDeEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataDeSaida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Confirmado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Habitacao.Rua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Locador.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CheckInId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CheckOutId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if(User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
 }
-    </tbody>
-</table>
+
+@if(User.IsInRole("Cliente"))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeEntrada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeSaida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Locador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckIn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckOut)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Confirmado)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeEntrada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeSaida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habitacao.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckInId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckOutId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Confirmado)
+                    </td>
+                    <td>
+                        @if (item.Habitacao.Pontuacoes.Count == 0)
+                        {
+                            <a class="btn btn-danger" asp-controller="Pontuacoes" asp-action="Create" asp-route-HabitacaoId="@item.Habitacao.Id">Avaliar</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success" asp-controller="Pontuacoes" asp-action="Edit" asp-route-id="@item.Habitacao.Pontuacoes.FirstOrDefault()?.Id">Editar Review</a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeEntrada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeSaida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Confirmado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Locador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckIn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckOut)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeEntrada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeSaida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Confirmado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habitacao.Rua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckInId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckOutId)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

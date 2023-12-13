@@ -13,5 +13,6 @@ namespace HabitAqui.Models
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }
         public string? CargoComLocador { get; set; } //TODO: Verificar se é necessário ou se faz sentido
+        public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();
     }
 }

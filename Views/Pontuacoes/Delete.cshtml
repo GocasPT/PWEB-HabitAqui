@@ -1,0 +1,67 @@
+﻿@model HabitAqui.Models.Pontuacao
+
+@{
+    ViewData["Title"] = "Apagar Review";
+}
+
+<h3>Tens a certeza que queres apagar esta review?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PontuacaoLimpeza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PontuacaoLimpeza)⭐
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PontuacaoLocalizacao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PontuacaoLocalizacao)⭐
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PontuacaoQualidadePreco)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PontuacaoQualidadePreco)⭐
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PontuacaoEspaco)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PontuacaoEspaco)⭐
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DataCriacao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DataCriacao)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Habitacao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Habitacao.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Apagar" class="btn btn-danger" />
+        <p></p>
+        <a asp-action="Index">Voltar á lista</a>
+    </form>
+</div>

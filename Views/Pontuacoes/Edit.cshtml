@@ -1,0 +1,83 @@
+﻿@model HabitAqui.Models.Pontuacao
+
+@{
+    ViewData["Title"] = "Editar Review";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="HabitacaoId" class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <textarea asp-for="Comentario" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PontuacaoLimpeza" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="PontuacaoLimpeza" class="form-control" type="number" min="1" max="5" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">⭐</span>
+                    </div>
+                </div>
+                <span asp-validation-for="PontuacaoLimpeza" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PontuacaoLocalizacao" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="PontuacaoLocalizacao" class="form-control" type="number" min="1" max="5" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">⭐</span>
+                    </div>
+                </div>
+                <span asp-validation-for="PontuacaoLocalizacao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PontuacaoQualidadePreco" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="PontuacaoQualidadePreco" class="form-control" type="number" min="1" max="5" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">⭐</span>
+                    </div>
+                </div>
+                <span asp-validation-for="PontuacaoQualidadePreco" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PontuacaoEspaco" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="PontuacaoEspaco" class="form-control" type="number" min="1" max="5" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">⭐</span>
+                    </div>
+                </div>
+                <span asp-validation-for="PontuacaoEspaco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar á lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

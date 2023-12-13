@@ -1,0 +1,154 @@
+﻿@model IEnumerable<HabitAqui.Models.Pontuacao>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("Cliente"))
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comentario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoLimpeza)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoLocalizacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoQualidadePreco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoEspaco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataCriacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacao)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comentario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoLimpeza)⭐
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoLocalizacao)⭐
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoQualidadePreco)⭐
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoEspaco)⭐
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataCriacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habitacao.Concelho)
+                    </td>
+                    <td>
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Habitacao.Id">Edit</a>
+                        <p></p>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comentario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoLimpeza)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoLocalizacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoQualidadePreco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PontuacaoEspaco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataCriacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationUser)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comentario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoLimpeza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoLocalizacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoQualidadePreco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PontuacaoEspaco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataCriacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habitacao.Concelho)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

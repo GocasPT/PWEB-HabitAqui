@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HabitAqui.Controllers
 {
@@ -24,6 +25,18 @@ namespace HabitAqui.Controllers
         // GET: Alugueres
         public async Task<IActionResult> Index()
         {
+            if(User.IsInRole("Cliente"))
+            {
+                var clientAlugueres = await _context.Alugueres
+                    .Where(a => a.ClienteId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    .Include(a => a.Habitacao)
+                    .Include(a => a.Habitacao.Pontuacoes)
+                    .Include(a => a.Locador)
+                    .ToListAsync();
+
+                return View(clientAlugueres);
+            }
+
             var applicationDbContext = _context.Alugueres.Include(a => a.Habitacao).Include(a => a.Locador);
             return View(await applicationDbContext.ToListAsync());
         }

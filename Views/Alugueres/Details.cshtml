@@ -1,13 +1,12 @@
 ﻿@model HabitAqui.Models.Aluguer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do Aluguer";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>Aluguer</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,26 +22,25 @@
             @Html.DisplayFor(model => model.DataDeSaida)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Confirmado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Confirmado)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Habitacao)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Habitacao.Id)
+            @Html.DisplayFor(model => model.Habitacao.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Locador)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locador.Id)
+            @Html.DisplayFor(model => model.Locador.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Confirmado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Confirmado)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>

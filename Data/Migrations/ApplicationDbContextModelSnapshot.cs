@@ -329,6 +329,9 @@ namespace HabitAqui.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Comentario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -336,7 +339,7 @@ namespace HabitAqui.Migrations
                     b.Property<DateTime?>("DataCriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HabitacaoId")
+                    b.Property<int?>("HabitacaoId")
                         .HasColumnType("int");
 
                     b.Property<double>("PontuacaoEspaco")
@@ -356,6 +359,8 @@ namespace HabitAqui.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("HabitacaoId");
 
@@ -751,11 +756,17 @@ namespace HabitAqui.Migrations
 
             modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
                 {
+                    b.HasOne("HabitAqui.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Pontuacoes")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
                         .WithMany("Pontuacoes")
                         .HasForeignKey("HabitacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Habitacao");
                 });
@@ -853,6 +864,8 @@ namespace HabitAqui.Migrations
             modelBuilder.Entity("HabitAqui.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Alugueres");
+
+                    b.Navigation("Pontuacoes");
                 });
 #pragma warning restore 612, 618
         }
