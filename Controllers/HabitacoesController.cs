@@ -127,16 +127,23 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
-            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
+            ViewData["LocadorNome"] = _context.Locadores.Find(habitacao.LocadorId)?.Nome;
+            ViewData["TipologiaNome"] = _context.Tipologia.Find(habitacao.TipologiaId)?.Nome;
+            ViewData["CategoriaNome"] = _context.Categorias.Find(habitacao.CategoriaId)?.Nome;
+
+            var selectedItensID = _context.Habitacoes_Itens
+                .Where(hi => hi.HabitacaoId == habitacao.Id)
+                .Select(hi => hi.Item.Id)
+                .ToList();
+
+            ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description", selectedItensID);
             return View(habitacao);
         }
 
         // POST: Habitacoes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId")] Habitacao habitacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId,Latitude,Longitude,Itens")] Habitacao habitacao)
         {
             if (id != habitacao.Id)
             {
@@ -150,6 +157,25 @@ namespace HabitAqui.Controllers
                     habitacao.DataCriacao = _context.Habitacoes.AsNoTracking().FirstOrDefault(h => h.Id == id)?.DataCriacao ?? DateTime.UtcNow;
                     _context.Update(habitacao);
                     await _context.SaveChangesAsync();
+
+                    _context.Habitacoes_Itens.RemoveRange(_context.Habitacoes_Itens.Where(hi => hi.HabitacaoId == habitacao.Id));
+                    await _context.SaveChangesAsync();
+
+                    var selectedItens = Request.Form["Itens"].ToString().Split(',').Select(int.Parse).ToArray();
+                    if (selectedItens.Length > 0)
+                    {
+                        foreach (var itemId in selectedItens)
+                        {
+                            var habitacaoItem = new Habitacao_Itens
+                            {
+                                HabitacaoId = habitacao.Id,
+                                ItemId = itemId
+                            };
+                            _context.Add(habitacaoItem);
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -164,9 +190,10 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
-            ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
+            ViewData["LocadorNome"] = _context.Locadores.Find(habitacao.LocadorId)?.Nome;
+            ViewData["TipologiaNome"] = _context.Tipologia.Find(habitacao.TipologiaId)?.Nome;
+            ViewData["CategoriaNome"] = _context.Categorias.Find(habitacao.CategoriaId)?.Nome;
+            ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description", habitacao.Itens);
             return View(habitacao);
         }
 

@@ -13,43 +13,55 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" readonly/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
+                <input asp-for="Descricao" class="form-control" readonly/>
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+                <input type="text" class="form-control" readonly value="@ViewData["CategoriaNome"]" />
+                <input asp-for="CategoriaId" type="hidden" />
                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TipologiaId" class="control-label"></label>
-                <select asp-for="TipologiaId" class="form-control" asp-items="ViewBag.TipologiaId"></select>
+                <input asp-for="TipologiaId" type="hidden" />
+                <input  type="text" class="form-control" readonly value="@ViewData["TipologiaNome"]" />
                 <span asp-validation-for="TipologiaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Pais" class="control-label"></label>
-                <input asp-for="Pais" class="form-control" />
+                <input asp-for="Pais" class="form-control" readonly/>
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Distrito" class="control-label"></label>
-                <input asp-for="Distrito" class="form-control" />
+                <input asp-for="Distrito" class="form-control" readonly/>
                 <span asp-validation-for="Distrito" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Concelho" class="control-label"></label>
-                <input asp-for="Concelho" class="form-control" />
+                <input asp-for="Concelho" class="form-control" readonly/>
                 <span asp-validation-for="Concelho" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Rua" class="control-label"></label>
-                <input asp-for="Rua" class="form-control" />
+                <input asp-for="Rua" class="form-control" readonly/>
                 <span asp-validation-for="Rua" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" readonly />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitude" class="control-label"></label>
+                <input asp-for="Longitude" class="form-control" readonly />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CustoPorNoite" class="control-label"></label>
@@ -58,13 +70,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="NumPessoas" class="control-label"></label>
-                <input asp-for="NumPessoas" class="form-control" />
+                <input asp-for="NumPessoas" class="form-control" readonly/>
                 <span asp-validation-for="NumPessoas" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumWC" class="control-label"></label>
-                <input asp-for="NumWC" class="form-control" />
+                <input asp-for="NumWC" class="form-control" readonly/>
                 <span asp-validation-for="NumWC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Itens" class="control-label"></label>
+                <select asp-for="Itens" asp-items="ViewBag.Itens" class="form-control" multiple></select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -73,7 +89,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="LocadorId" class="control-label"></label>
-                <select asp-for="LocadorId" class="form-control" asp-items="ViewBag.LocadorId"></select>
+                <input asp-for="LocadorId" type="hidden" />
+                <input type="text" class="form-control" readonly value="@ViewData["LocadorNome"]" />
                 <span asp-validation-for="LocadorId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -90,5 +107,6 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
     }
 }
