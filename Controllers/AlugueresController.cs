@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Cliente")]
-    public class AlugueresController : Controller
+    public class AlugueresController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
-        public AlugueresController(ApplicationDbContext context)
+        public AlugueresController(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

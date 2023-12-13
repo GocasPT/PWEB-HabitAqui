@@ -13,11 +13,11 @@ namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Administrador")]
 
-    public class CategoriasController : Controller
+    public class CategoriasController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriasController(ApplicationDbContext context)
+        public CategoriasController(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

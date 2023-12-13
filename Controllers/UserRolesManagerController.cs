@@ -1,4 +1,5 @@
-﻿using HabitAqui.Models;
+﻿using HabitAqui.Data;
+using HabitAqui.Models;
 using HabitAqui.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Administrador")]
-    public class UserRolesManagerController : Controller
+    public class UserRolesManagerController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRolesManagerController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRolesManagerController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : base(context)
         {
             _userManager = userManager;
             _roleManager = roleManager;

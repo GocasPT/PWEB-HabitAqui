@@ -45,15 +45,10 @@ namespace HabitAqui.Data
         public DbSet<ApplicationUser> Funcionarios { get; set; }
         public DbSet<ApplicationUser> Clientes { get; set; }
         public DbSet<ApplicationUser> Utilizadores { get; set; }
-
         public DbSet<Itens> Itens { get; set; }
         public DbSet<Pontuacao> Pontuacoes { get; set; }
         public DbSet<Habitacao_Itens> Habitacoes_Itens { get; set; }
-
-        public DbSet<HabitAqui.Models.ModelTest>? ModelTest { get; set; }
-
         public DbSet<Fotografia> Fotografias { get; set; }
-
         public DbSet<TipoLocador> TipoLocador { get; set; }
         public DbSet<Tipologia> Tipologia { get; set; }
     }

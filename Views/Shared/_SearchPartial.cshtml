@@ -1,7 +1,21 @@
-﻿<form asp-controller="Habitacoes" asp-action="Search" class="d-flex" role="search">
+﻿
+@{
+    var categorias = ViewData["Categorias"] as List<Categoria>;
+}
+
+<form asp-controller="Habitacoes" asp-action="Search" class="d-flex" role="search">
     <input class="form-control me-2" type="search" name="searchString" placeholder="Nome da habitação">
     @*TODO: input checIn e checkOut*@
-    @* <input class="form-control me-2" type="date" name="checkIn" placeholder="CheckIn">
+    <select name="categoriaId" class="fomr-select">
+        <option selected>Tipo de habitação</option>
+        @foreach (var categoria in categorias)
+        {
+            <option value="@categoria.Id">@categoria.Nome</option>
+        })
+    </select>
+    @* 
+    <input class="form-control me-2" type="date" name="checkIn" placeholder="CheckIn">
     <input class="form-control me-2" type="date" name="checkOut" placeholder="checkOut"> *@
+
     <button class="btn btn-outline-success" type="submit">Search</button>
 </form>

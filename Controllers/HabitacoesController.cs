@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace HabitAqui.Controllers
 {
     //[Authorize(Roles = "Funcionario")] TIRAR ISTO DEPOIS (NAO TEMOS FUNCIONARIOS)
-    public class HabitacoesController : Controller
+    public class HabitacoesController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
-        public HabitacoesController(ApplicationDbContext context)
+        public HabitacoesController(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
@@ -194,7 +194,7 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Search
         public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
         {
-            var viewModel = new HomeSearchViewModel
+            var viewModel = new SearchViewModel
             {
                 TextoAPesquisar = searchString,
                 OrdemPreco = orderPrice,

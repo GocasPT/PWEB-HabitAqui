@@ -1,4 +1,4 @@
-@model HabitAqui.ViewModels.HomeSearchViewModel
+@model HabitAqui.ViewModels.SearchViewModel
 
 @{
     ViewData["Title"] = "Pesquisar habitação";
@@ -7,17 +7,8 @@
 
 <h1>As nossas habitações</h1>
 
-<form asp-action="Search" class="btn-group" role="group">
-    <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />
-    <button type="submit" class="btn btn-primary">All</button>
-    @foreach (var categoria in Model.Categorias)
-    {
-        <button type="submit" class="btn btn-primary" asp-route-categoriaId="@categoria.Id">@categoria.Nome</button>
-    }
-</form>
-
 @*TODO: fazer parte da filtragem*@
-<form asp-action="Index" class="form-check" role="group">
+<form asp-action="Search" class="form-check" role="group">
     <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />
     <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
 
@@ -60,7 +51,7 @@
                         <h1 class="card-title pricing-card-title">
                             @h.CustoPorNoite<small class="text-muted fw-light"></small>€
                         </h1>
-                        <h3>@Html.Raw(h.Categoria.Nome) | @Html.Raw(h.Tipologia.Nome)</h3>
+                        @*TODO: <h3>@Html.Raw(h.Categoria.Nome) | @Html.Raw(h.Tipologia.Nome)</h3> *@
                         <hr />
                         <h5>@Html.Raw(h.Descricao)</h5>
                         <hr/>
