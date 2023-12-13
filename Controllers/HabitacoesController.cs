@@ -136,7 +136,7 @@ namespace HabitAqui.Controllers
                 .Select(hi => hi.Item.Id)
                 .ToList();
 
-            ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description", selectedItensID);
+            ViewBag.Itens = new MultiSelectList(_context.Itens, "Id", "Description", selectedItensID);
             return View(habitacao);
         }
 
