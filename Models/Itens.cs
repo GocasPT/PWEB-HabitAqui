@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string? Categoria { get; set; }
+
+        public ICollection<Habitacao_Itens>? HabitacaoItens { get; set; } = new List<Habitacao_Itens>();
     }
 }

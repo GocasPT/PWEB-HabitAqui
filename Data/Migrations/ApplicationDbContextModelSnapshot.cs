@@ -255,23 +255,15 @@ namespace HabitAqui.Migrations
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao_Itens", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int>("HabitacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ItemID")
+                    b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("HabitacaoId", "ItemId");
 
-                    b.HasIndex("HabitacaoId");
-
-                    b.HasIndex("ItemID");
+                    b.HasIndex("ItemId");
 
                     b.ToTable("Habitacoes_Itens");
                 });
@@ -732,14 +724,14 @@ namespace HabitAqui.Migrations
             modelBuilder.Entity("HabitAqui.Models.Habitacao_Itens", b =>
                 {
                     b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
-                        .WithMany()
+                        .WithMany("Itens")
                         .HasForeignKey("HabitacaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HabitAqui.Models.Itens", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemID")
+                        .WithMany("HabitacaoItens")
+                        .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -841,7 +833,14 @@ namespace HabitAqui.Migrations
                 {
                     b.Navigation("Alugueres");
 
+                    b.Navigation("Itens");
+
                     b.Navigation("Pontuacoes");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.Itens", b =>
+                {
+                    b.Navigation("HabitacaoItens");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>

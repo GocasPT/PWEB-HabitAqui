@@ -31,6 +31,19 @@ namespace HabitAqui.Data
                 .HasForeignKey(p => p.HabitacaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Habitacao_Itens>()
+                .HasKey(hi => new { hi.HabitacaoId, hi.ItemId });
+
+            modelBuilder.Entity<Habitacao_Itens>()
+                .HasOne(hi => hi.Habitacao)
+                .WithMany(h => h.Itens)
+                .HasForeignKey(hi => hi.HabitacaoId);
+
+            modelBuilder.Entity<Habitacao_Itens>()
+                .HasOne(hi => hi.Item)
+                .WithMany(i => i.HabitacaoItens)
+                .HasForeignKey(hi => hi.ItemId);
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -71,13 +71,14 @@ namespace HabitAqui.Controllers
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome");
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
+            ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description");
             return View();
         }
 
         // POST: Habitacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId,Latitude,Longitude")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId,Latitude,Longitude,Itens")] Habitacao habitacao)
         {
             //TODO: receber a(s) foto(s)
             if (ModelState.IsValid)
@@ -85,12 +86,30 @@ namespace HabitAqui.Controllers
                 habitacao.DataCriacao = DateTime.UtcNow;
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
+
+                var selectedItens = Request.Form["Itens"].ToString().Split(',').Select(int.Parse).ToArray();
+                if (selectedItens.Length > 0)
+                {
+                    foreach (var itemId in selectedItens)
+                    {
+                        var habitacaoItem = new Habitacao_Itens
+                        {
+                            HabitacaoId = habitacao.Id,
+                            ItemId = itemId
+                        };
+                        _context.Add(habitacaoItem);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
 
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
+            ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Name", habitacao.Itens);
 
             return View(habitacao);
         }
