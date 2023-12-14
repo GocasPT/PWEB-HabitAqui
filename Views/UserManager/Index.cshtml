@@ -1,0 +1,56 @@
+﻿@model IEnumerable<HabitAqui.ViewModels.UserManagerViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Utilizadores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a href="@Url.Page("/Account/Register", new { area = "Identity", id = ViewBag.LocadorId })">Criar novo utilizador</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </th>
+                <td>
+                    @String.Join(", ", item.Roles)
+                </td>
+                <td>
+                    @if (item.Ativo)
+                    {
+                        <a class="btn btn-warning" asp-action="Disable" asp-route-userId="@item.UserId">Desativar</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success" asp-action="Enable" asp-route-userId="@item.UserId">Ativar</a>
+                    }
+                    @if ((item.CheckIns == null || !item.CheckIns.Any()) && (item.CheckOuts == null || !item.CheckOuts.Any()))
+                    {
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-userId="@item.UserId">Apagar</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

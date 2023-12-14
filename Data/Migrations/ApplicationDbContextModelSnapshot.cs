@@ -62,7 +62,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Alugueres");
+                    b.ToTable("Alugueres", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
@@ -86,7 +86,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
@@ -116,7 +116,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("CheckIns");
+                    b.ToTable("CheckIns", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
@@ -146,7 +146,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("CheckOuts");
+                    b.ToTable("CheckOuts", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Fotografia", b =>
@@ -176,7 +176,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("CheckInId");
 
-                    b.ToTable("Fotografias");
+                    b.ToTable("Fotografias", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -250,7 +250,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("TipologiaId");
 
-                    b.ToTable("Habitacoes");
+                    b.ToTable("Habitacoes", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao_Itens", b =>
@@ -265,7 +265,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Habitacoes_Itens");
+                    b.ToTable("Habitacoes_Itens", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Itens", b =>
@@ -289,7 +289,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Itens");
+                    b.ToTable("Itens", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
@@ -318,7 +318,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("TipoLocadorId");
 
-                    b.ToTable("Locadores");
+                    b.ToTable("Locadores", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
@@ -364,7 +364,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("HabitacaoId");
 
-                    b.ToTable("Pontuacoes");
+                    b.ToTable("Pontuacoes", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.TipoLocador", b =>
@@ -381,7 +381,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoLocador");
+                    b.ToTable("TipoLocador", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Tipologia", b =>
@@ -398,7 +398,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tipologia");
+                    b.ToTable("Tipologia", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -612,6 +612,9 @@ namespace HabitAqui.Migrations
             modelBuilder.Entity("HabitAqui.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("CargoComLocador")
                         .HasColumnType("nvarchar(max)");

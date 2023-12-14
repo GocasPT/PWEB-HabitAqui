@@ -30,6 +30,7 @@ namespace HabitAqui.Data
                 Email = "admin@localhost.com",
                 PrimeiroNome = "Administrador",
                 UltimoNome = "Local",
+                Ativo = true,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
@@ -39,6 +40,46 @@ namespace HabitAqui.Data
             {
                 await userManager.CreateAsync(defaultUser, "Is3C..00");
                 await userManager.AddToRoleAsync(defaultUser, Roles.Administrador.ToString());
+            }
+
+            //APAGAR ISTO DEPOIS
+            var defaultUser1 = new ApplicationUser
+            {
+                UserName = "gestor@localhost.com",
+                Email = "gestor@localhost.com",
+                PrimeiroNome = "Gestor",
+                UltimoNome = "Banana",
+                LocadorId = 8,
+                Ativo = true,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            var user1 = await userManager.FindByEmailAsync(defaultUser1.Email);
+            if (user1 == null)
+            {
+                await userManager.CreateAsync(defaultUser1, "Is3C..00");
+                await userManager.AddToRoleAsync(defaultUser1, Roles.Gestor.ToString());
+            }
+
+            //APAGAR ISTO DEPOIS
+            var defaultUser2 = new ApplicationUser
+            {
+                UserName = "funcionario@localhost.com",
+                Email = "funcionario@localhost.com",
+                PrimeiroNome = "Funcionario",
+                UltimoNome = "Banana",
+                LocadorId = 8,
+                Ativo = true,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            var user2 = await userManager.FindByEmailAsync(defaultUser2.Email);
+            if (user2 == null)
+            {
+                await userManager.CreateAsync(defaultUser2, "Is3C..00");
+                await userManager.AddToRoleAsync(defaultUser2, Roles.Funcionario.ToString());
             }
         }
     }

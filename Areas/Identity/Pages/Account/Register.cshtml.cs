@@ -17,7 +17,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace HabitAqui.Areas.Identity.Pages.Account
@@ -30,13 +32,19 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        [BindProperty(SupportsGet = true)]
+        public string Id { get; set; }
+        public SelectList RoleList { get; set; }
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +52,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -115,6 +124,9 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Função")]
+            public string SelectedRole { get; set; }
         }
 
 
@@ -122,6 +134,8 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var roles = await _roleManager.Roles.Where(role => role.Name != "Administrador" && role.Name != "Cliente").ToListAsync();
+            RoleList = new SelectList(roles, nameof(IdentityRole.Id), nameof(IdentityRole.Name));
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -138,13 +152,30 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 user.UltimoNome = Input.UltimoNome;
                 user.DataNascimento = Input.DataNascimento;
                 user.Alugueres = new List<Aluguer>();
+                user.DataCriacao = DateTime.UtcNow;
+                user.Ativo = true;
+                
+                if (!string.IsNullOrEmpty(Id))
+                {
+                    user.LocadorId = Int32.Parse(Id);
+                }
+
                 await _userManager.UpdateAsync(user);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 
-
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Cliente");
+                    var selectedRole = Input.SelectedRole;
+                    if (!string.IsNullOrEmpty(selectedRole))
+                    {
+                        var roleName = await GetRoleNameById(selectedRole);
+
+                        await _userManager.AddToRoleAsync(user, roleName);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Cliente");
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -175,8 +206,13 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
+        }
+        private async Task<string> GetRoleNameById(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+
+            return role?.Name;
         }
 
         private ApplicationUser CreateUser()

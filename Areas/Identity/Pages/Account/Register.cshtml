@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id?}"
 @model RegisterModel
 @{
     ViewData["Title"] = "Registo";
@@ -41,6 +41,15 @@
                 <label asp-for="Input.ConfirmPassword">Confirmar Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            @if (!string.IsNullOrEmpty(Model.Id))
+            {
+                <div class="form-floating">
+                    <select asp-for="Input.SelectedRole" asp-items="@Model.RoleList" class="form-select">
+                    </select>
+                    <label asp-for="Input.SelectedRole"></label>
+                    <span asp-validation-for="Input.SelectedRole" class="text-danger"></span>
+                </div>
+            }
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registar</button>
         </form>
     </div>

@@ -111,7 +111,7 @@ namespace HabitAqui.Controllers
             //user.Ativo = false;
             await _userManager.UpdateAsync(user);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Enable(string userId)
