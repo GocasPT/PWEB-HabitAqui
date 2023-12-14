@@ -21,12 +21,14 @@ namespace HabitAqui.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -110,6 +112,14 @@ namespace HabitAqui.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                if (!user.Ativo)
+                {
+                    ModelState.AddModelError(string.Empty, "Your account is not active. Please contact your superior.");
+                    return Page();
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
