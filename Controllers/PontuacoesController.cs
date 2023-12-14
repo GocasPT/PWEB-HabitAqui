@@ -66,7 +66,8 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Pontuacoes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Pontuacoes == null)
             {
