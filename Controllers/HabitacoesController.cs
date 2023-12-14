@@ -9,6 +9,9 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using HabitAqui.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Identity;
+using HabitAqui.Migrations;
 
 namespace HabitAqui.Controllers
 {
@@ -16,19 +19,24 @@ namespace HabitAqui.Controllers
     public class HabitacoesController : BaseController
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HabitacoesController(ApplicationDbContext context) : base(context)
+        public HabitacoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) : base(context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Habitacoes
         public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+
             var habitacoes = _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
-                .Include(h => h.Tipologia);
+                .Include(h => h.Tipologia)
+                .Where(h => h.LocadorId == currentUser.LocadorId);
 
             return View(await habitacoes.ToListAsync());
         }
@@ -87,20 +95,24 @@ namespace HabitAqui.Controllers
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
 
-                var selectedItens = Request.Form["Itens"].ToString().Split(',').Select(int.Parse).ToArray();
-                if (selectedItens.Length > 0)
+                if (!string.IsNullOrEmpty(Request.Form["Itens"]))
                 {
-                    foreach (var itemId in selectedItens)
-                    {
-                        var habitacaoItem = new Habitacao_Itens
-                        {
-                            HabitacaoId = habitacao.Id,
-                            ItemId = itemId
-                        };
-                        _context.Add(habitacaoItem);
-                    }
+                    var selectedItens = Request.Form["Itens"].ToString().Split(',').Select(int.Parse).ToArray();
 
-                    await _context.SaveChangesAsync();
+                    if (selectedItens.Length > 0)
+                    {
+                        foreach (var itemId in selectedItens)
+                        {
+                            var habitacaoItem = new Habitacao_Itens
+                            {
+                                HabitacaoId = habitacao.Id,
+                                ItemId = itemId
+                            };
+                            _context.Add(habitacaoItem);
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 return RedirectToAction(nameof(Index));
