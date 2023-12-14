@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Identity;
 using HabitAqui.Migrations;
+using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
@@ -32,13 +33,24 @@ namespace HabitAqui.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var habitacoes = _context.Habitacoes
-                .Include(h => h.Categoria)
-                .Include(h => h.Locador)
-                .Include(h => h.Tipologia)
-                .Where(h => h.LocadorId == currentUser.LocadorId);
+            if (currentUser != null)
+            {
+                var habitacoes = _context.Habitacoes
+                    .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .Include(h => h.Tipologia)
+                    .Where(h => h.LocadorId == currentUser.LocadorId);
 
-            return View(await habitacoes.ToListAsync());
+                return View(await habitacoes.ToListAsync());
+            }
+            else
+            {
+                var habitacoes = _context.Habitacoes
+                      .Include(h => h.Categoria)
+                      .Include(h => h.Locador)
+                      .Include(h => h.Tipologia);
+                return View(await habitacoes.ToListAsync());
+            }
         }
 
         // GET: Habitacoes/Details/5
@@ -78,7 +90,7 @@ namespace HabitAqui.Controllers
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome");
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
+            //ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
             ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description");
             return View();
         }
@@ -86,12 +98,15 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,LocadorId,Latitude,Longitude,Itens")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,Latitude,Longitude,Itens")] Habitacao habitacao)
         {
             //TODO: receber a(s) foto(s)
             if (ModelState.IsValid)
             {
+                var currentUser = await _userManager.GetUserAsync(User);
+
                 habitacao.DataCriacao = DateTime.UtcNow;
+                habitacao.LocadorId = currentUser.LocadorId;
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
 
@@ -120,7 +135,7 @@ namespace HabitAqui.Controllers
 
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
+            //ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Name", habitacao.Itens);
 
             return View(habitacao);
@@ -283,6 +298,44 @@ namespace HabitAqui.Controllers
         private bool HabitacaoExists(int id)
         {
             return (_context.Habitacoes?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> Disable(int? id)
+        {
+            if (id == null || _context.Habitacoes == null)
+            {
+                return NotFound();
+            }
+
+            var habitacao = await _context.Habitacoes.FindAsync(id);
+            if (habitacao == null)
+            {
+                return NotFound();
+            }
+
+            habitacao.Disponivel = false;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Enable(int? id)
+        {
+            if (id == null || _context.Habitacoes == null)
+            {
+                return NotFound();
+            }
+
+            var habitacao = await _context.Habitacoes.FindAsync(id);
+            if (habitacao == null)
+            {
+                return NotFound();
+            }
+
+            habitacao.Disponivel = true;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

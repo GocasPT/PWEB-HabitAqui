@@ -52,7 +52,6 @@ namespace HabitAqui.Models
         public String? Descricao { get; set; }
 
         [Display(Name = "Locador")]
-        [Required(ErrorMessage = "O locador é obrigatório.")]
         public int? LocadorId { get; set; }
         public Locador? Locador { get; set; }
 
