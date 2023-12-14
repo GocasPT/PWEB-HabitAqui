@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
-    //[Authorize(Roles = "Funcionario")] TIRAR ISTO DEPOIS (NAO TEMOS FUNCIONARIOS)
+    [Authorize(Roles = "Funcionario, Gestor")]
     public class HabitacoesController : BaseController
     {
         private readonly ApplicationDbContext _context;
@@ -39,6 +39,7 @@ namespace HabitAqui.Controllers
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
                     .Include(h => h.Tipologia)
+                    .Include(h => h.Alugueres)
                     .Where(h => h.LocadorId == currentUser.LocadorId);
 
                 return View(await habitacoes.ToListAsync());

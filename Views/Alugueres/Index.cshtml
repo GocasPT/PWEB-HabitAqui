@@ -95,9 +95,6 @@ else
                     @Html.DisplayNameFor(model => model.DataDeSaida)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Confirmado)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Habitacao)
                 </th>
                 <th>
@@ -109,7 +106,10 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.CheckOut)
                 </th>
-                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Confirmado)
+                </th>
+                <th>Operações</th>
             </tr>
         </thead>
         <tbody>
@@ -121,9 +121,6 @@ else
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DataDeSaida)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Confirmado)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Habitacao.Rua)
@@ -138,9 +135,20 @@ else
                         @Html.DisplayFor(modelItem => item.CheckOutId)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        @Html.DisplayFor(modelItem => item.Confirmado)
+                    </td>
+                    <td>
+                        @if (item.Confirmado)
+                        {
+                            <a class="btn btn-warning" asp-action="Disable" asp-route-id="@item.Id">Rejeitar</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success" asp-action="Enable" asp-route-id="@item.Id">Aprovar</a>
+                        }
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>*@
+                        @*<a asp-action="Details" asp-route-id="@item.Id">Details</a>*@
+                        @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     </td>
                 </tr>
             }

@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Cliente")]
+    [Authorize(Roles = "Cliente, Funcionario, Gestor")]
     public class AlugueresController : BaseController
     {
         private readonly ApplicationDbContext _context;
@@ -189,7 +189,45 @@ namespace HabitAqui.Controllers
 
         private bool AluguerExists(int id)
         {
-          return (_context.Alugueres?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Alugueres?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> Disable(int? id)
+        {
+            if (id == null || _context.Habitacoes == null)
+            {
+                return NotFound();
+            }
+
+            var aluguer = await _context.Alugueres.FindAsync(id);
+            if (aluguer == null)
+            {
+                return NotFound();
+            }
+
+            aluguer.Confirmado = false;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Enable(int? id)
+        {
+            if (id == null || _context.Habitacoes == null)
+            {
+                return NotFound();
+            }
+
+            var aluguer = await _context.Alugueres.FindAsync(id);
+            if (aluguer == null)
+            {
+                return NotFound();
+            }
+
+            aluguer.Confirmado = true;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -11,6 +11,7 @@ namespace HabitAqui.Models
         public DateTime DataDeEntrada { get; set; }
         [Display(Name = "Saida")]
         public DateTime DataDeSaida { get; set; }
+        [Display(Name = "Aprovado")]
         public bool Confirmado { get; set; }
         public String? ClienteId { get; set; }
         public ApplicationUser Cliente { get; set; }
