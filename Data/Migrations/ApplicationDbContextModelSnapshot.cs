@@ -156,7 +156,6 @@ namespace HabitAqui.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FuncionarioId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Observacoes")
@@ -743,9 +742,7 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.ApplicationUser", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FuncionarioId");
 
                     b.Navigation("Aluguer");
 

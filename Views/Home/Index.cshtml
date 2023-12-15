@@ -129,6 +129,7 @@
                 </td>
                 <td>
                     <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
+                    <a asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@habitacao.Id">Pedir</a>
                 </td>
             </tr>
         }

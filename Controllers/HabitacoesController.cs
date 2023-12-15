@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Funcionario, Gestor")]
+    //[Authorize(Roles = "Funcionario, Gestor")]
     public class HabitacoesController : BaseController
     {
         private readonly ApplicationDbContext _context;

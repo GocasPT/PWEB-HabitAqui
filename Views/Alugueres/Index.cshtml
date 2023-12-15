@@ -15,6 +15,7 @@
 
 @if(User.IsInRole("Cliente"))
 {
+    <h3>Reservas Atuais</h3>
     <table class="table">
         <thead>
             <tr>
@@ -43,7 +44,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Where(x => x.CheckOut == null))
             {
                 <tr>
                     <td>
@@ -59,10 +60,71 @@
                         @Html.DisplayFor(modelItem => item.Locador.Nome)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckInId)
+                        @Html.DisplayFor(modelItem => item.CheckIn.DataCheckIn)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckOutId)
+                        @Html.DisplayFor(modelItem => item.CheckOut.DataCheckOut)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Confirmado)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Reservas Concluidas</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeEntrada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDeSaida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Locador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckIn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckOut)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Confirmado)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(x => x.CheckOut != null))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeEntrada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDeSaida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habitacao.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckIn.DataCheckIn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckOut.DataCheckOut)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Confirmado)
@@ -88,6 +150,9 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th>
+                    Cliente
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DataDeEntrada)
                 </th>
@@ -116,6 +181,9 @@ else
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @(item.Cliente.PrimeiroNome + " " + item.Cliente.UltimoNome)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DataDeEntrada)
                     </td>
