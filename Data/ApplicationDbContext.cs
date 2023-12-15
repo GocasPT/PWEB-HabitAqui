@@ -84,7 +84,8 @@ namespace HabitAqui.Data
             modelBuilder.Entity<Fotografia>()
                 .HasOne(f => f.Habitacao)
                 .WithMany(h => h.Fotografias)
-                .HasForeignKey(f => f.HabitacaoId);
+                .HasForeignKey(f => f.HabitacaoId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }

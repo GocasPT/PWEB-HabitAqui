@@ -21,11 +21,13 @@ namespace HabitAqui.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public HabitacoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) : base(context)
+        public HabitacoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment) : base(context)
         {
             _context = context;
             _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Habitacoes
@@ -66,6 +68,7 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
                 .Include(h => h.Tipologia)
+                .Include(h => h.Fotografias)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {
@@ -99,7 +102,7 @@ namespace HabitAqui.Controllers
         // POST: Habitacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,Latitude,Longitude,Itens")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,Name,Descricao,CategoriaId,TipologiaId,Pais,Distrito,Concelho,Rua,CustoPorNoite,NumPessoas,NumWC,Disponivel,Latitude,Longitude,Itens,Fotografias")] Habitacao habitacao, List<IFormFile> Fotografias)
         {
             //TODO: receber a(s) foto(s)
             if (ModelState.IsValid)
@@ -127,6 +130,37 @@ namespace HabitAqui.Controllers
                             _context.Add(habitacaoItem);
                         }
 
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                var uploadsPath = Path.Combine(_webHostEnvironment.WebRootPath, "img", "habitacoes");
+
+                if (!Directory.Exists(uploadsPath))
+                {
+                    Directory.CreateDirectory(uploadsPath);
+                }
+
+                foreach (var formFile in Fotografias)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                        var filePath = Path.Combine(uploadsPath, fileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(fileStream);
+                        }
+
+                        var fotografia = new Models.Fotografia
+                        {
+                            Nome = fileName,
+                            Extensao = Path.GetExtension(fileName),
+                            HabitacaoId = habitacao.Id
+                        };
+
+                        _context.Add(fotografia);
                         await _context.SaveChangesAsync();
                     }
                 }
@@ -255,10 +289,23 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Habitacoes'  is null.");
             }
-            var habitacao = await _context.Habitacoes.FindAsync(id);
+            var habitacao = await _context.Habitacoes
+                .Include(h => h.Fotografias)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (habitacao != null)
             {
                 _context.Habitacoes.Remove(habitacao);
+            }
+
+            foreach (var fotografia in habitacao.Fotografias)
+            {
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "img/habitacoes", fotografia.Nome);
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
             }
 
             await _context.SaveChangesAsync();

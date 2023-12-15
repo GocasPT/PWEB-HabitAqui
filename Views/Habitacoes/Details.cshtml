@@ -20,32 +20,57 @@
 
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
-<div class="ad-containerImage">
+@if(Model.Fotografias != null && Model.Fotografias.Any())
+{
+    <div class="ad-containerImage">
     <div class="row">
-        <div class="col-sm-7">
-            <img class="ad-MainImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
-        </div>
-        <div class="col-sm-5" style="grid-row-gap: 20px">
-            <div class="row">
-                <div class="col-6 col-sm-6">
-                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
-                </div>
-                <div class="col-6 col-sm-6">
-                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
-                </div>
+        @if (Model.Fotografias != null && Model.Fotografias.Any())
+        {
+            <div class="col-sm-7">
+                <img class="ad-MainImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image">
             </div>
-            <div class="row">
-                <div class="col-6 col-sm-6">
-                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+            <div class="col-sm-5" style="grid-row-gap: 20px">
+                @foreach (var fotografia in Model.Fotografias.Skip(1))
+                {
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
+                            <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image">
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    </div>
+}
+else
+{
+    <div class="ad-containerImage">
+        <div class="row">
+            <div class="col-sm-7">
+                <img class="ad-MainImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+            </div>
+            <div class="col-sm-5" style="grid-row-gap: 20px">
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                    </div>
                 </div>
-                <div class="col-6 col-sm-6">
-                    <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <img class="ad_ExtraImage_2" src="https://placekitten.com/800/400" alt="Ad Image">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 
 <div class="ad-container">
     <div class="row">

@@ -190,10 +190,6 @@ namespace HabitAqui.Migrations
                     b.Property<int?>("CheckOutId")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("Extensao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -776,7 +772,8 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
                         .WithMany("Fotografias")
-                        .HasForeignKey("HabitacaoId");
+                        .HasForeignKey("HabitacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("CheckOut");
 
