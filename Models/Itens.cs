@@ -8,5 +8,7 @@
         public string? Categoria { get; set; }
 
         public ICollection<Habitacao_Itens>? HabitacaoItens { get; set; } = new List<Habitacao_Itens>();
+        public ICollection<CheckInItem>? CheckInItems { get; set; }
+        public ICollection<CheckOutItem>? CheckOutItems { get; set; }
     }
 }

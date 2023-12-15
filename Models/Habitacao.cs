@@ -64,6 +64,7 @@ namespace HabitAqui.Models
 
         public ICollection<Pontuacao>? Pontuacoes { get; set; } = new List<Pontuacao>();
         public ICollection<Habitacao_Itens>? Itens { get; set; } = new List<Habitacao_Itens>();
+        public ICollection<Fotografia>? Fotografias { get; set; } = new List<Fotografia>();
 
         [Display(Name = "Estrelas")]
         // Propriedade de leitura somente para calcular a média das pontuações

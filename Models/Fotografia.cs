@@ -6,7 +6,10 @@
         public string Nome { get; set; }
         public string Extensao { get; set; }
         public byte[] Data { get; set; }
-        public int CheckInId { get; set; }
-        public CheckIn CheckIn { get; set; }
+        public int? CheckOutId { get; set; }
+        public CheckOut? CheckOut { get; set; }
+
+        public int? HabitacaoId { get; set; }
+        public Habitacao? Habitacao { get; set; }
     }
 }

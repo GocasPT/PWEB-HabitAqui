@@ -62,7 +62,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Alugueres", (string)null);
+                    b.ToTable("Alugueres");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
@@ -86,7 +86,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
@@ -116,7 +116,22 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("CheckIns", (string)null);
+                    b.ToTable("CheckIns");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.CheckInItem", b =>
+                {
+                    b.Property<int?>("CheckInId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CheckInId", "ItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CheckInItems");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
@@ -146,7 +161,22 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("CheckOuts", (string)null);
+                    b.ToTable("CheckOuts");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.CheckOutItem", b =>
+                {
+                    b.Property<int?>("CheckOutId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CheckOutId", "ItemId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("CheckOutItems");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Fotografia", b =>
@@ -157,7 +187,7 @@ namespace HabitAqui.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CheckInId")
+                    b.Property<int?>("CheckOutId")
                         .HasColumnType("int");
 
                     b.Property<byte[]>("Data")
@@ -168,15 +198,20 @@ namespace HabitAqui.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HabitacaoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CheckInId");
+                    b.HasIndex("CheckOutId");
 
-                    b.ToTable("Fotografias", (string)null);
+                    b.HasIndex("HabitacaoId");
+
+                    b.ToTable("Fotografias");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -214,7 +249,6 @@ namespace HabitAqui.Migrations
                         .HasColumnType("float");
 
                     b.Property<int?>("LocadorId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<double?>("Longitude")
@@ -250,7 +284,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("TipologiaId");
 
-                    b.ToTable("Habitacoes", (string)null);
+                    b.ToTable("Habitacoes");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao_Itens", b =>
@@ -265,7 +299,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Habitacoes_Itens", (string)null);
+                    b.ToTable("Habitacoes_Itens");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Itens", b =>
@@ -289,7 +323,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Itens", (string)null);
+                    b.ToTable("Itens");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
@@ -318,7 +352,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("TipoLocadorId");
 
-                    b.ToTable("Locadores", (string)null);
+                    b.ToTable("Locadores");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
@@ -364,7 +398,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("HabitacaoId");
 
-                    b.ToTable("Pontuacoes", (string)null);
+                    b.ToTable("Pontuacoes");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.TipoLocador", b =>
@@ -381,7 +415,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoLocador", (string)null);
+                    b.ToTable("TipoLocador");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Tipologia", b =>
@@ -398,7 +432,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tipologia", (string)null);
+                    b.ToTable("Tipologia");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -619,6 +653,9 @@ namespace HabitAqui.Migrations
                     b.Property<string>("CargoComLocador")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DataCriacao")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
@@ -676,6 +713,25 @@ namespace HabitAqui.Migrations
                     b.Navigation("Funcionario");
                 });
 
+            modelBuilder.Entity("HabitAqui.Models.CheckInItem", b =>
+                {
+                    b.HasOne("HabitAqui.Models.CheckIn", "CheckIn")
+                        .WithMany("CheckInItems")
+                        .HasForeignKey("CheckInId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HabitAqui.Models.Itens", "Items")
+                        .WithMany("CheckInItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CheckIn");
+
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
                 {
                     b.HasOne("HabitAqui.Models.Aluguer", "Aluguer")
@@ -693,15 +749,38 @@ namespace HabitAqui.Migrations
                     b.Navigation("Funcionario");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.Fotografia", b =>
+            modelBuilder.Entity("HabitAqui.Models.CheckOutItem", b =>
                 {
-                    b.HasOne("HabitAqui.Models.CheckIn", "CheckIn")
-                        .WithMany()
-                        .HasForeignKey("CheckInId")
+                    b.HasOne("HabitAqui.Models.CheckOut", "CheckOut")
+                        .WithMany("CheckOutItems")
+                        .HasForeignKey("CheckOutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CheckIn");
+                    b.HasOne("HabitAqui.Models.Itens", "Items")
+                        .WithMany("CheckOutItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CheckOut");
+
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.Fotografia", b =>
+                {
+                    b.HasOne("HabitAqui.Models.CheckOut", "CheckOut")
+                        .WithMany("Fotografias")
+                        .HasForeignKey("CheckOutId");
+
+                    b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
+                        .WithMany("Fotografias")
+                        .HasForeignKey("HabitacaoId");
+
+                    b.Navigation("CheckOut");
+
+                    b.Navigation("Habitacao");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -714,9 +793,7 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.Locador", "Locador")
                         .WithMany("Habitacoes")
-                        .HasForeignKey("LocadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocadorId");
 
                     b.HasOne("HabitAqui.Models.Tipologia", "Tipologia")
                         .WithMany()
@@ -843,9 +920,23 @@ namespace HabitAqui.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
+                {
+                    b.Navigation("CheckInItems");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.CheckOut", b =>
+                {
+                    b.Navigation("CheckOutItems");
+
+                    b.Navigation("Fotografias");
+                });
+
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
                 {
                     b.Navigation("Alugueres");
+
+                    b.Navigation("Fotografias");
 
                     b.Navigation("Itens");
 
@@ -854,6 +945,10 @@ namespace HabitAqui.Migrations
 
             modelBuilder.Entity("HabitAqui.Models.Itens", b =>
                 {
+                    b.Navigation("CheckInItems");
+
+                    b.Navigation("CheckOutItems");
+
                     b.Navigation("HabitacaoItens");
                 });
 

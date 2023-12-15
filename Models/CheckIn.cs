@@ -9,5 +9,6 @@
         public ApplicationUser Funcionario { get; set; }
         public int? AluguerId { get; set; }
         public Aluguer Aluguer { get; set; }
+        public ICollection<CheckInItem>? CheckInItems { get; set; }
     }
 }

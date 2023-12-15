@@ -50,6 +50,42 @@ namespace HabitAqui.Data
                 .WithMany(i => i.HabitacaoItens)
                 .HasForeignKey(hi => hi.ItemId);
 
+            modelBuilder.Entity<CheckInItem>()
+            .HasKey(ci => new { ci.CheckInId, ci.ItemId });
+
+            modelBuilder.Entity<CheckInItem>()
+                .HasOne(ci => ci.CheckIn)
+                .WithMany(c => c.CheckInItems)
+                .HasForeignKey(ci => ci.CheckInId);
+
+            modelBuilder.Entity<CheckInItem>()
+                .HasOne(ci => ci.Items)
+                .WithMany(i => i.CheckInItems)
+                .HasForeignKey(ci => ci.ItemId);
+
+            modelBuilder.Entity<CheckOutItem>()
+            .HasKey(ci => new { ci.CheckOutId, ci.ItemId });
+
+            modelBuilder.Entity<CheckOutItem>()
+                .HasOne(ci => ci.CheckOut)
+                .WithMany(c => c.CheckOutItems)
+                .HasForeignKey(ci => ci.CheckOutId);
+
+            modelBuilder.Entity<CheckOutItem>()
+                .HasOne(ci => ci.Items)
+                .WithMany(i => i.CheckOutItems)
+                .HasForeignKey(ci => ci.ItemId);
+
+            modelBuilder.Entity<Fotografia>()
+                .HasOne(f => f.CheckOut)
+                .WithMany(c => c.Fotografias)
+                .HasForeignKey(f => f.CheckOutId);
+
+            modelBuilder.Entity<Fotografia>()
+                .HasOne(f => f.Habitacao)
+                .WithMany(h => h.Fotografias)
+                .HasForeignKey(f => f.HabitacaoId);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -70,5 +106,7 @@ namespace HabitAqui.Data
         public DbSet<Fotografia> Fotografias { get; set; }
         public DbSet<TipoLocador> TipoLocador { get; set; }
         public DbSet<Tipologia> Tipologia { get; set; }
+        public DbSet<CheckInItem> CheckInItems { get; set; }
+        public DbSet<CheckOutItem> CheckOutItems { get; set; }
     }
 }

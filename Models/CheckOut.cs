@@ -9,6 +9,7 @@
         public ApplicationUser Funcionario { get; set; }
         public int? AluguerId { get; set; }
         public Aluguer Aluguer { get; set; }
-        //TODO: model fotografia
+        public ICollection<CheckOutItem>? CheckOutItems { get; set; }
+        public ICollection<Fotografia> Fotografias { get; set; }
     }
 }
