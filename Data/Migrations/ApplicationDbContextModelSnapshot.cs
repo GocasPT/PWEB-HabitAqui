@@ -100,12 +100,16 @@ namespace HabitAqui.Migrations
                     b.Property<int?>("AluguerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Danos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataCheckIn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FuncionarioId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Observacoes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -145,12 +149,16 @@ namespace HabitAqui.Migrations
                     b.Property<int?>("AluguerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Danos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataCheckOut")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FuncionarioId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Observacoes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -700,9 +708,7 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.ApplicationUser", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FuncionarioId");
 
                     b.Navigation("Aluguer");
 
@@ -736,9 +742,7 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.ApplicationUser", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FuncionarioId");
 
                     b.Navigation("Aluguer");
 

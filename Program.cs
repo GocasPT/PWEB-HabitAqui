@@ -2,10 +2,17 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 string path = Directory.GetCurrentDirectory();
+
+var cultureInfo = new CultureInfo("en-US");
+cultureInfo.NumberFormat.CurrencySymbol = "€";
+
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection").Replace("[DataDirectory]", path); ;

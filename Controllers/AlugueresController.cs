@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +9,8 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 
 namespace HabitAqui.Controllers
 {
@@ -16,10 +18,12 @@ namespace HabitAqui.Controllers
     public class AlugueresController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AlugueresController(ApplicationDbContext context)
+        public AlugueresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Alugueres
@@ -32,12 +36,20 @@ namespace HabitAqui.Controllers
                     .Include(a => a.Habitacao)
                     .Include(a => a.Habitacao.Pontuacoes)
                     .Include(a => a.Locador)
+                    .Include(a => a.CheckIn)
+                    .Include(a => a.CheckOut)
                     .ToListAsync();
 
                 return View(clientAlugueres);
             }
 
-            var applicationDbContext = _context.Alugueres.Include(a => a.Habitacao).Include(a => a.Locador);
+            var applicationDbContext = _context.Alugueres
+                .Include(a => a.Habitacao)
+                .Include(a => a.Locador)
+                .Include(a => a.CheckIn)
+                .Include(a => a.CheckOut)
+                .Include(a => a.Cliente);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -62,10 +74,9 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Alugueres/Create
-        public IActionResult Create()
+        public IActionResult Create(int HabitacaoId)
         {
-            ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id");
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Id");
+            ViewBag.HabitacaoId = HabitacaoId;
             return View();
         }
 
@@ -74,22 +85,22 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataDeEntrada,DataDeSaida,Confirmado,HabitacaoId,LocadorId")] Aluguer aluguer)
+        public async Task<IActionResult> Create([Bind("DataDeEntrada,DataDeSaida,HabitacaoId,LocadorId,ClienteId,Confirmado")] Aluguer aluguer)
         {
-            ModelState.Remove(nameof(aluguer.Cliente));
-            ModelState.Remove(nameof(aluguer.Habitacao));
-            ModelState.Remove(nameof(aluguer.Locador));
-            ModelState.Remove(nameof(aluguer.CheckIn));
-            ModelState.Remove(nameof(aluguer.CheckOut));
-
             if (ModelState.IsValid)
             {
+                var currentUser = await _userManager.GetUserAsync(User);
+                aluguer.ClienteId = currentUser.Id;
+                aluguer.Confirmado = false;
+                var locadorId = _context.Habitacoes
+                    .Where(h => h.Id == aluguer.HabitacaoId)
+                    .Select(h => h.LocadorId)
+                    .FirstOrDefault();
+                aluguer.LocadorId = locadorId;
                 _context.Add(aluguer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id", aluguer.HabitacaoId);
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Id", aluguer.LocadorId);
             return View(aluguer);
         }
 

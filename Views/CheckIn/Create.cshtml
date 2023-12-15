@@ -1,0 +1,105 @@
+﻿@model HabitAqui.Models.CheckIn
+
+@{
+    ViewData["Title"] = "Check-in";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="myForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AluguerId" value="@ViewBag.AluguerId"/>
+            <div class="form-group" id="observacoesGroup" style="display:none;">
+                <label asp-for="Observacoes" class="control-label"></label>
+                <input asp-for="Observacoes" class="form-control" />
+                <span asp-validation-for="Observacoes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showObservacoes" /> Inserir Observações
+                </label>
+            </div>
+
+            <div class="form-group" id="danosGroup" style="display:none;">
+                <label asp-for="Danos" class="control-label"></label>
+                <input asp-for="Danos" class="form-control" />
+                <span asp-validation-for="Danos" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showDanos" /> Inserir Danos
+                </label>
+            </div>
+
+            <div class="form-group" id="itemsGroup" style="display:none;">
+                <label asp-for="CheckInItems" class="control-label"></label>
+                <select asp-for="CheckInItems" asp-items="ViewBag.Itens" class="form-control" multiple></select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showItems" /> Inserir Items
+                </label>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Check-in" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Alugueres" asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var observacoesGroup = document.getElementById('observacoesGroup');
+            var showObservacoesCheckbox = document.getElementById('showObservacoes');
+
+            showObservacoesCheckbox.addEventListener('change', function () {
+                if (!showObservacoesCheckbox.checked) {
+                    observacoesGroup.style.display = 'none';
+                    document.getElementById('Observacoes').value = '';
+                } else {
+                    observacoesGroup.style.display = 'block';
+                }
+            });
+
+            var danosGroup = document.getElementById('danosGroup');
+            var showDanosCheckbox = document.getElementById('showDanos');
+
+            showDanosCheckbox.addEventListener('change', function () {
+                if (!showDanosCheckbox.checked) {
+                    danosGroup.style.display = 'none';
+                    document.getElementById('Danos').value = '';
+                } else {
+                    danosGroup.style.display = 'block';
+                }
+            });
+
+            var itemsGroup = document.getElementById('itemsGroup');
+            var showItemsCheckbox = document.getElementById('showItems');
+            var itemsSelect = document.getElementById('CheckInItems');
+
+            showItemsCheckbox.addEventListener('change', function () {
+                if (!showItemsCheckbox.checked) {
+                    itemsGroup.style.display = 'none';
+                    for (var i = 0; i < itemsSelect.options.length; i++) {
+                        itemsSelect.options[i].selected = false;
+                    }
+                    itemsSelect.selectedIndex = -1;
+                } else {
+                    itemsGroup.style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+}
