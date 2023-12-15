@@ -37,7 +37,12 @@ namespace HabitAqui.Controllers
                 return View(clientAlugueres);
             }
 
-            var applicationDbContext = _context.Alugueres.Include(a => a.Habitacao).Include(a => a.Locador);
+            var applicationDbContext = _context.Alugueres
+                .Include(a => a.Habitacao)
+                .Include(a => a.Locador)
+                .Include(a => a.CheckIn)
+                .Include(a => a.CheckOut);
+
             return View(await applicationDbContext.ToListAsync());
         }
 

@@ -129,10 +129,10 @@ else
                         @Html.DisplayFor(modelItem => item.Locador.Nome)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckInId)
+                        @Html.DisplayFor(modelItem => item.CheckIn.DataCheckIn)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckOutId)
+                        @Html.DisplayFor(modelItem => item.CheckOut.DataCheckOut)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Confirmado)
@@ -140,13 +140,21 @@ else
                     <td>
                         @if (item.Confirmado)
                         {
-                            <a class="btn btn-warning" asp-action="Disable" asp-route-id="@item.Id">Rejeitar</a>
+                            if (item.CheckIn == null && item.CheckOut == null)
+                            {
+                                <a class="btn btn-warning" asp-action="Disable" asp-route-id="@item.Id">Rejeitar</a>
+                                <a class="btn btn-success" asp-controller="CheckIn" asp-action="Create" asp-route-AluguerId="@item.Id">Check-in</a>
+                            }
+                            else if (item.CheckIn != null && item.CheckOut == null)
+                            {
+                                <a class="btn btn-info" asp-controller="CheckOut" asp-action="Create" asp-route-AluguerId="@item.Id">Check-out</a>
+                            }
                         }
                         else
                         {
                             <a class="btn btn-success" asp-action="Enable" asp-route-id="@item.Id">Aprovar</a>
                         }
-                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>*@
+                        
                         @*<a asp-action="Details" asp-route-id="@item.Id">Details</a>*@
                         @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     </td>
