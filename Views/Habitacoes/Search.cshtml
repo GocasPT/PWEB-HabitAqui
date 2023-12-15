@@ -7,6 +7,8 @@
 
 <h1>As nossas habitações</h1>
 
+<partial name="_SearchPartial" />
+
 @*TODO: fazer parte da filtragem*@
 <form asp-action="Search" class="form-check" role="group">
     <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />

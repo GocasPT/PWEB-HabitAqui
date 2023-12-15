@@ -1,4 +1,4 @@
-@model HabitAqui.ViewModels.HomeIndexViewModel
+@model HabitAqui.ViewModels.HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,6 +7,8 @@
 <h1>HabitAqui</h1>
 
 <h2>Funcionalidade - Camacho</h2>
+
+<partial name="_SearchPartial" />
 
 <form asp-action="Index" class="btn-group" role="group">
     <input type="hidden" name="orderPrice" value="@Model.OrdemPreco" />

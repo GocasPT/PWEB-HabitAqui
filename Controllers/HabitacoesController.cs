@@ -17,13 +17,13 @@ using System.Diagnostics;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Funcionario, Gestor")]
-    public class HabitacoesController : BaseController
+    public class HabitacoesController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public HabitacoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment) : base(context)
+        public HabitacoesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _userManager = userManager;
@@ -313,6 +313,8 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Habitacoes/Search
+        [AllowAnonymous]
+        [Authorize(Roles = "Cliente")]
         public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
         {
             var viewModel = new SearchViewModel

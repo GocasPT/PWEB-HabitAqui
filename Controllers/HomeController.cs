@@ -9,12 +9,12 @@ using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context) : base(context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -23,7 +23,7 @@ namespace HabitAqui.Controllers
         // GET: Home
         public async Task<IActionResult> Index(int? categoriaId, string orderPrice, string orderRating)
         {
-            var viewModel = new HomeIndexViewModel
+            var viewModel = new HomeViewModel
             {
                 OrdemPreco = orderPrice,
                 OrdemRating = orderRating,

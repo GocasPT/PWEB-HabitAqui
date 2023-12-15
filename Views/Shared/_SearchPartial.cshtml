@@ -1,17 +1,14 @@
-﻿
-@{
-    var categorias = ViewData["Categorias"] as List<Categoria>;
-}
+﻿@model HabitAqui.ViewModels.CategoriasListViewModel
 
 <form asp-controller="Habitacoes" asp-action="Search" class="d-flex" role="search">
     <input class="form-control me-2" type="search" name="searchString" placeholder="Nome da habitação">
     @*TODO: input checIn e checkOut*@
     <select name="categoriaId" class="fomr-select">
         <option selected>Tipo de habitação</option>
-        @*foreach (var categoria in categorias)
+        @foreach (var categoria in Model.Categorias)
         {
             <option value="@categoria.Id">@categoria.Nome</option>
-        })*@
+        })
     </select>
     @* 
     <input class="form-control me-2" type="date" name="checkIn" placeholder="CheckIn">

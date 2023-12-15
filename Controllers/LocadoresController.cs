@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Administrador")]
-    public class LocadoresController : BaseController
+    public class LocadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public LocadoresController(ApplicationDbContext context) : base(context)
+        public LocadoresController(ApplicationDbContext context)
         {
             _context = context;
         }

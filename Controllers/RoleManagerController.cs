@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Administrador")]
-    public class RoleManagerController : BaseController
+    public class RoleManagerController : Controller
     {
 
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleManagerController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager) : base(context)
+        public RoleManagerController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
         }

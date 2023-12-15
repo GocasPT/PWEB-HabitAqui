@@ -13,11 +13,11 @@ using System.Security.Claims;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Cliente, Funcionario, Gestor")]
-    public class AlugueresController : BaseController
+    public class AlugueresController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AlugueresController(ApplicationDbContext context) : base(context)
+        public AlugueresController(ApplicationDbContext context)
         {
             _context = context;
         }
