@@ -9,61 +9,38 @@ using System.Threading.Tasks;
 public class UserManagerController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _context;
 
-    public UserManagerController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
+    public UserManagerController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
     {
         _userManager = userManager;
-        _dbContext = dbContext;
+        _context = context;
     }
 
     public async Task<IActionResult> Index()
     {
-        var currentUser = await _userManager.GetUserAsync(User);
-        var users = await _userManager.Users
-            .Where(u => u.LocadorId == currentUser.LocadorId)
-            .ToListAsync();
+        //var currectUser = await _userManager.GetUserAsync(User);
+        
 
-        ViewBag.LocadorId = currentUser.LocadorId;
-
-        var userManagerViewModelList = new List<UserManagerViewModel>();
+        var viewModelList = new List<UserManagerViewModel>();
+        var users = await _userManager.Users.ToListAsync();
 
         foreach (var user in users)
         {
-            if (user.Id == currentUser?.Id)
-            {
-                continue;
-            }
-
             var roles = await GetUserRoles(user);
-            if (roles.Contains("Administrador"))
-            {
-                continue;
-            }
-
-            var checkins = await _dbContext.CheckIns
-                .Where(c => c.FuncionarioId == user.Id)
-                .ToListAsync();
-
-            var checkouts = await _dbContext.CheckOuts
-                .Where(c => c.FuncionarioId == user.Id)
-                .ToListAsync();
-
-            var userManagerViewModel = new UserManagerViewModel
+            var viewModel = new UserManagerViewModel
             {
                 UserId = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 Ativo = user.Ativo,
-                Roles = roles,
-                CheckIns = checkins,
-                CheckOuts = checkouts
+                Roles = roles
             };
 
-            userManagerViewModelList.Add(userManagerViewModel);
+            viewModelList.Add(viewModel);
         }
 
-        return View(userManagerViewModelList);
+        return View(viewModelList);
     }
 
     private async Task<List<string>> GetUserRoles(ApplicationUser user)
@@ -120,5 +97,54 @@ public class UserManagerController : Controller
 
         var result = await _userManager.DeleteAsync(user);
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Funcionarios()
+    {
+        var currentUser = await _userManager.GetUserAsync(User);
+        var users = await _userManager.Users
+            .Where(u => u.LocadorId == currentUser.LocadorId)
+            .ToListAsync();
+
+        ViewBag.LocadorId = currentUser.LocadorId;
+
+        var viewModelList = new List<UserManagerViewModel>();
+
+        foreach (var user in users)
+        {
+            if (user.Id == currentUser?.Id)
+            {
+                continue;
+            }
+
+            var roles = await GetUserRoles(user);
+            if (roles.Contains("Administrador"))
+            {
+                continue;
+            }
+
+            var checkins = await _context.CheckIns
+                .Where(c => c.FuncionarioId == user.Id)
+                .ToListAsync();
+
+            var checkouts = await _context.CheckOuts
+                .Where(c => c.FuncionarioId == user.Id)
+                .ToListAsync();
+
+            var viewModel = new UserManagerViewModel
+            {
+                UserId = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Ativo = user.Ativo,
+                Roles = roles,
+                CheckIns = checkins,
+                CheckOuts = checkouts
+            };
+
+            viewModelList.Add(viewModel);
+        }
+
+        return View("Index", viewModelList);
     }
 }

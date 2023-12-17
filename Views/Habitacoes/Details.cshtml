@@ -1,4 +1,4 @@
-﻿@model HabitAqui.Models.Habitacao
+@model HabitAqui.Models.Habitacao
 
 @{
     ViewData["Title"] = "Detalhes da Habitação";
@@ -94,9 +94,8 @@ else
 <div class="ad-container">
     <div class="row">
         <div class="ad-subtitle"><i class="bi bi-file-earmark-person-fill"></i> Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
-        @*TODO: CHAMACO*@
         <div class="ad-subdescription">
-            @ViewBag.AnosDeServico anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.TipoLocador.Nome)
+            @*TODO: @ViewBag.AnosDeServico anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.TipoLocador.Nome)*@
         </div>
     </div>
 </div>

@@ -21,12 +21,10 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Home
-        public async Task<IActionResult> Index(int? categoriaId, string orderPrice, string orderRating)
+        public async Task<IActionResult> Index()
         {
-            var viewModel = new HomeViewModel
+            var viewModel = new SearchViewModel
             {
-                OrdemPreco = orderPrice,
-                OrdemRating = orderRating,
                 Categorias = await _context.Categorias.ToListAsync(),
                 Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
@@ -37,17 +35,26 @@ namespace HabitAqui.Controllers
                     .ToListAsync()
             };
 
-            if (categoriaId != null)
-                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Id == categoriaId).ToList();
-
-            //TODO: fazer o filtro
-            //if (orderPrice != null)
-            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
-
-            //if (orderRating != null)
-            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.Pontuacoes).ToList();
-
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("CategoriaId,OrdemPreco,OrdemRating")] SearchViewModel filter)
+        {
+            filter.Categorias = await _context.Categorias.ToListAsync();
+            filter.Habitacoes = await _context.Habitacoes
+                .Include(h => h.Categoria)
+                //.Include(h => h.Locador)
+                //.Include(h => h.Pontuacoes)
+                //.Include(h => h.Tipologia)
+                .ToListAsync();
+
+            Console.WriteLine("Categoria: " + filter.CategoriaId);
+            Console.WriteLine("Ordem de preco: " + filter.OrdemPreco);
+            Console.WriteLine("Ordem de rating: " + filter.OrdemRating);
+
+            return View(filter);
         }
 
         // GET: Home/Privacy

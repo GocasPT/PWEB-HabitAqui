@@ -105,7 +105,6 @@ namespace HabitAqui.Data
         public DbSet<Pontuacao> Pontuacoes { get; set; }
         public DbSet<Habitacao_Itens> Habitacoes_Itens { get; set; }
         public DbSet<Fotografia> Fotografias { get; set; }
-        public DbSet<TipoLocador> TipoLocador { get; set; }
         public DbSet<Tipologia> Tipologia { get; set; }
         public DbSet<CheckInItem> CheckInItems { get; set; }
         public DbSet<CheckOutItem> CheckOutItems { get; set; }

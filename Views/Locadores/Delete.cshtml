@@ -7,26 +7,44 @@
 <h1>@ViewData["Title"]</h1>
 
 <h3>Tens a certeza que queres apagar este locador?</h3>
+
+<h1>Detakhes do Locador</h1>
 <div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Apagar" class="btn btn-danger" />
+        <p></p>
+        <a asp-action="Index">Voltar à lista</a>
+    </form>
+
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Contacto)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Contacto)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoLocador)
+            @Html.DisplayNameFor(model => model.IsEmpresa)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TipoLocador.Nome)
+            @{
+                var tipoLocador = Model.IsEmpresa ? "Empresa" : "Particular";
+            }
+            @Html.DisplayFor(model => tipoLocador)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DataCriacao)
@@ -35,11 +53,48 @@
             @Html.DisplayFor(model => model.DataCriacao)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Apagar" class="btn btn-danger" />
-        <p></p>
-        <a asp-action="Index">Voltar à lista</a>
-    </form>
+</div>
+
+<h1>Habitações</h1>
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habitacoes)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Habitacoes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                </tr>
+            }
+        </tbody>
+</div>
+
+<h1>Gestores e Funcionários</h1>
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <th>
+                @Html.DisplayNameFor(model => model.GestoresFuncionarios)
+        </th>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.GestoresFuncionarios)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrimeiroNome)
+                    </td>
+                </tr>
+            }
+    </table>
 </div>

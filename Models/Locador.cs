@@ -8,18 +8,21 @@ namespace HabitAqui.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Locador")]
+        [Display(Name = "Nome do locador")]
+        [Required(ErrorMessage = "O nome do locador é obrigatório")]
         public string Nome { get; set; }
+        [Display(Name = "Email do locador")]
+        [Required(ErrorMessage = "O email do locador é obrigatório")]
+        public string Email { get; set; }
+        [Display(Name = "Telefone do locador")]
+        [Phone(ErrorMessage = "O contacto do locador é obrigatório")]
         public string Contacto { get; set; }
-
-        [Display(Name = "Tipo de Locador")]
-        public int? TipoLocadorId { get; set; }
-        [Display(Name = "Tipo de Locador")]
-        public TipoLocador? TipoLocador { get; set; }
-
-        [Display(Name = "Criado a")]
-        public DateTime? DataCriacao { get; set; } 
+        [Display(Name = "É uma empresa")]
+        public bool IsEmpresa { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? DataCriacao { get; set; }
         public ICollection<Habitacao>? Habitacoes { get; set; }
         public ICollection<ApplicationUser>? GestoresFuncionarios { get; set; }
+        public bool Ativo { get; set; }
     }
 }

@@ -11,16 +11,16 @@
 
 @*TODO: fazer parte da filtragem*@
 <form asp-action="Search" class="form-check" role="group">
-    <input type="hidden" name="searchString" value="@Model.TextoAPesquisar" />
-    <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
-
+    <input type="hidden" asp-for="TextoAPesquisar" value="@Model.TextoAPesquisar" />
+    <input type="hidden" asp-for="CheckIn" value="@Model.CheckIn" />
+    <input type="hidden" asp-for="CheckOut" value="@Model.CheckOut" />
     <label>Preço</label>
-    <input type="submit" class="btn btn-primary" name="orderPrice" value="Ascendente" />
-    <input type="submit" class="btn btn-primary" name="orderPrice" value="Descendente" />
+    <input type="submit" class="btn btn-primary" asp-for="OrdemPreco" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" asp-for="OrdemPreco" value="Descendente" />
     <br />
     <label>Rating</label>
-    <input type="submit" class="btn btn-primary" name="orderRating" value="Ascendente" />
-    <input type="submit" class="btn btn-primary" name="orderRating" value="Descendente" />
+    <input type="submit" class="btn btn-primary" asp-for="OrdemRating" value="Ascendente" />
+    <input type="submit" class="btn btn-primary" asp-for="OrdemRating" value="Descendente" />
 </form>
 
 @if (!string.IsNullOrEmpty(Model.TextoAPesquisar))

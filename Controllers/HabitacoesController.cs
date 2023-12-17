@@ -327,34 +327,64 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Search
         [AllowAnonymous]
         [Authorize(Roles = "Cliente")]
-        public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
+        //public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
+        public async Task<IActionResult> Search([Bind("TextoAPesquisar,CategoriaId,CheckIn,CheckOut,OrdemPreco,OrdemRating")] SearchViewModel search)
         {
-            var viewModel = new SearchViewModel
+            ModelState.Remove(nameof(search.Categorias));
+            ModelState.Remove(nameof(search.Habitacoes));
+            search.Categorias = await _context.Categorias.ToListAsync();
+
+            if (search.CheckIn > search.CheckOut)
             {
-                TextoAPesquisar = searchString,
-                OrdemPreco = orderPrice,
-                OrdemRating = orderRating,
-                Categorias = await _context.Categorias.ToListAsync(),
-                Habitacoes = await _context.Habitacoes
+                ModelState.AddModelError("CheckIn", "A data de check-in n�o pode ser superior � data de check-out.");
+                ModelState.AddModelError("CheckOut", "A data de check-out n�o pode ser inferior � data de check-in.");
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                search.Habitacoes = await _context.Habitacoes
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
-                    .Where(h => h.Name.Contains(searchString))
-                    .ToListAsync()
-            };
+                    .Include(h => h.Tipologia)
+                    .Include(h => h.Pontuacoes)
+                    .Include(h => h.Fotografias)
+                    .Where(h => h.Disponivel == true)
+                    .Where(h => h.Name.Contains(search.TextoAPesquisar) || h.Descricao.Contains(search.TextoAPesquisar))
+                    .ToListAsync();
 
-            if (categoriaId != null)
-                viewModel.Habitacoes = viewModel.Habitacoes.Where(h => h.Categoria.Id == categoriaId).ToList();
 
-            //TODO: fazer o filtro
-            //if (orderPrice != null)
-            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
+                if (search.OrdemPreco != null)
+                {
+                    if (search.OrdemPreco == "Ascendente")
+                        search.Habitacoes = search.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
+                    else
+                        search.Habitacoes = search.Habitacoes.OrderByDescending(h => h.CustoPorNoite).ToList();
+                }
 
-            //if (orderRating != null)
-            //    viewModel.Habitacoes = viewModel.Habitacoes.OrderBy(h => h.Pontuacoes).ToList();
+                //TODO
+                //if (search.OrdemRating != null)
+                //    if (search.OrdemRating == "Ascendente")
+                //        search.Habitacoes = search.Habitacoes.OrderBy(h => h.Pontuacoes).ToList();
+                //    else
+                //        search.Habitacoes = search.Habitacoes.OrderByDescending(h => h.Pontuacoes).ToList();
 
-            viewModel.NumResultados = viewModel.Habitacoes.Count();
+                search.NumResultados = search.Habitacoes.Count();
 
-            return View(viewModel);
+                return View(search);
+            } else
+            {
+                search.Habitacoes = await _context.Habitacoes
+                    .Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .Include(h => h.Tipologia)
+                    .Include(h => h.Fotografias)
+                    .ToListAsync();
+
+                //TODO: show model erro on view (texto a pesquisar, tipo, checkin, checkout)
+            }
+
+            return View("~/Views/Home/Index.cshtml", search);
         }
 
         private bool HabitacaoExists(int id)

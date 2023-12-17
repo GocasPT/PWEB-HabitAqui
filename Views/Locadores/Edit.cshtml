@@ -17,14 +17,19 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Contacto" class="control-label"></label>
-                <input asp-for="Contacto" class="form-control" />
+                <input asp-for="Contacto" class="form-control" type="number" />
                 <span asp-validation-for="Contacto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoLocadorId" class="control-label"></label>
-                <select asp-for="TipoLocadorId" class="form-control" asp-items="ViewBag.TipoLocadorId"></select>
-                <span asp-validation-for="TipoLocadorId" class="text-danger"></span>
+                <label asp-for="IsEmpresa" class="form-check-label"></label>
+                <input asp-for="IsEmpresa" class="form-check-input" type="checkbox" />
+                <span asp-validation-for="IsEmpresa" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />

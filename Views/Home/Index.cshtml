@@ -1,4 +1,4 @@
-@model HabitAqui.ViewModels.HomeViewModel
+@model HabitAqui.ViewModels.SearchViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,28 +6,26 @@
 
 <partial name="_SearchPartial" />
 
-<form asp-action="Index" class="btn-group" role="group">
-    <input type="hidden" name="orderPrice" value="@Model.OrdemPreco" />
-    <input type="hidden" name="orderRating" value="@Model.OrdemRating" />
-    <button type="submit" class="btn btn-primary">All</button>
-    @foreach (var categoria in Model.Categorias)
-    {
-        <button type="submit" class="btn btn-primary" asp-route-categoriaId="@categoria.Id">@categoria.Nome</button>
-    }
-</form>
-
-@*TODO: fazer parte da filtragem*@
-<form asp-action="Index" class="form-check" role="group">
-    <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
-
-    <label>Preço</label>
-    <input type="submit" class="btn btn-primary" name="orderPrice" value="Ascendente" />
-    <input type="submit" class="btn btn-primary" name="orderPrice" value="Descendente" />
-    <br />
-    <label>Rating</label>
-    <input type="submit" class="btn btn-primary" name="orderRating" value="Ascendente" />
-    <input type="submit" class="btn btn-primary" name="orderRating" value="Descendente" />
-</form>
+@*TODO: fazer parte da filtragem + POST*@
+<div>
+    <form asp-action="Index" method="post" class="form-check" role="group">
+        <button type="submit" class="btn btn-primary">All</button>
+        <input type="hidden" asp-for="CategoriaId" value="" />
+        @foreach (var categoria in Model.Categorias)
+        {
+            <button type="submit" class="btn btn-primary">@categoria.Nome</button>
+            <input type="hidden" asp-for="CategoriaId" value="@categoria.Id" />
+        }
+        <br />
+        <label>Preço</label>
+        <input type="submit" class="btn btn-primary" asp-for="OrdemPreco" value="Ascendente" />
+        <input type="submit" class="btn btn-primary" asp-for="OrdemPreco" value="Descendente" />
+        <br />
+        <label>Rating</label>
+        <input type="submit" class="btn btn-primary" asp-for="OrdemRating" value="Ascendente" />
+        <input type="submit" class="btn btn-primary" asp-for="OrdemRating" value="Descendente" />
+    </form>
+</div>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>

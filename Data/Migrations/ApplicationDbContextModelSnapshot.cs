@@ -338,6 +338,9 @@ namespace HabitAqui.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Contacto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -345,16 +348,18 @@ namespace HabitAqui.Migrations
                     b.Property<DateTime?>("DataCriacao")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsEmpresa")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TipoLocadorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TipoLocadorId");
 
                     b.ToTable("Locadores");
                 });
@@ -403,23 +408,6 @@ namespace HabitAqui.Migrations
                     b.HasIndex("HabitacaoId");
 
                     b.ToTable("Pontuacoes");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.TipoLocador", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoLocador");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Tipologia", b =>
@@ -826,15 +814,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.Locador", b =>
-                {
-                    b.HasOne("HabitAqui.Models.TipoLocador", "TipoLocador")
-                        .WithMany()
-                        .HasForeignKey("TipoLocadorId");
-
-                    b.Navigation("TipoLocador");
-                });
-
             modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
                 {
                     b.HasOne("HabitAqui.Models.ApplicationUser", "ApplicationUser")
@@ -914,11 +893,9 @@ namespace HabitAqui.Migrations
 
             modelBuilder.Entity("HabitAqui.Models.Aluguer", b =>
                 {
-                    b.Navigation("CheckIn")
-                        .IsRequired();
+                    b.Navigation("CheckIn");
 
-                    b.Navigation("CheckOut")
-                        .IsRequired();
+                    b.Navigation("CheckOut");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
