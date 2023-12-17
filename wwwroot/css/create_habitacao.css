@@ -1,0 +1,14 @@
+﻿.checkbox-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.checkbox-list .form-check {
+    width: 20%;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
