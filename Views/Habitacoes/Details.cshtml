@@ -116,7 +116,6 @@ else
 
 <div class="ad-divider"></div>
 
-
 <div class="ad-container">
     <div class="row">
         <div class="ad-description">
@@ -174,6 +173,20 @@ else
                     }
                 </div>
             }
+        }
+    </div>
+</div>
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
+        @if (ViewBag.HabitacaoItens != null)
+        {
+            <div>
+                @foreach (var categoria in ViewBag.HabitacaoItens.Categoria) {
+                    @categoria.Item.Description
+                }
+            </div>
         }
     </div>
 </div>

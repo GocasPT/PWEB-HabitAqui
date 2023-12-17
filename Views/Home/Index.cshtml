@@ -1,5 +1,11 @@
 @model HabitAqui.ViewModels.SearchViewModel
 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -39,6 +45,7 @@
     </form>
 </div>
 
+@*
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
@@ -143,22 +150,92 @@
         }
     </tbody>
 </table>
+*@
 
-<div class="container">
-    <div class="row">
+
+<div class="ad-container" style="margin-top:50px">
+    <div class="row justify-content-center">
+
+        <div class="col-md-3">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="houseTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Preço €
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="houseTypeDropdown">
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('All')">N/A</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('Ascendente')">Ascendente</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('Descendente')">Descendente</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <form asp-action="Index" method="post" class="form-check" role="group">
+                <button type="submit" class="btn btn-primary">All</button>
+                <input type="hidden" asp-for="CategoriaId" value="" />
+                @foreach (var categoria in Model.Categorias)
+                {
+                    <button type="submit" class="btn btn-primary">@categoria.Nome</button>
+                    <input type="hidden" asp-for="CategoriaId" value="@categoria.Id" />
+                }
+                <br />
+            </form>
+        </div>
+
+        <div class="col-md-3 text-end">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButtonRating" data-bs-toggle="dropdown" aria-expanded="false">
+                    Rating
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="houseTypeDropdownRating">
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('All')">N/A</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Ascendente')">Ascendente</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Descendente')">Descendente</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function selectHouseType(type) {
+        var dropdownButton = document.getElementById('houseTypeDropdown');
+
+        if (type === 'All') {
+            dropdownButton.innerText = 'Preço € ';
+        } else {
+            dropdownButton.innerText = 'Preço € : ' + type;
+        }
+    }
+
+    function selectHouseTypeRating(type) {
+        var dropdownButton = document.getElementById('houseTypeDropdownRating');
+
+        if (type === 'All') {
+            dropdownButtonRating.innerText = 'Rating ';
+        } else {
+            dropdownButtonRating.innerText = 'Rating : ' + type;
+        }
+    }
+</script>
+
+
+<div class="ad-container">
+    <div class="row justify-content-center">
         @foreach (var item in Model.Habitacoes.Where(h => h.Disponivel))
         {
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="card border-0">
-                    <div id="carouselExample-@item.Id" class="carousel slide" data-ride="carousel" style="height: 200px; border-radius: 8px; overflow: hidden;">
+                <div class="card border-0 shadow">
+                    <div id="carouselExample-@item.Id" class="carousel slide" data-ride="carousel" style="height: 200px; overflow: hidden;">
                         <div class="carousel-inner">
                             @foreach (var image in item.Fotografias)
                             {
                                 <div class="carousel-item @if (image == item.Fotografias.First()) {
-                        <text>active</text>
- }">
-                                    <img src="@Url.Content($"~/img/habitacoes/{image.Nome}")" class="d-block w-100" alt="Slide" style="object-fit: cover; width: 406px; height: 200px; border-radius: 8px;">
-                                </div>
+                                    <text>active</text>
+                                }">
+                                            <img src="@Url.Content($"~/img/habitacoes/{image.Nome}")" class="d-block w-100" alt="Slide" style="object-fit: cover; width: 406px; height: 200px; border-radius: 8px 8px 0 0;">
+                                        </div>
                             }
                         </div>
                     </div>
@@ -176,16 +253,21 @@
                                 @Html.DisplayFor(modelItem => item.Concelho)
                             </span>
                         </div>
-                        <div class="card-text tight-line-height">
+                        <div class="card-text tight-line-height text-end">
                             <strong>
                                 @Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite
                             </strong>
                         </div>
-                        @if (User.IsInRole("Cliente")) {
+                        @if (User.IsInRole("Cliente"))
+                        {
                             <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Alugueres" asp-action="Create" asp-route-id="@item.Id">RESERVAR</a>
-                        } else if (!User.Identity.IsAuthenticated) {
+                        }
+                        else if (!User.Identity.IsAuthenticated)
+                        {
                             <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Habitacoes" asp-action="Details" asp-route-id="@item.Id">DETALHES</a>
-                        } else {
+                        }
+                        else
+                        {
                             <a class="btn btn-primary btn-warning" style="margin-top: 5px;" asp-controller="Habitacoes" asp-action="Edit" asp-route-id="@item.Id">EDITAR</a>
                         }
                     </div>
@@ -193,4 +275,15 @@
             </div>
         }
     </div>
+
 </div>
+<div class="ad-container position-relative" style="margin-top:60px;margin-bottom:90px;">
+    <div class="row justify-content-center">
+        <img class="d-block w-100" alt="Slide" style="object-fit: cover; border-radius: 40px; max-width: 1224px; max-height: 460px;" src="https://content.skyscnr.com/m/63977162d1971615/original/HotelDeals_GraphicPromo_1442x800_Tablet_EMEA-NoCopy.jpg?imbypass=true">
+        <div class="position-absolute top-50 start-0 translate-middle-y text-white" style="margin-left:40px;">
+            <h1 style="font-size: 3rem;">Venha desfrutar de umas férias</h1>
+            <p>Reserve já</p>
+        </div>
+    </div>
+</div>
+
