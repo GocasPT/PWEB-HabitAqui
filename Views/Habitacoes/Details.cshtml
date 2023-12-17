@@ -23,24 +23,24 @@
 @if(Model.Fotografias != null && Model.Fotografias.Any())
 {
     <div class="ad-containerImage">
-    <div class="row">
-        @if (Model.Fotografias != null && Model.Fotografias.Any())
-        {
-            <div class="col-sm-7">
-                <img class="ad-MainImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image">
-            </div>
-            <div class="col-sm-5" style="grid-row-gap: 20px">
-                @foreach (var fotografia in Model.Fotografias.Skip(1))
-                {
-                    <div class="row">
-                        <div class="col-6 col-sm-6">
-                            <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image">
+        <div class="row">
+            @if (Model.Fotografias != null && Model.Fotografias.Any())
+            {
+                <div class="col-sm-7">
+                    <img class="ad-MainImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image">
+                </div>
+                <div class="col-sm-5" style="grid-row-gap: 20px">
+                    @foreach (var fotografia in Model.Fotografias.Skip(1))
+                    {
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image">
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
-        }
-    </div>
+                    }
+                </div>
+            }
+        </div>
     </div>
 }
 else
@@ -141,6 +141,7 @@ else
 
 <div class="ad-divider"></div>
 
+@*
 <div class="ad-container">
     <div class="row">
         <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
@@ -159,7 +160,7 @@ else
             foreach (var category in distinctCategories)
             {
                 <div>
-                    <h2>@category</h2> 
+                    <div class="ad-subtitle" style="margin-top:10px">@category</div>
                     @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
                     {
                         if (habitacaoItem.Item.Categoria == category)
@@ -170,6 +171,69 @@ else
                         }
                     }
                 </div>
+            }
+        }
+    </div>
+</div>
+*@
+
+<div class="ad-container">
+    <div class="row">
+        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
+        @if (ViewBag.HabitacaoItens != null)
+        {
+            List<string> distinctCategories = new List<string>();
+            foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+            {
+                var category = habitacaoItem.Item.Categoria;
+                if (!distinctCategories.Contains(category))
+                {
+                    distinctCategories.Add(category);
+                }
+            }
+
+            for (int i = 0; i < Math.Min(2, distinctCategories.Count); i++)
+            {
+                var category = distinctCategories[i];
+                <div>
+                    <div class="ad-subtitle" style="margin-top:10px">@category</div>
+                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                    {
+                        if (habitacaoItem.Item.Categoria == category)
+                        {
+                            <div>
+                                <p>@habitacaoItem.Item.Description</p>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+            if (distinctCategories.Count > 2)
+            {
+                <div>
+                    <div id="popupContent" style="display: none;">
+                        @for (int i = 2; i < distinctCategories.Count; i++)
+                        {
+                            var category = distinctCategories[i];
+                            <div>
+                                <h2>@category</h2>
+                                @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                                {
+                                    if (habitacaoItem.Item.Categoria == category)
+                                    {
+                                        <div>
+                                            <p>@habitacaoItem.Item.Description</p>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+                <p class="ad-linkText" data-toggle="modal" data-target="#itensTotal" style="margin-bottom:-0.8rem;">
+                    Mostrar todos os itens
+                </p>
             }
         }
     </div>
@@ -278,6 +342,55 @@ else
             <div class="modal-body">
                 <h4>Sobre este espaço</h4>
                 @Html.DisplayFor(model => model.Descricao)
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="itensTotal" tabindex="-1" role="dialog" aria-labelledby="modalItens" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="ad-container">
+                    <div class="row">
+                        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
+                        @if (ViewBag.HabitacaoItens != null)
+                        {
+                            List<string> distinctCategories = new List<string>();
+                            foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                            {
+                                var category = habitacaoItem.Item.Categoria;
+                                if (!distinctCategories.Contains(category))
+                                {
+                                    distinctCategories.Add(category);
+                                }
+                            }
+
+                            foreach (var category in distinctCategories)
+                            {
+                                <div>
+                                    <div class="ad-subtitle" style="margin-top:10px">@category</div>
+                                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                                    {
+                                        if (habitacaoItem.Item.Categoria == category)
+                                        {
+                                            <div>
+                                                <p>@habitacaoItem.Item.Description</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
