@@ -4,23 +4,7 @@
     ViewData["Title"] = "Editar Habitação";
 }
 
-<style>
-    .checkbox-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px; /* Aumentei o espaço para 30px entre os elementos */
-    }
-
-        .checkbox-list .form-check {
-            width: 20%; /* Mantive 20% para 5 checkboxes por linha */
-            box-sizing: border-box;
-        }
-
-    /* Adicionei um espaçamento inferior geral */
-    .form-group {
-        margin-bottom: 15px;
-    }
-</style>
+<link rel="stylesheet" href="~/css/create_habitacao.css" />
 
 <h1>@ViewData["Title"]</h1>
 <hr />
@@ -37,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Descricao" class="control-label"></label>
-                    <textarea asp-for="Descricao" class="form-control" readonly rows="5"></textarea>
+                    <textarea asp-for="Descricao" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="Descricao" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -98,18 +82,19 @@
                     <span asp-validation-for="NumWC" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Itens" class="control-label">Select Itens:</label>
+                    <label asp-for="Itens" class="control-label">Select Items:</label>
 
                     <div class="checkbox-list">
-
-                        @foreach (var item in (MultiSelectList)ViewData["Itens"])
+                        @foreach (var item in (MultiSelectList)ViewBag.Itens)
                         {
+                            var isChecked = ViewBag.Itens != null && ViewBag.Itens.SelectedValues.Contains(item.Value.ToString());
+
                             <div class="form-check">
-                                <input type="checkbox" name="Itens" value="@item.Value" id="@($"chk{item.Value}")" class="form-check-input" />
+                                <input type="checkbox" name="Itens" value="@item.Value" id="@($"chk{item.Value}")"
+                                       class="form-check-input" @(isChecked ? "checked" : "") />
                                 <label class="form-check-label" for="@($"chk{item.Value}")">@item.Text</label>
                             </div>
                         }
-
                     </div>
                 </div>
                 <div class="form-group form-check">

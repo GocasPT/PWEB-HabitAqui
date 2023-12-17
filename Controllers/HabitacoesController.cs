@@ -181,7 +181,6 @@ namespace HabitAqui.Controllers
 
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome", habitacao.CategoriaId);
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome", habitacao.TipologiaId);
-            //ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome", habitacao.LocadorId);
             ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Name", habitacao.Itens);
 
             return View(habitacao);
@@ -202,12 +201,12 @@ namespace HabitAqui.Controllers
             ViewData["TipologiaNome"] = _context.Tipologia.Find(habitacao.TipologiaId)?.Nome;
             ViewData["CategoriaNome"] = _context.Categorias.Find(habitacao.CategoriaId)?.Nome;
 
-            var selectedItensID = _context.Habitacoes_Itens
+            var selectedDescriptions = _context.Habitacoes_Itens
                 .Where(hi => hi.HabitacaoId == habitacao.Id)
-                .Select(hi => hi.Item.Id)
+                .Select(hi => hi.Item.Description)
                 .ToList();
 
-            ViewBag.Itens = new MultiSelectList(_context.Itens, "Id", "Description", selectedItensID);
+            ViewBag.Itens = new MultiSelectList(_context.Itens, "Description", "Description", selectedDescriptions);
             return View(habitacao);
         }
 
@@ -225,6 +224,8 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
+                    var currentUser = await _userManager.GetUserAsync(User);
+                    habitacao.LocadorId = currentUser.LocadorId;
                     habitacao.DataCriacao = _context.Habitacoes.AsNoTracking().FirstOrDefault(h => h.Id == id)?.DataCriacao ?? DateTime.UtcNow;
                     _context.Update(habitacao);
                     await _context.SaveChangesAsync();
@@ -232,10 +233,16 @@ namespace HabitAqui.Controllers
                     _context.Habitacoes_Itens.RemoveRange(_context.Habitacoes_Itens.Where(hi => hi.HabitacaoId == habitacao.Id));
                     await _context.SaveChangesAsync();
 
-                    var selectedItens = Request.Form["Itens"].ToString().Split(',').Select(int.Parse).ToArray();
-                    if (selectedItens.Length > 0)
+                    var selectedDescriptions = Request.Form["Itens"].ToString().Split(',');
+
+                    foreach (var description in selectedDescriptions)
                     {
-                        foreach (var itemId in selectedItens)
+                        var itemId = _context.Itens
+                            .Where(i => i.Description == description)
+                            .Select(i => i.Id)
+                            .FirstOrDefault();
+
+                        if (itemId != null)
                         {
                             var habitacaoItem = new Habitacao_Itens
                             {
@@ -244,9 +251,9 @@ namespace HabitAqui.Controllers
                             };
                             _context.Add(habitacaoItem);
                         }
-
-                        await _context.SaveChangesAsync();
                     }
+
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
