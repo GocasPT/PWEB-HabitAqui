@@ -169,7 +169,13 @@
                                 @Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite
                             </strong>
                         </div>
-                        <button type="button" class="btn btn-primary" style="margin-top: 5px;">RESERVAR</button>
+                        @if (User.IsInRole("Cliente")) {
+                            <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Alugueres" asp-action="Create" asp-route-id="@item.Id">RESERVAR</a>
+                        } else if (!User.Identity.IsAuthenticated) {
+                            <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Habitacoes" asp-action="Details" asp-route-id="@item.Id">DETALHES</a>
+                        } else {
+                            <a class="btn btn-primary btn-warning" style="margin-top: 5px;" asp-controller="Habitacoes" asp-action="Edit" asp-route-id="@item.Id">EDITAR</a>
+                        }
                     </div>
                 </div>
             </div>

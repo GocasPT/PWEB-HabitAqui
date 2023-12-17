@@ -57,6 +57,7 @@ namespace HabitAqui.Controllers
         }
 
         // GET: Habitacoes/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Habitacoes == null)
@@ -67,13 +68,11 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
-                    .ThenInclude(l => l.TipoLocador)
                 .Include(h => h.Tipologia)
                 .Include(h => h.Fotografias)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (habitacao == null)
-            {
+            if (habitacao == null) {
                 return NotFound();
             }
 
@@ -81,8 +80,7 @@ namespace HabitAqui.Controllers
             DateTime currentDate = DateTime.Now.Date;
             int anosDeServico = currentDate.Year - dataCriacao.Year;
 
-            if (currentDate < dataCriacao.AddYears(anosDeServico))
-            {
+            if (currentDate < dataCriacao.AddYears(anosDeServico)) {
                 anosDeServico--;
             }
 
@@ -191,14 +189,12 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Habitacoes == null)
-            {
+            if (id == null || _context.Habitacoes == null) {
                 return NotFound();
             }
 
             var habitacao = await _context.Habitacoes.FindAsync(id);
-            if (habitacao == null)
-            {
+            if (habitacao == null) {
                 return NotFound();
             }
             ViewData["LocadorNome"] = _context.Locadores.Find(habitacao.LocadorId)?.Nome;

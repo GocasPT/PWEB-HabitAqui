@@ -83,7 +83,9 @@ else
         <div class="col-5">
             <div class="ad-priceContainer">
                 <span style="font-size:23px;font-weight: bold;">@Html.DisplayFor(model => model.CustoPorNoite)€</span> / noite
-                <a class="btn btn-danger float-end" asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@Model.Id">RESERVAR</a>
+                @if (User.IsInRole("Cliente") || !User.Identity.IsAuthenticated) {
+                    <a class="btn btn-danger float-end" asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@Model.Id">RESERVAR</a>
+                }
             </div>
         </div>
     </div>
@@ -94,9 +96,21 @@ else
 <div class="ad-container">
     <div class="row">
         <div class="ad-subtitle"><i class="bi bi-file-earmark-person-fill"></i> Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
-        <div class="ad-subdescription">
-            @*TODO: @ViewBag.AnosDeServico anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.TipoLocador.Nome)*@
-        </div>
+        
+        @{
+            Boolean isEmpresa = Model.Locador.IsEmpresa;
+            if (isEmpresa) {
+                <div class="ad-subdescription">
+                    @ViewBag.AnosDeServico
+                    anos de serviço no HabitAqui | Empresa
+                </div>
+            } else {
+                <div class="ad-subdescription">
+                    @ViewBag.AnosDeServico
+                    anos de serviço no HabitAqui | Particular
+                </div>
+            }
+        }
     </div>
 </div>
 
@@ -110,17 +124,14 @@ else
                 string descricao = Model.Descricao;
                 int maxLength = 100;
 
-                if (descricao.Length > maxLength)
-                {
+                if (descricao.Length > maxLength) {
                     descricao = descricao.Substring(0, maxLength) + "...";
                 }
             }
 
             @Html.Raw(descricao)
 
-            @if (Model.Descricao.Length > maxLength)
-            {
-
+            @if (Model.Descricao.Length > maxLength) {
                 <p class="ad-linkText" data-toggle="modal" data-target="#habitacaoDescricao" style="margin-bottom:-0.8rem;">
                     Mostrar mais ...
                 </p>
