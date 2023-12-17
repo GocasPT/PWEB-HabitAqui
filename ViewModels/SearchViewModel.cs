@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.ViewModels
 {
-    //TODO: tipo (casa, apartamento, etc) e categoria (familiar, ferias, luxo, etc)
     public class SearchViewModel
     {
         [Display(Name = "Texto a Pesquisar")]

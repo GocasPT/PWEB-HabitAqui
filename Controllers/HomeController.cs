@@ -43,12 +43,21 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> Index([Bind("CategoriaId,OrdemPreco,OrdemRating")] SearchViewModel filter)
         {
             filter.Categorias = await _context.Categorias.ToListAsync();
-            filter.Habitacoes = await _context.Habitacoes
+
+            var habitacoesQuery = _context.Habitacoes
                 .Include(h => h.Categoria)
-                //.Include(h => h.Locador)
-                //.Include(h => h.Pontuacoes)
-                //.Include(h => h.Tipologia)
-                .ToListAsync();
+                .Include(h => h.Locador)
+                .Include(h => h.Pontuacoes)
+                .Include(h => h.Tipologia)
+                .Include(h => h.Fotografias)
+                .AsQueryable();
+
+            if (filter.CategoriaId != 0)
+            {
+                habitacoesQuery = habitacoesQuery.Where(h => h.CategoriaId == filter.CategoriaId);
+            }
+
+            filter.Habitacoes = await habitacoesQuery.ToListAsync();
 
             Console.WriteLine("Categoria: " + filter.CategoriaId);
             Console.WriteLine("Ordem de preco: " + filter.OrdemPreco);
