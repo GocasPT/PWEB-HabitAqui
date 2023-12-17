@@ -359,13 +359,18 @@ namespace HabitAqui.Controllers
             {
 
                 search.Habitacoes = await _context.Habitacoes
+                    .Include(h => h.Alugueres)
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
                     .Include(h => h.Tipologia)
                     .Include(h => h.Pontuacoes)
                     .Include(h => h.Fotografias)
                     .Where(h => h.Disponivel == true)
-                    .Where(h => h.Name.Contains(search.TextoAPesquisar) || h.Descricao.Contains(search.TextoAPesquisar))
+                    .Where(h => h.Name.Contains(search.TextoAPesquisar) ||
+                                h.Descricao.Contains(search.TextoAPesquisar))
+                    .Where(h => h.Alugueres
+                        .All(a => a.CheckIn.DataCheckIn > search.CheckOut ||
+                                    a.CheckOut.DataCheckOut < search.CheckIn))
                     .ToListAsync();
 
                 if (search.CategoriaId != 0)

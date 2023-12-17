@@ -154,51 +154,88 @@
 
 
 <div class="ad-container" style="margin-top:50px">
-    <div class="row justify-content-center">
+    <form asp-action="Index" method="post" class="from-check" role="group">
+        <input type="hidden" asp-for="TextoAPesquisar" value="@Model.TextoAPesquisar" />
+        <input type="hidden" asp-for="CheckIn" value="@Model.CheckIn" />
+        <input type="hidden" asp-for="CheckOut" value="@Model.CheckOut" />
 
-        <div class="col-md-3">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="houseTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Preço €
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="houseTypeDropdown">
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('All')">N/A</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('Ascendente')">Ascendente</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseType('Descendente')">Descendente</a></li>
-                </ul>
+        <div class="row justify-content-center">
+
+            <div class="col-md-3">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="houseTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        @{
+                            var priceStr = Model.OrdemPreco == "N/A" ? "" : ": "+Model.OrdemPreco;
+                        }
+
+                        Preço € @priceStr
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="houseTypeDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseType('All')">
+                                <input type="submit" asp-for="OrdemPreco" value="N/A" />
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseType('Ascendente')">
+                                <input type="submit" asp-for="OrdemPreco" value="Ascendente" />
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseType('Descendente')">
+                                <input type="submit" asp-for="OrdemPreco" value="Descendente" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        @*
+            
 
-        
-        <div class="col-md-6 text-center">
+
+            @* <div class="col-md-6 text-center">
             <form asp-action="Index" method="post" class="form-check" role="group">
-                <button type="submit" class="btn btn-primary">All</button>
-                <input type="hidden" asp-for="CategoriaId" value="" />
-                @foreach (var categoria in Model.Categorias)
-                {
-                    <button type="submit" class="btn btn-primary">@categoria.Nome</button>
-                    <input type="hidden" asp-for="CategoriaId" value="@categoria.Id" />
-                }
-                <br />
+            <button type="submit" class="btn btn-primary">All</button>
+            <input type="hidden" asp-for="CategoriaId" value="" />
+            @foreach (var categoria in Model.Categorias)
+            {
+            <button type="submit" class="btn btn-primary">@categoria.Nome</button>
+            <input type="hidden" asp-for="CategoriaId" value="@categoria.Id" />
+            }
+            <br />
             </form>
-        </div>
-        *@
+            </div> *@
+           
 
-        <div class="col-md-3 text-end">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButtonRating" data-bs-toggle="dropdown" aria-expanded="false">
-                    Rating
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="houseTypeDropdownRating">
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('All')">N/A</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Ascendente')">Ascendente</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Descendente')">Descendente</a></li>
-                </ul>
+            <div class="col-md-3 text-end">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButtonRating" data-bs-toggle="dropdown" aria-expanded="false">
+                        @{
+                            var ratingStr = Model.OrdemRating == "N/A" ? "" : ": "+Model.OrdemRating;
+                        }
+                        Rating @ratingStr
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="houseTypeDropdownRating">
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseTypeRating('All')">
+                                <input type="submit" asp-for="OrdemRating" value="N/A" />
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Ascendente')">
+                                <input type="submit" asp-for="OrdemRating" value="Ascendente" />
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="selectHouseTypeRating('Descendente')">
+                                <input type="submit" asp-for="OrdemRating" value="Descendente" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
+    </form>
 </div>
 
 <script>
