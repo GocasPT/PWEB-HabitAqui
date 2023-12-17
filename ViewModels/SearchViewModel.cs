@@ -16,7 +16,7 @@ namespace HabitAqui.ViewModels
         public int? NumResultados { get; set; }
         public string? OrdemPreco { get; set; }
         public string? OrdemRating { get; set; }
-        public List<Categoria> Categorias { get; set; }
+        public int? LocadorId { get; set; }
         public List<Habitacao> Habitacoes { get; set; }
     }
 }

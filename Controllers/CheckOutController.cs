@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 using HabitAqui.Migrations;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Funcionario, Gestor")]
     public class CheckOutController : Controller
     {
         private readonly ApplicationDbContext _context;

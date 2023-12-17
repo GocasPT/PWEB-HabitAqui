@@ -58,6 +58,7 @@ namespace HabitAqui.Controllers
 
         // GET: Habitacoes/Details/5
         [AllowAnonymous]
+        [Authorize(Roles = "Cliente")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Habitacoes == null)
@@ -323,12 +324,23 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Search
         [AllowAnonymous]
         [Authorize(Roles = "Cliente")]
-        //public async Task<IActionResult> Search(int? categoriaId, string searchString, string orderPrice, string orderRating)
-        public async Task<IActionResult> Search([Bind("TextoAPesquisar,CategoriaId,CheckIn,CheckOut,OrdemPreco,OrdemRating")] SearchViewModel search)
+        public async Task<IActionResult> Search([Bind("TextoAPesquisar,CheckIn,CheckOut,OrdemPreco,OrdemRating")] SearchViewModel search)
         {
-            ModelState.Remove(nameof(search.Categorias));
+            var categorias = await _context.Categorias
+                .Select(c => new { Id = c.Id, Nome = c.Nome })
+                .Distinct()
+                .ToListAsync();
+            categorias.Insert(0, new { Id = 0, Nome = "Todas" });
+            ViewBag.Categorias = new SelectList(categorias, "Id", "Nome");
+
+            var locadores = await _context.Locadores
+                .Select(l => new { Id = l.Id, Nome = l.Nome })
+                .Distinct()
+                .ToListAsync();
+            locadores.Insert(0, new { Id = 0, Nome = "Todos" });
+            ViewBag.Locadores = new SelectList(locadores, "Id", "Nome");
+
             ModelState.Remove(nameof(search.Habitacoes));
-            search.Categorias = await _context.Categorias.ToListAsync();
 
             if (search.CheckIn > search.CheckOut)
             {
@@ -349,6 +361,11 @@ namespace HabitAqui.Controllers
                     .Where(h => h.Name.Contains(search.TextoAPesquisar) || h.Descricao.Contains(search.TextoAPesquisar))
                     .ToListAsync();
 
+                if (search.CategoriaId != 0)
+                    search.Habitacoes = search.Habitacoes.Where(h => h.CategoriaId == search.CategoriaId).ToList();
+
+                if (search.LocadorId != 0)
+                    search.Habitacoes = search.Habitacoes.Where(h => h.LocadorId == search.LocadorId).ToList();
 
                 if (search.OrdemPreco != null)
                 {

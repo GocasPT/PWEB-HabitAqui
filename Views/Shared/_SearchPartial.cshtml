@@ -2,19 +2,14 @@
 
 <div>
     <form asp-controller="Habitacoes" asp-action="Search" method="post" class="d-flex" role="search">
+        <input type="hidden" asp-for="CategoriaId" />
+        <input type="hidden" asp-for="LocadorId" />
+        <input type="hidden" asp-for="OrdemPreco" />
+        <input type="hidden" asp-for="OrdemRating" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input asp-for="TextoAPesquisar" class="form-control me-2" type="search">
-        <select asp-for="CategoriaId" class="fomr-select">
-            <option>Tipo de habitação</option>
-            @foreach (var categoria in Model.Categorias)
-            {
-                <option value="@categoria.Id">@categoria.Nome</option>
-            })
-        </select>
-        <input asp-for="CheckIn" class="form-control me-2" type="date">
-        <input asp-for="CheckOut" class="form-control me-2" type="date">
+        <input type="search" asp-for="TextoAPesquisar" class="form-control me-2">
+        <input type="date" asp-for="CheckIn" class="form-control me-2">
+        <input type="date" asp-for="CheckOut" class="form-control me-2">
         <button class="btn btn-outline-success" type="submit">Search</button>
-        <input asp-for="OrdemPreco" type="hidden" value=""/>
-        <input asp-for="OrdemRating" type="hidden" value=""/>
     </form>
 </div>

@@ -6,22 +6,36 @@
 
 <partial name="_SearchPartial" />
 
-@*TODO: fazer parte da filtragem + POST*@
 <div>
+    <form asp-action="Index" method="post" class="from-check" role="group">
+        <input type="hidden" asp-for="TextoAPesquisar" value="@Model.TextoAPesquisar" />
+        <input type="hidden" asp-for="CheckIn" value="@Model.CheckIn" />
+        <input type="hidden" asp-for="CheckOut" value="@Model.CheckOut" />
+
+        Categoria:
+        <select asp-for="CategoriaId" asp-items="@ViewBag.Categorias"></select>
+
+        Locador:
+        <select asp-for="LocadorId" asp-items="@ViewBag.Locadores"></select>
+
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
     <form asp-action="Index" method="post" class="form-check" role="group">
-        <button type="submit" class="btn btn-primary" name="categoriaId" value="">All</button>
-        @foreach (var categoria in Model.Categorias)
-        {
-            <button type="submit" class="btn btn-primary" name="categoriaId" value="@categoria.Id">@categoria.Nome</button>
-        }
+        <input type="hidden" asp-for="TextoAPesquisar" value="@Model.TextoAPesquisar" />
+        <input type="hidden" asp-for="CheckIn" value="@Model.CheckIn" />
+        <input type="hidden" asp-for="CheckOut" value="@Model.CheckOut" />
+        <input type="hidden" asp-for="CategoriaId" value="@Model.CategoriaId" />
+        <input type="hidden" asp-for="LocadorId" value="@Model.LocadorId" />
+
+        Ordenar por custo:
+        <input type="submit" asp-for="OrdemPreco" value="Ascendente" />
+        <input type="submit" asp-for="OrdemPreco" value="Descendente" />
         <br />
-        <label>Preço</label>
-        <input type="submit" class="btn btn-primary" name="ordemPreco" value="Ascendente" />
-        <input type="submit" class="btn btn-primary" name="ordemPreco" value="Descendente" />
-        <br />
-        <label>Rating</label>
-        <input type="submit" class="btn btn-primary" name="ordemRating" value="Ascendente" />
-        <input type="submit" class="btn btn-primary" name="ordemRating" value="Descendente" />
+
+        Ordenar por Pontuação:
+        <input type="submit" asp-for="OrdemRating" value="Ascendente" />
+        <input type="submit" asp-for="OrdemRating" value="Descendente" />
     </form>
 </div>
 

@@ -9,9 +9,11 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using System.Security.Claims;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Cliente")]
     public class PontuacoesController : Controller
     {
         private readonly ApplicationDbContext _context;

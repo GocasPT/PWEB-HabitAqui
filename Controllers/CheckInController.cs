@@ -9,9 +9,11 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Funcionario, Gestor")]
     public class CheckInController : Controller
     {
         private readonly ApplicationDbContext _context;
