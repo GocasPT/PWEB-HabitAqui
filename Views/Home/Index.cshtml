@@ -163,7 +163,7 @@
                         </div>
                         @if (User.IsInRole("Cliente"))
                         {
-                            <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Alugueres" asp-action="Create" asp-route-id="@item.Id">RESERVAR</a>
+                            <a class="btn btn-primary" style="margin-top: 5px;" asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@item.Id">RESERVAR</a>
                         }
                         else if (!User.Identity.IsAuthenticated)
                         {
