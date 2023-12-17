@@ -31,7 +31,6 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Alugueres" asp-action="Index">Alugueres</a>
                     </li>
                 }
-                //TODO:Editar o Else depois
                 else if (User.IsInRole("Administrador") )
                 {
 
@@ -42,10 +41,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Locadores" asp-action="Index">Locadores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Alugueres" asp-action="Index">Alugueres</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="UserRolesManager" asp-action="Index">User Roles Manager</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="UserManager" asp-action="Index">Gerir Users</a>
                     </li>
                 }
             </ul>

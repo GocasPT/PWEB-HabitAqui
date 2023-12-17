@@ -6,7 +6,11 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<a href="@Url.Page("/Account/Register", new { area = "Identity", id = ViewBag.LocadorId })">Criar novo utilizador</a>
+
+@if (ViewBag.Role == "Gestor")
+{
+    <a href="@Url.Page("/Account/Register", new { area = "Identity", id = ViewBag.LocadorId })">Criar novo funcionários/gestor</a>
+}
 
 <table class="table">
     <thead>
@@ -36,20 +40,27 @@
                 <td>
                     @String.Join(", ", item.Roles)
                 </td>
-                <td>
-                    @if (item.Ativo)
-                    {
-                        <a class="btn btn-warning" asp-action="Disable" asp-route-userId="@item.UserId">Desativar</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-success" asp-action="Enable" asp-route-userId="@item.UserId">Ativar</a>
-                    }
-                    @if ((item.CheckIns == null || !item.CheckIns.Any()) && (item.CheckOuts == null || !item.CheckOuts.Any()))
-                    {
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-userId="@item.UserId">Apagar</a>
-                    }
-                </td>
+                @if (ViewBag.CurrentUserId == null || ViewBag.CurrentUserId != item.UserId)
+                {
+                    <td>
+                        @if (item.Ativo)
+                        {
+                            <a class="btn btn-danger" asp-action="Disable" asp-route-userId="@item.UserId">Desativar</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success" asp-action="Enable" asp-route-userId="@item.UserId">Ativar</a>
+                        }
+                        @if ((item.CheckIns == null || !item.CheckIns.Any()) && (item.CheckOuts == null || !item.CheckOuts.Any()))
+                        {
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-userId="@item.UserId">Apagar</a>
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                })
             </tr>
         }
     </tbody>

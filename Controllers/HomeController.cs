@@ -2,6 +2,7 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using HabitAqui.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,29 @@ namespace HabitAqui.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _logger = logger;
+            _userManager = userManager;
             _context = context;
         }
 
         // GET: Home
         public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+            {
+                var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+                if (currentUserRoles.Contains("Administrador"))
+                    return RedirectToAction("Index", "UserManager");
+                else if (currentUserRoles.Contains("Gestor") || currentUserRoles.Contains("Funcionario"))
+                    return RedirectToAction("Index", "Habitacoes");
+            }
+
             var categorias = await _context.Categorias
                 .Select(c => new { Id = c.Id, Nome = c.Nome })
                 .Distinct()
@@ -109,6 +122,11 @@ namespace HabitAqui.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task<List<string>> GetUserRoles(ApplicationUser user)
+        {
+            return new List<string>(await _userManager.GetRolesAsync(user));
         }
     }
 }
