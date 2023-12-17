@@ -146,7 +146,6 @@ else
         <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
         @if (ViewBag.HabitacaoItens != null)
         {
-            // Find distinct categories
             List<string> distinctCategories = new List<string>();
             foreach (var habitacaoItem in ViewBag.HabitacaoItens)
             {
@@ -157,11 +156,10 @@ else
                 }
             }
 
-            // Iterate through distinct categories
             foreach (var category in distinctCategories)
             {
                 <div>
-                    <h2>@category</h2> <!-- Display category name -->
+                    <h2>@category</h2> 
                     @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
                     {
                         if (habitacaoItem.Item.Categoria == category)
@@ -173,20 +171,6 @@ else
                     }
                 </div>
             }
-        }
-    </div>
-</div>
-
-<div class="ad-container">
-    <div class="row">
-        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
-        @if (ViewBag.HabitacaoItens != null)
-        {
-            <div>
-                @foreach (var categoria in ViewBag.HabitacaoItens.Categoria) {
-                    @categoria.Item.Description
-                }
-            </div>
         }
     </div>
 </div>
