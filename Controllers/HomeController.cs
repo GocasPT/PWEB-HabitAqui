@@ -50,15 +50,24 @@ namespace HabitAqui.Controllers
             locadores.Insert(0, new { Id = 0, Nome = "Todos" });
             ViewBag.Locadores = new SelectList(locadores, "Id", "Nome");
 
+            var habitacoes = await _context.Habitacoes
+                .Include(h => h.Categoria)
+                .Include(h => h.Locador)
+                .Include(h => h.Tipologia)
+                .Include(h => h.Fotografias)
+                .ToListAsync();
+
+            foreach (var habitacao in habitacoes)
+            {
+                habitacao.Alugueres = await _context.Alugueres
+                    .Include(a => a.Pontuacao)
+                    .Where(a => a.HabitacaoId == habitacao.Id)
+                    .ToListAsync();
+            }
+
             var viewModel = new SearchViewModel
             {
-                Habitacoes = await _context.Habitacoes
-                    .Include(h => h.Categoria)
-                    .Include(h => h.Locador)
-                    .Include(h => h.Pontuacoes)
-                    .Include(h => h.Tipologia)
-                    .Include(h => h.Fotografias)
-                    .ToListAsync()
+                Habitacoes = habitacoes
             };
 
             return View(viewModel);
@@ -85,7 +94,6 @@ namespace HabitAqui.Controllers
             var habitacoesQuery = _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
-                .Include(h => h.Pontuacoes)
                 .Include(h => h.Tipologia)
                 .Include(h => h.Fotografias)
                 .AsQueryable();

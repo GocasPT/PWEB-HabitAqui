@@ -25,12 +25,6 @@ namespace HabitAqui.Data
                 .WithOne(a => a.CheckOut)
                 .HasForeignKey<CheckOut>(c => c.AluguerId);
 
-            modelBuilder.Entity<Habitacao>()
-                .HasMany(h => h.Pontuacoes)
-                .WithOne(p => p.Habitacao)
-                .HasForeignKey(p => p.HabitacaoId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(a => a.Pontuacoes)
                 .WithOne(p => p.ApplicationUser)
@@ -86,6 +80,17 @@ namespace HabitAqui.Data
                 .WithMany(h => h.Fotografias)
                 .HasForeignKey(f => f.HabitacaoId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Aluguer>()
+                .HasOne(a => a.Pontuacao)
+                .WithOne(p => p.Aluguer)
+                .HasForeignKey<Pontuacao>(p => p.AluguerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Pontuacao>()
+                .HasOne(p => p.Aluguer)
+                .WithOne(a => a.Pontuacao)
+                .HasForeignKey<Aluguer>(a => a.PontuacaoId);
 
             base.OnModelCreating(modelBuilder);
         }

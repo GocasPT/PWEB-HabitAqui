@@ -71,6 +71,8 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Locador)
                 .Include(h => h.Tipologia)
                 .Include(h => h.Fotografias)
+                .Include(h => h.Alugueres)
+                    .ThenInclude(a => a.Pontuacao)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (habitacao == null) {
@@ -92,11 +94,39 @@ namespace HabitAqui.Controllers
             .Include(hi => hi.Item)
             .ToListAsync();
 
-            habitacao.Pontuacoes = await _context.Pontuacoes
-            .Where(p => p.HabitacaoId == habitacao.Id)
-            .ToListAsync();
-
             ViewBag.HabitacaoItens = habitacaoItens;
+
+            double averagePontuacaoTotal = habitacao.Alugueres?.Where(a => a.Pontuacao?.MediaPontuacao.HasValue ?? false)
+                                              .Select(a => a.Pontuacao.MediaPontuacao.Value)
+                                              .DefaultIfEmpty(0)
+                                              .Average() ?? 0;
+
+
+            double averagePontuacaoLimpeza = habitacao.Alugueres?
+                .Select(a => a.Pontuacao?.PontuacaoLimpeza)
+                .Where(p => p.HasValue)
+                .Average() ?? 0;
+
+            double averagePontuacaoLocalizacao = habitacao.Alugueres?
+                .Select(a => a.Pontuacao?.PontuacaoLocalizacao)
+                .Where(p => p.HasValue)
+                .Average() ?? 0;
+
+            double averagePontuacaoQualidadePreco = habitacao.Alugueres?
+                .Select(a => a.Pontuacao?.PontuacaoQualidadePreco)
+                .Where(p => p.HasValue)
+                .Average() ?? 0;
+
+            double averagePontuacaoEspaco = habitacao.Alugueres?
+                .Select(a => a.Pontuacao?.PontuacaoEspaco)
+                .Where(p => p.HasValue)
+                .Average() ?? 0;
+
+            ViewBag.AveragePontuacaoTotal = averagePontuacaoTotal;
+            ViewBag.AveragePontuacaoLimpeza = averagePontuacaoLimpeza;
+            ViewBag.AveragePontuacaoLocalizacao = averagePontuacaoLocalizacao;
+            ViewBag.AveragePontuacaoQualidadePreco = averagePontuacaoQualidadePreco;
+            ViewBag.AveragePontuacaoEspaco = averagePontuacaoEspaco;
 
             return View(habitacao);
         }
@@ -363,7 +393,6 @@ namespace HabitAqui.Controllers
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
                     .Include(h => h.Tipologia)
-                    .Include(h => h.Pontuacoes)
                     .Include(h => h.Fotografias)
                     .Where(h => h.Disponivel == true)
                     .Where(h => h.Name.Contains(search.TextoAPesquisar) ||

@@ -130,13 +130,13 @@
                         @Html.DisplayFor(modelItem => item.Confirmado)
                     </td>
                     <td>
-                        @if (item.Habitacao.Pontuacoes.Count == 0)
+                        @if (item.Pontuacao == null)
                         {
-                            <a class="btn btn-danger" asp-controller="Pontuacoes" asp-action="Create" asp-route-HabitacaoId="@item.Habitacao.Id">Avaliar</a>
+                            <a class="btn btn-danger" asp-controller="Pontuacoes" asp-action="Create" asp-route-AluguerId="@item.Id">Avaliar</a>
                         }
                         else
                         {
-                            <a class="btn btn-success" asp-controller="Pontuacoes" asp-action="Edit" asp-route-id="@item.Habitacao.Pontuacoes.FirstOrDefault()?.Id">Editar Review</a>
+                            <a class="btn btn-success" asp-controller="Pontuacoes" asp-action="Edit" asp-route-id="@item.Pontuacao.Id">Editar Review</a>
                         }
                         <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                     </td>

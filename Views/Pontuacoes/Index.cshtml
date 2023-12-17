@@ -33,7 +33,7 @@
                     @Html.DisplayNameFor(model => model.DataCriacao)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Habitacao)
+                    @Html.DisplayNameFor(model => model.Aluguer.Habitacao.Name)
                 </th>
                 <th></th>
             </tr>
@@ -64,7 +64,7 @@
                         @Html.DisplayFor(modelItem => item.DataCriacao)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Habitacao.Concelho)
+                        @Html.DisplayFor(modelItem => item.Aluguer.Habitacao.Name)
                     </td>
                     <td>
                         <a class="btn btn-info" asp-controller="Pontuacoes" asp-action="Edit" asp-route-id="@item.Id">Edit</a>

@@ -89,7 +89,7 @@
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().DataCriacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().mediaPontuacoes)
+                Pontuação
             </th>
             <th>
                 Operações
@@ -140,7 +140,13 @@
                     @Html.DisplayFor(modelItem => habitacao.DataCriacao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)⭐
+                    @{
+                        double averagePontuacao = habitacao.Alugueres?.Where(a => a.Pontuacao?.MediaPontuacao.HasValue ?? false)
+                        .Select(a => a.Pontuacao.MediaPontuacao.Value)
+                        .DefaultIfEmpty(0)
+                        .Average() ?? 0;
+                    }
+                    @averagePontuacao⭐
                 </td>
                 <td>
                     <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
@@ -285,7 +291,7 @@
                         </h5>
                         <div class="card-text tight-line-height">
                             <span>
-                                <i class="bi bi-bookmark-star-fill"></i> @(item.mediaPontuacoes != 0 ? item.mediaPontuacoes.ToString("0.00") : "N/A")
+                                @*<i class="bi bi-bookmark-star-fill"></i> @(item.mediaPontuacoes != 0 ? item.mediaPontuacoes.ToString("0.00") : "N/A")*@
                             </span>
                         </div>
                         <div class="card-text tight-line-height">

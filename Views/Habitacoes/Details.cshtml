@@ -4,22 +4,44 @@
     ViewData["Title"] = "Detalhes da Habitação";
 }
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin="" />
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
+
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
+
+
+
 
 
 
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
+@*
 @if(Model.Fotografias != null && Model.Fotografias.Any())
 {
     <div class="ad-containerImage">
@@ -40,6 +62,141 @@
                     }
                 </div>
             }
+        </div>
+    </div>
+}
+*@
+@*
+@if (Model.Fotografias != null && Model.Fotografias.Any())
+{
+    <div class="ad-containerImage">
+        <div class="row">
+            @if (Model.Fotografias != null && Model.Fotografias.Any())
+            {
+                <div class="col-sm-7">
+                    <img class="ad-MainImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image">
+                </div>
+                <div class="col-sm-5" style="grid-row-gap: 20px">
+                    @for (int i = 1; i < Model.Fotografias.Count && i <= 4; i += 2)
+                    {
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.Nome}")" alt="Ad Image">
+                            </div>
+                            @if (i + 1 < Model.Fotografias.Count)
+                            {
+                                <div class="col-6 col-sm-6">
+                                    <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.Skip(1).Nome}")" alt="Ad Image">
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}*@
+
+
+<div class="ad-containerImage text-center">
+    <div class="row">
+        <div class="col-6 mx-auto my-5">
+            <div id="ecommerce-gallery" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/14a.webp" alt="White blouse" class="w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp" alt="Blue Jeans Jacket" class="w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp" alt="Red Sweatshirt" class="w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/15a.webp" alt="Black Shirt" class="w-100">
+                    </div>
+                </div>
+                <div class="row py-3 shadow-5 mt-3">
+                    <div class="col-3 mt-1">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/14a.webp" alt="White blouse" class="thumbnail-image" onclick="changeImage(0)">
+                    </div>
+                    <div class="col-3 mt-1">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp" alt="Blue Jeans Jacket" class="thumbnail-image" onclick="changeImage(1)">
+                    </div>
+                    <div class="col-3 mt-1">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp" alt="Red Sweatshirt" class="thumbnail-image" onclick="changeImage(2)">
+                    </div>
+                    <div class="col-3 mt-1">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/15a.webp" alt="Black Shirt" class="thumbnail-image" onclick="changeImage(3)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .thumbnail-image {
+        width: 100%;
+        height: auto;
+        max-width: 100px; /* Set the maximum width for the thumbnail */
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function changeImage(index) {
+        $('#ecommerce-gallery').carousel(index);
+    }
+</script>
+
+
+
+@if (Model.Fotografias != null && Model.Fotografias.Any())
+{
+    <div class="ad-containerImage text-center">
+        <div class="row">
+            <div class="col-6 mx-auto my-5">
+                <div id="ecommerce-gallery" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image" class="w-75">
+                        </div>
+                        @foreach (var fotografia in Model.Fotografias.Skip(1))
+                        {
+                            <div class="carousel-item">
+                                <img src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image" class="w-75">
+                            </div>
+                        }
+                    </div>
+                    <div class="row py-3 shadow-5 mt-3">
+                        @foreach (var fotografia in Model.Fotografias)
+                        {
+                            <div class="col-3 mt-1">
+                                <img src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image" class="w-75">
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (Model.Fotografias != null && Model.Fotografias.Any())
+{
+    <div class="ad-containerImage">
+        <div class="row">
+            <div class="col-sm-7">
+                <img class="ad-MainImage_2" src="@Url.Content($"~/img/habitacoes/{Model.Fotografias.First().Nome}")" alt="Ad Image" data-toggle="modal" data-target="#imageModal">
+            </div>
+            <div class="col-sm-5" style="grid-row-gap: 20px">
+                @foreach (var fotografia in Model.Fotografias.Skip(1).Take(4))
+                {
+                    <img class="ad_ExtraImage_2" src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image" data-toggle="modal" data-target="#imageModal">
+                }
+            </div>
         </div>
     </div>
 }
@@ -83,7 +240,8 @@ else
         <div class="col-5">
             <div class="ad-priceContainer">
                 <span style="font-size:23px;font-weight: bold;">@Html.DisplayFor(model => model.CustoPorNoite)€</span> / noite
-                @if (User.IsInRole("Cliente") || !User.Identity.IsAuthenticated) {
+                @if (User.IsInRole("Cliente") || !User.Identity.IsAuthenticated)
+                {
                     <a class="btn btn-danger float-end" asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@Model.Id">RESERVAR</a>
                 }
             </div>
@@ -96,15 +254,18 @@ else
 <div class="ad-container">
     <div class="row">
         <div class="ad-subtitle"><i class="bi bi-file-earmark-person-fill"></i> Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
-        
+
         @{
             Boolean isEmpresa = Model.Locador.IsEmpresa;
-            if (isEmpresa) {
+            if (isEmpresa)
+            {
                 <div class="ad-subdescription">
                     @ViewBag.AnosDeServico
                     anos de serviço no HabitAqui | Empresa
                 </div>
-            } else {
+            }
+            else
+            {
                 <div class="ad-subdescription">
                     @ViewBag.AnosDeServico
                     anos de serviço no HabitAqui | Particular
@@ -123,14 +284,16 @@ else
                 string descricao = Model.Descricao;
                 int maxLength = 100;
 
-                if (descricao.Length > maxLength) {
+                if (descricao.Length > maxLength)
+                {
                     descricao = descricao.Substring(0, maxLength) + "...";
                 }
             }
 
             @Html.Raw(descricao)
 
-            @if (Model.Descricao.Length > maxLength) {
+            @if (Model.Descricao.Length > maxLength)
+            {
                 <p class="ad-linkText" data-toggle="modal" data-target="#habitacaoDescricao" style="margin-bottom:-0.8rem;">
                     Mostrar mais ...
                 </p>
@@ -140,42 +303,6 @@ else
 </div>
 
 <div class="ad-divider"></div>
-
-@*
-<div class="ad-container">
-    <div class="row">
-        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
-        @if (ViewBag.HabitacaoItens != null)
-        {
-            List<string> distinctCategories = new List<string>();
-            foreach (var habitacaoItem in ViewBag.HabitacaoItens)
-            {
-                var category = habitacaoItem.Item.Categoria;
-                if (!distinctCategories.Contains(category))
-                {
-                    distinctCategories.Add(category);
-                }
-            }
-
-            foreach (var category in distinctCategories)
-            {
-                <div>
-                    <div class="ad-subtitle" style="margin-top:10px">@category</div>
-                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
-                    {
-                        if (habitacaoItem.Item.Categoria == category)
-                        {
-                            <div>
-                                <p>@habitacaoItem.Item.Description</p>
-                            </div>
-                        }
-                    }
-                </div>
-            }
-        }
-    </div>
-</div>
-*@
 
 <div class="ad-container">
     <div class="row">
@@ -257,7 +384,7 @@ else
 
 
                 var map = L.map('map').setView([latitude, longitude], 13);
-                
+
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -282,43 +409,42 @@ else
             <div class="row mb-4">
                 <div class="col">
                     <h1 class="ad-subtitle" style="font-size:50px;margin-bottom:1rem">
-                            @(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")
+                        @(ViewBag.AveragePontuacaoTotal != 0 ? ViewBag.AveragePontuacaoTotal.ToString("0.0") : "N/A")⭐
                     </h1>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row text-center" style="margin-bottom:70px">
         <div class="col-lg-3 mb-3">
-                <h3><i class="bi bi-stars"></i></h3>
+            <h3><i class="bi bi-stars"></i></h3>
             <h3>Limpeza</h3>
             <h4>
-                @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")
+                @(ViewBag.AveragePontuacaoLimpeza != 0 ? ViewBag.AveragePontuacaoLimpeza.ToString("0.0") : "N/A")⭐
             </h4>
         </div>
 
         <div class="col-lg-3 mb-3">
-                <h3><i class="bi bi-geo-fill"></i></h3>
+            <h3><i class="bi bi-geo-fill"></i></h3>
             <h3>Localização</h3>
             <h4>
-                @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")
+                @(ViewBag.AveragePontuacaoLocalizacao != 0 ? ViewBag.AveragePontuacaoLocalizacao.ToString("0.0") : "N/A")⭐
             </h4>
         </div>
 
         <div class="col-lg-3 mb-3">
-                <h3><i class="bi bi-tags-fill"></i></h3>
+            <h3><i class="bi bi-tags-fill"></i></h3>
             <h3>Qualidade/€</h3>
             <h4>
-                @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")
+                @(ViewBag.AveragePontuacaoQualidadePreco != 0 ? ViewBag.AveragePontuacaoQualidadePreco.ToString("0.0") : "N/A")⭐
             </h4>
         </div>
 
         <div class="col-lg-3 mb-3">
-                <h3><i class="bi bi-house-heart-fill"></i></h3>
+            <h3><i class="bi bi-house-heart-fill"></i></h3>
             <h3>Espaço</h3>
             <h4>
-                @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")
+                @(ViewBag.AveragePontuacaoEspaco != 0 ? ViewBag.AveragePontuacaoEspaco.ToString("0.0") : "N/A")⭐
             </h4>
         </div>
     </div>
@@ -390,6 +516,31 @@ else
                             }
                         }
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach (var fotografia in Model.Fotografias)
+                        {
+                            <div class="swiper-slide">
+                                <img src="@Url.Content($"~/img/habitacoes/{fotografia.Nome}")" alt="Ad Image">
+                            </div>
+                        }
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
         </div>

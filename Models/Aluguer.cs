@@ -27,5 +27,7 @@ namespace HabitAqui.Models
         public int? CheckOutId { get; set; }
         [Display(Name = "Saiu")]
         public CheckOut? CheckOut { get; set; }
+        public int? PontuacaoId { get; set; }
+        public Pontuacao? Pontuacao { get; set; }
     }
 }
