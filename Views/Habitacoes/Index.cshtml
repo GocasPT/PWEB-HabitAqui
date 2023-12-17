@@ -6,10 +6,11 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Criar nova habitação</a>
-</p>
 @*TODO: mostrar URL ou imagens das habitações*@
+
+<div>
+    <button asp-action="Create" type="button" class="w-100 btn btn-lg btn-primary btn-success" style="margin-bottom:20px;margin-top:20px">Criar nova habitação</button>
+</div>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -43,9 +44,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Disponivel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Locador)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumPessoas)
@@ -94,9 +92,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Disponivel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Locador.Nome)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumPessoas)

@@ -67,13 +67,26 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
+                    .ThenInclude(l => l.TipoLocador)
                 .Include(h => h.Tipologia)
                 .Include(h => h.Fotografias)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (habitacao == null)
             {
                 return NotFound();
             }
+
+            DateTime dataCriacao = (DateTime) habitacao.Locador.DataCriacao;
+            DateTime currentDate = DateTime.Now.Date;
+            int anosDeServico = currentDate.Year - dataCriacao.Year;
+
+            if (currentDate < dataCriacao.AddYears(anosDeServico))
+            {
+                anosDeServico--;
+            }
+
+            ViewBag.AnosDeServico = anosDeServico;
 
             var habitacaoItens = await _context.Habitacoes_Itens
             .Where(hi => hi.HabitacaoId == habitacao.Id)
@@ -94,7 +107,6 @@ namespace HabitAqui.Controllers
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "Id", "Nome");
             ViewData["TipologiaId"] = new SelectList(_context.Tipologia, "Id", "Nome");
-            //ViewData["LocadorId"] = new SelectList(_context.Locadores, "Id", "Nome");
             ViewData["Itens"] = new MultiSelectList(_context.Itens, "Id", "Description");
             return View();
         }

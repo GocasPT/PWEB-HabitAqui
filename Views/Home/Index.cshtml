@@ -4,10 +4,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>HabitAqui</h1>
-
-<h2>Funcionalidade - Camacho</h2>
-
 <partial name="_SearchPartial" />
 
 <form asp-action="Index" class="btn-group" role="group">
@@ -138,44 +134,47 @@
     </tbody>
 </table>
 
-<h2>Bonito - Tiago</h2>
-
-@foreach (var item in Model.Habitacoes.Where(h => h.Disponivel))
-{
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">
-                @Html.DisplayFor(modelItem => item.Name)
-            </h5>
-            <p class="card-text">
-                <span>
-                    @String.Format(("0.00"), item.mediaPontuacoes)
-                </span>
-                <span>
-                    @Html.DisplayFor(modelItem => item.Concelho)
-                </span>
-            </p>
-            <p class="card-text">
-                <strong>
-                    @Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite
-                </strong>
-            </p>
-            <button type="button" class="btn btn-primary">RESERVAR</button>
-        </div>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Habitacoes.Where(h => h.Disponivel))
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card border-0">
+                    <div id="carouselExample-@item.Id" class="carousel slide" data-ride="carousel" style="height: 200px; border-radius: 8px; overflow: hidden;">
+                        <div class="carousel-inner">
+                            @foreach (var image in item.Fotografias)
+                            {
+                                <div class="carousel-item @if (image == item.Fotografias.First()) {
+                        <text>active</text>
+ }">
+                                    <img src="@Url.Content($"~/img/habitacoes/{image.Nome}")" class="d-block w-100" alt="Slide" style="object-fit: cover; width: 406px; height: 200px; border-radius: 8px;">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body tight-line-height">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </h5>
+                        <div class="card-text tight-line-height">
+                            <span>
+                                <i class="bi bi-bookmark-star-fill"></i> @(item.mediaPontuacoes != 0 ? item.mediaPontuacoes.ToString("0.00") : "N/A")
+                            </span>
+                        </div>
+                        <div class="card-text tight-line-height">
+                            <span>
+                                @Html.DisplayFor(modelItem => item.Concelho)
+                            </span>
+                        </div>
+                        <div class="card-text tight-line-height">
+                            <strong>
+                                @Html.DisplayFor(modelItem => item.CustoPorNoite)€/Noite
+                            </strong>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="margin-top: 5px;">RESERVAR</button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
-
-<div id="map" style="height: 200px;">
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-    </script>
 </div>
-
-<a class="weatherwidget-io" href="https://forecast7.com/en/40d72n8d11/vouzela/" data-label_1="VOUZELA" data-label_2="WEATHER" data-icons="Climacons Animated" data-mode="Forecast" data-theme="original">VOUZELA PREVISÃO</a>
-<script>
-    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
-</script>

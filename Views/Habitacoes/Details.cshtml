@@ -75,7 +75,7 @@ else
 <div class="ad-container">
     <div class="row">
         <div class="col-7">
-            <div class="ad-title">@Html.DisplayFor(model => model.Tipologia) em @Html.DisplayFor(model => model.Concelho)</div>
+            <div class="ad-title">@Html.DisplayFor(model => model.Categoria.Nome) @Html.DisplayFor(model => model.Tipologia.Nome) em @Html.DisplayFor(model => model.Concelho)</div>
             <div class="ad-subdescription">
                 @Html.DisplayFor(model => model.NumPessoas) hóspedes | @Html.DisplayFor(model => model.NumWC) casas de banho
             </div>
@@ -83,6 +83,7 @@ else
         <div class="col-5">
             <div class="ad-priceContainer">
                 <span style="font-size:23px;font-weight: bold;">@Html.DisplayFor(model => model.CustoPorNoite)€</span> / noite
+                <a class="btn btn-danger float-end" asp-controller="Alugueres" asp-action="Create" asp-route-HabitacaoId="@Model.Id">RESERVAR</a>
             </div>
         </div>
     </div>
@@ -92,9 +93,10 @@ else
 
 <div class="ad-container">
     <div class="row">
-        <div class="ad-subtitle">Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
+        <div class="ad-subtitle"><i class="bi bi-file-earmark-person-fill"></i> Gerido por @Html.DisplayFor(model => model.Locador.Nome)</div>
+        @*TODO: CHAMACO*@
         <div class="ad-subdescription">
-            X anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.TipoLocador)
+            @ViewBag.AnosDeServico anos de serviço no HabitAqui | @Html.DisplayFor(model => model.Locador.TipoLocador.Nome)
         </div>
     </div>
 </div>
@@ -105,10 +107,25 @@ else
 <div class="ad-container">
     <div class="row">
         <div class="ad-description">
-            @Html.DisplayFor(model => model.Descricao)
-            <p class="ad-linkText" data-toggle="modal" data-target="#habitacaoDescricao" style="margin-bottom:-0.8rem;">
-                Mostrar mais ...
-            </p>
+            @{
+                string descricao = Model.Descricao;
+                int maxLength = 100;
+
+                if (descricao.Length > maxLength)
+                {
+                    descricao = descricao.Substring(0, maxLength) + "...";
+                }
+            }
+
+            @Html.Raw(descricao)
+
+            @if (Model.Descricao.Length > maxLength)
+            {
+
+                <p class="ad-linkText" data-toggle="modal" data-target="#habitacaoDescricao" style="margin-bottom:-0.8rem;">
+                    Mostrar mais ...
+                </p>
+            }
         </div>
     </div>
 </div>
@@ -117,8 +134,17 @@ else
 
 <div class="ad-container">
     <div class="row">
-        <div class="ad-subtitle">O que dispõe neste espaço</div>
-        <button type="button" class="btn btn-outline-dark">Mostrar todos os itens</button>
+        <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
+        @if (ViewBag.HabitacaoItens != null)
+        {
+            <div>
+                @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                {
+                    @habitacaoItem.Item.Description
+                }
+            </div>
+        }
+        
     </div>
 </div>
 
@@ -126,7 +152,7 @@ else
 
 <div class="ad-container">
     <div class="row">
-        <div class="ad-subtitle">Localização</div>
+        <div class="ad-subtitle"><i class="bi bi-geo-fill"></i> Localização</div>
         <div class="ad-subdescription">@Html.DisplayFor(model => model.Rua), @Html.DisplayFor(model => model.Concelho), @Html.DisplayFor(model => model.Distrito)</div>
     </div>
     <div class="row">
@@ -155,64 +181,65 @@ else
 
 <div class="ad-divider"></div>
 
-<div class="ad-container">
+<div class="ad-container" style="margin-bottom:60px">
     <div class="row">
-        <div class="ad-subtitle">Avaliações</div>
-    @* </div> *@
+        <div class="ad-subtitle"> <i class="bi bi-bookmark-star-fill"></i> Avaliações</div>
+    </div>
 
     <div class="row">
         <div class="container text-center">
-
             <div class="row mb-4">
                 <div class="col">
-                    <h2 class="ad-subtitle">
-                        @(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")
-                    </h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3 mb-3">
-                    <h4>Limpeza</h4>
-                    <p>
-                        @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")
-                    </p>
-                </div>
-
-                <div class="col-lg-3 mb-3">
-                    <h4>Localização</h4>
-                    <p>
-                        @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")
-                    </p>
-                </div>
-
-                <div class="col-lg-3 mb-3">
-                    <h4>Qualidade/€</h4>
-                    <p>
-                        @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")
-                    </p>
-                </div>
-
-                <div class="col-lg-3 mb-3">
-                    <h4>Espaço</h4>
-                    <p>
-                        @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")
-                    </p>
+                    <h1 class="ad-subtitle" style="font-size:50px;margin-bottom:1rem">
+                            @(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")
+                    </h1>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row text-center" style="margin-bottom:70px">
+        <div class="col-lg-3 mb-3">
+                <h3><i class="bi bi-stars"></i></h3>
+            <h3>Limpeza</h3>
+            <h4>
+                @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")
+            </h4>
+        </div>
+
+        <div class="col-lg-3 mb-3">
+                <h3><i class="bi bi-geo-fill"></i></h3>
+            <h3>Localização</h3>
+            <h4>
+                @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")
+            </h4>
+        </div>
+
+        <div class="col-lg-3 mb-3">
+                <h3><i class="bi bi-tags-fill"></i></h3>
+            <h3>Qualidade/€</h3>
+            <h4>
+                @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")
+            </h4>
+        </div>
+
+        <div class="col-lg-3 mb-3">
+                <h3><i class="bi bi-house-heart-fill"></i></h3>
+            <h3>Espaço</h3>
+            <h4>
+                @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")
+            </h4>
+        </div>
+    </div>
+
     <div class="row">
         <div class="ad-subdescription-low">
-            @*@Html.DisplayFor(model => model.DataCriacao)*@
             @Html.DisplayNameFor(model => model.DataCriacao) @Html.DisplayFor(model => model.DataCriacao)
         </div>
     </div>
 </div>
 
 
-
-<!-- Modal More Info -->
 <div class="modal fade" id="habitacaoDescricao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -227,125 +254,4 @@ else
             </div>
         </div>
     </div>
-</div>
-
-
-
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Categoria.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipologia)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Tipologia.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pais)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pais)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Distrito)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Distrito)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Concelho)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Concelho)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rua)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rua)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CustoPorNoite)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CustoPorNoite)€
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumPessoas)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumPessoas)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumWC)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumWC)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Disponivel)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Disponivel)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Locador)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Locador.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataCriacao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataCriacao)
-        </dd>
-        <dt class="col-sm-2">
-            Itens
-        </dt>
-        <dd class="col-sm-10">
-            @if (ViewBag.HabitacaoItens != null)
-            {
-                <ul>
-                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
-                    {
-                        <li>@habitacaoItem.Item.Description</li>
-                    }
-                </ul>
-            }
-        </dd>
-        <dt class="col-sm-2">
-            ⭐
-        </dt>
-        <dd class="col-sm-10">
-            <ul>
-                <li>Total: @(Model.mediaPontuacoes != 0 ? Model.mediaPontuacoes.ToString("0.00") : "N/A")</li>
-                <li>Limpeza: @(Model.mediaPontuacaoLimpeza != 0 ? Model.mediaPontuacaoLimpeza.ToString("0.00") : "N/A")</li>
-                <li>Localização: @(Model.mediaPontuacaoLocalizacao != 0 ? Model.mediaPontuacaoLocalizacao.ToString("0.00") : "N/A")</li>
-                <li>Qualidade/€: @(Model.mediaPontuacaoQualidadePreco != 0 ? Model.mediaPontuacaoQualidadePreco.ToString("0.00") : "N/A")</li>
-                <li>Espaço: @(Model.mediaPontuacaoEspaco != 0 ? Model.mediaPontuacaoEspaco.ToString("0.00") : "N/A")</li>
-            </ul>
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Voltar à lista</a>
 </div>

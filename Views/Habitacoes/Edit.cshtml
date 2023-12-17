@@ -4,99 +4,124 @@
     ViewData["Title"] = "Editar Habitação";
 }
 
+<style>
+    .checkbox-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px; /* Aumentei o espaço para 30px entre os elementos */
+    }
+
+        .checkbox-list .form-check {
+            width: 20%; /* Mantive 20% para 5 checkboxes por linha */
+            box-sizing: border-box;
+        }
+
+    /* Adicionei um espaçamento inferior geral */
+    .form-group {
+        margin-bottom: 15px;
+    }
+</style>
+
 <h1>@ViewData["Title"]</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" readonly/>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" readonly/>
-                <span asp-validation-for="Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <input type="text" class="form-control" readonly value="@ViewData["CategoriaNome"]" />
-                <input asp-for="CategoriaId" type="hidden" />
-                <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TipologiaId" class="control-label"></label>
-                <input asp-for="TipologiaId" type="hidden" />
-                <input  type="text" class="form-control" readonly value="@ViewData["TipologiaNome"]" />
-                <span asp-validation-for="TipologiaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pais" class="control-label"></label>
-                <input asp-for="Pais" class="form-control" readonly/>
-                <span asp-validation-for="Pais" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Distrito" class="control-label"></label>
-                <input asp-for="Distrito" class="form-control" readonly/>
-                <span asp-validation-for="Distrito" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Concelho" class="control-label"></label>
-                <input asp-for="Concelho" class="form-control" readonly/>
-                <span asp-validation-for="Concelho" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rua" class="control-label"></label>
-                <input asp-for="Rua" class="form-control" readonly/>
-                <span asp-validation-for="Rua" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" readonly />
-                <span asp-validation-for="Latitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" readonly />
-                <span asp-validation-for="Longitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustoPorNoite" class="control-label"></label>
-                <input asp-for="CustoPorNoite" class="form-control" />
-                <span asp-validation-for="CustoPorNoite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumPessoas" class="control-label"></label>
-                <input asp-for="NumPessoas" class="form-control" readonly/>
-                <span asp-validation-for="NumPessoas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumWC" class="control-label"></label>
-                <input asp-for="NumWC" class="form-control" readonly/>
-                <span asp-validation-for="NumWC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Itens" class="control-label"></label>
-                <select asp-for="Itens" asp-items="ViewBag.Itens" class="form-control" multiple></select>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Disponivel" /> @Html.DisplayNameFor(model => model.Disponivel)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="LocadorId" class="control-label"></label>
-                <input asp-for="LocadorId" type="hidden" />
-                <input type="text" class="form-control" readonly value="@ViewData["LocadorNome"]" />
-                <span asp-validation-for="LocadorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+<div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" readonly />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descricao" class="control-label"></label>
+                    <textarea asp-for="Descricao" class="form-control" readonly rows="5"></textarea>
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoriaId" class="control-label"></label>
+                    <input type="text" class="form-control" readonly value="@ViewData["CategoriaNome"]" />
+                    <input asp-for="CategoriaId" type="hidden" />
+                    <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TipologiaId" class="control-label"></label>
+                    <input asp-for="TipologiaId" type="hidden" />
+                    <input type="text" class="form-control" readonly value="@ViewData["TipologiaNome"]" />
+                    <span asp-validation-for="TipologiaId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pais" class="control-label"></label>
+                    <input asp-for="Pais" class="form-control" readonly />
+                    <span asp-validation-for="Pais" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Distrito" class="control-label"></label>
+                    <input asp-for="Distrito" class="form-control" readonly />
+                    <span asp-validation-for="Distrito" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Concelho" class="control-label"></label>
+                    <input asp-for="Concelho" class="form-control" readonly />
+                    <span asp-validation-for="Concelho" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rua" class="control-label"></label>
+                    <input asp-for="Rua" class="form-control" readonly />
+                    <span asp-validation-for="Rua" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Latitude" class="control-label"></label>
+                    <input asp-for="Latitude" class="form-control" readonly />
+                    <span asp-validation-for="Latitude" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Longitude" class="control-label"></label>
+                    <input asp-for="Longitude" class="form-control" readonly />
+                    <span asp-validation-for="Longitude" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustoPorNoite" class="control-label"></label>
+                    <input asp-for="CustoPorNoite" class="form-control" />
+                    <span asp-validation-for="CustoPorNoite" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumPessoas" class="control-label"></label>
+                    <input asp-for="NumPessoas" class="form-control" readonly />
+                    <span asp-validation-for="NumPessoas" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumWC" class="control-label"></label>
+                    <input asp-for="NumWC" class="form-control" readonly />
+                    <span asp-validation-for="NumWC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Itens" class="control-label">Select Itens:</label>
+
+                    <div class="checkbox-list">
+
+                        @foreach (var item in (MultiSelectList)ViewData["Itens"])
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" name="Itens" value="@item.Value" id="@($"chk{item.Value}")" class="form-check-input" />
+                                <label class="form-check-label" for="@($"chk{item.Value}")">@item.Text</label>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Disponivel" /> @Html.DisplayNameFor(model => model.Disponivel)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="w-100 btn btn-lg btn-primary btn-warning" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
