@@ -89,7 +89,7 @@
                 @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().DataCriacao)
             </th>
             <th>
-                Pontuação
+                @Html.DisplayNameFor(model => model.Habitacoes.FirstOrDefault().mediaPontuacoes)
             </th>
             <th>
                 Operações
@@ -140,13 +140,7 @@
                     @Html.DisplayFor(modelItem => habitacao.DataCriacao)
                 </td>
                 <td>
-                    @{
-                        double averagePontuacao = habitacao.Alugueres?.Where(a => a.Pontuacao?.MediaPontuacao.HasValue ?? false)
-                        .Select(a => a.Pontuacao.MediaPontuacao.Value)
-                        .DefaultIfEmpty(0)
-                        .Average() ?? 0;
-                    }
-                    @averagePontuacao⭐
+                    @Html.DisplayFor(modelItem => habitacao.mediaPontuacoes)⭐
                 </td>
                 <td>
                     <a asp-controller="Habitacoes" asp-action="Details" asp-route-id="@habitacao.Id">Detalhes</a>
@@ -198,18 +192,15 @@
             
 
 
-            @* <div class="col-md-6 text-center">
-            <form asp-action="Index" method="post" class="form-check" role="group">
-            <button type="submit" class="btn btn-primary">All</button>
-            <input type="hidden" asp-for="CategoriaId" value="" />
-            @foreach (var categoria in Model.Categorias)
-            {
-            <button type="submit" class="btn btn-primary">@categoria.Nome</button>
-            <input type="hidden" asp-for="CategoriaId" value="@categoria.Id" />
-            }
-            <br />
-            </form>
-            </div> *@
+            <div class="col-md-6 text-center">
+                <form asp-action="Index" method="post" class="from-check" role="group">
+                    Categoria:
+                    <select asp-for="CategoriaId" asp-items="@ViewBag.Categorias"></select>
+                    Locador:
+                    <select asp-for="LocadorId" asp-items="@ViewBag.Locadores"></select>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </form>
+            </div>
            
 
             <div class="col-md-3 text-end">
@@ -291,7 +282,14 @@
                         </h5>
                         <div class="card-text tight-line-height">
                             <span>
-                                @*<i class="bi bi-bookmark-star-fill"></i> @(item.mediaPontuacoes != 0 ? item.mediaPontuacoes.ToString("0.00") : "N/A")*@
+                                <i class="bi bi-bookmark-star-fill"></i>
+                                @{
+                                    double averagePontuacao = item.Alugueres?.Where(a => a.Pontuacao?.MediaPontuacao.HasValue ?? false)
+                                    .Select(a => a.Pontuacao.MediaPontuacao.Value)
+                                    .DefaultIfEmpty(0)
+                                    .Average() ?? 0;
+                                }
+                                @averagePontuacao
                             </span>
                         </div>
                         <div class="card-text tight-line-height">

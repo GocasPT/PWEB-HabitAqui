@@ -98,6 +98,14 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Fotografias)
                 .AsQueryable();
 
+            foreach (var habitacao in habitacoesQuery)
+            {
+                habitacao.Alugueres = await _context.Alugueres
+                    .Include(a => a.Pontuacao)
+                    .Where(a => a.HabitacaoId == habitacao.Id)
+                    .ToListAsync();
+            }
+
             if (filter.CategoriaId != 0 && filter.CategoriaId != null)
                 habitacoesQuery = habitacoesQuery.Where(h => h.CategoriaId == filter.CategoriaId);
 
@@ -109,11 +117,14 @@ namespace HabitAqui.Controllers
             else if (filter.OrdemPreco == "Descendente")
                 habitacoesQuery = habitacoesQuery.OrderByDescending(h => h.CustoPorNoite);
 
-            //TODO: quick check
-            /*if (filter.OrdemRating == "Ascendente")
-                habitacoesQuery = habitacoesQuery.OrderBy(h => h.mediaPontuacoes);
+            if (filter.OrdemRating == "Ascendente")
+            {
+                habitacoesQuery = habitacoesQuery.OrderBy(h => h.Alugueres.Average(a => a.Pontuacao.MediaPontuacao));
+            }
             else if (filter.OrdemRating == "Descendente")
-                habitacoesQuery = habitacoesQuery.OrderByDescending(h => h.mediaPontuacoes);*/
+            {
+                habitacoesQuery = habitacoesQuery.OrderByDescending(h => h.Alugueres.Average(a => a.Pontuacao.MediaPontuacao));
+            }
 
             filter.Habitacoes = await habitacoesQuery.ToListAsync();
 
