@@ -29,7 +29,7 @@ namespace HabitAqui.Controllers
         // GET: Alugueres
         public async Task<IActionResult> Index()
         {
-            if(User.IsInRole("Cliente"))
+            if (User.IsInRole("Cliente"))
             {
                 var clientAlugueres = await _context.Alugueres
                     .Where(a => a.ClienteId == User.FindFirstValue(ClaimTypes.NameIdentifier))
@@ -41,6 +41,21 @@ namespace HabitAqui.Controllers
                     .ToListAsync();
 
                 return View(clientAlugueres);
+            }
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser != null)
+            {
+                var alugueres = _context.Alugueres
+                    .Include(a => a.Habitacao)
+                    .Include(a => a.Locador)
+                    .Include(a => a.CheckIn)
+                    .Include(a => a.CheckOut)
+                    .Include(a => a.Cliente)
+                    .Where(h => h.LocadorId == currentUser.LocadorId);
+
+                return View(await alugueres.ToListAsync());
             }
 
             var applicationDbContext = _context.Alugueres

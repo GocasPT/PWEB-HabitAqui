@@ -147,14 +147,34 @@ else
         <div class="ad-subtitle"><i class="bi bi-list-ul"></i> O que dispõe neste espaço</div>
         @if (ViewBag.HabitacaoItens != null)
         {
-            <div>
-                @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+            // Find distinct categories
+            List<string> distinctCategories = new List<string>();
+            foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+            {
+                var category = habitacaoItem.Item.Categoria;
+                if (!distinctCategories.Contains(category))
                 {
-                    @habitacaoItem.Item.Description
+                    distinctCategories.Add(category);
                 }
-            </div>
+            }
+
+            // Iterate through distinct categories
+            foreach (var category in distinctCategories)
+            {
+                <div>
+                    <h2>@category</h2> <!-- Display category name -->
+                    @foreach (var habitacaoItem in ViewBag.HabitacaoItens)
+                    {
+                        if (habitacaoItem.Item.Categoria == category)
+                        {
+                            <div>
+                                <p>@habitacaoItem.Item.Description</p>
+                            </div>
+                        }
+                    }
+                </div>
+            }
         }
-        
     </div>
 </div>
 
