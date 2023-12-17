@@ -31,36 +31,53 @@ namespace HabitAqui.Controllers
                 var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var pontuacoes = await _context.Pontuacoes
                     .Include(p => p.ApplicationUser)
-                    .Include(p => p.Habitacao)
+                    .Include(p => p.Aluguer)
+                        .ThenInclude(a => a.Habitacao)
                     .Where(p => p.ApplicationUserId == currentUserId)
                     .ToListAsync();
+
                 return View(pontuacoes);
             }
 
-            var applicationDbContext = _context.Pontuacoes.Include(p => p.ApplicationUser).Include(p => p.Habitacao);
+            var applicationDbContext = _context.Pontuacoes.Include(p => p.ApplicationUser).Include(p => p.Aluguer);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Pontuacoes/Create
-        public IActionResult Create(int habitacaoId)
+        public IActionResult Create(int? AluguerId)
         {
-            ViewBag.HabitacaoId = habitacaoId;
+            if (AluguerId == null || _context.Pontuacoes == null)
+            {
+                return NotFound();
+
+            }
+            ViewBag.AluguerId = AluguerId;
             return View();
         }
 
         // POST: Pontuacoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Comentario,PontuacaoLimpeza,PontuacaoLocalizacao,PontuacaoQualidadePreco,PontuacaoEspaco,HabitacaoId")] Pontuacao pontuacao)
+        public async Task<IActionResult> Create([Bind("Titulo,Comentario,PontuacaoLimpeza,PontuacaoLocalizacao,PontuacaoQualidadePreco,PontuacaoEspaco,AluguerId")] Pontuacao pontuacao)
         {
             if (ModelState.IsValid)
             {
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 pontuacao.ApplicationUserId = userId;
-                
+
+                double average = (pontuacao.PontuacaoLimpeza + pontuacao.PontuacaoLocalizacao + pontuacao.PontuacaoQualidadePreco + pontuacao.PontuacaoEspaco) / 4.0;
+
+                pontuacao.MediaPontuacao = (int)average;
                 pontuacao.DataCriacao = DateTime.UtcNow;
+
+                var aluguer = await _context.Alugueres.FindAsync(pontuacao.AluguerId);
+
+                aluguer.Pontuacao = pontuacao;
+                aluguer.PontuacaoId = pontuacao.Id;
+
                 _context.Add(pontuacao);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction("Index", "Alugueres");
             }
 
@@ -108,14 +125,6 @@ namespace HabitAqui.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PontuacaoExists(pontuacao.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -149,21 +158,29 @@ namespace HabitAqui.Controllers
         {
             if (_context.Pontuacoes == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Pontuacoes'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Pontuacoes' is null.");
             }
-            var pontuacao = await _context.Pontuacoes.FindAsync(id);
-            if (pontuacao != null)
-            {
-                _context.Pontuacoes.Remove(pontuacao);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool PontuacaoExists(int id)
-        {
-          return (_context.Pontuacoes?.Any(e => e.Id == id)).GetValueOrDefault();
+            var pontuacao = await _context.Pontuacoes
+                .Include(p => p.Aluguer)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (pontuacao == null)
+            {
+                return NotFound();
+            }
+
+            if (pontuacao.Aluguer != null)
+            {
+                pontuacao.Aluguer.Pontuacao = null;
+                pontuacao.Aluguer.PontuacaoId = null;
+            }
+
+            _context.Pontuacoes.Remove(pontuacao);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -11,6 +11,7 @@ namespace HabitAqui.Models
 
         [Display(Name = "Comentário")]
         public string Comentario { get; set; }
+        public int? MediaPontuacao { get; set; }
 
         [Display(Name = "Limpeza")]
         public double PontuacaoLimpeza { get; set; }
@@ -25,9 +26,11 @@ namespace HabitAqui.Models
         public DateTime? DataCriacao { get; set; }
         public int? HabitacaoId { get; set; }
         
-        [Display(Name = "Nome da Habitação")]
+        [Display(Name = "Habitação")]
         public Habitacao? Habitacao { get; set; }
         public string? ApplicationUserId { get; set; }
         public ApplicationUser? ApplicationUser { get; set; }
+        public int? AluguerId { get; set; }
+        public Aluguer? Aluguer { get; set; }
     }
 }

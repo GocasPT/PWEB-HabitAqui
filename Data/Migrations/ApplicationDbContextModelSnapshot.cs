@@ -54,6 +54,9 @@ namespace HabitAqui.Migrations
                     b.Property<int?>("LocadorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PontuacaoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
@@ -61,6 +64,10 @@ namespace HabitAqui.Migrations
                     b.HasIndex("HabitacaoId");
 
                     b.HasIndex("LocadorId");
+
+                    b.HasIndex("PontuacaoId")
+                        .IsUnique()
+                        .HasFilter("[PontuacaoId] IS NOT NULL");
 
                     b.ToTable("Alugueres");
                 });
@@ -372,6 +379,9 @@ namespace HabitAqui.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AluguerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -383,6 +393,9 @@ namespace HabitAqui.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("HabitacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MediaPontuacao")
                         .HasColumnType("int");
 
                     b.Property<double>("PontuacaoEspaco")
@@ -681,11 +694,18 @@ namespace HabitAqui.Migrations
                         .WithMany()
                         .HasForeignKey("LocadorId");
 
+                    b.HasOne("HabitAqui.Models.Pontuacao", "Pontuacao")
+                        .WithOne("Aluguer")
+                        .HasForeignKey("HabitAqui.Models.Aluguer", "PontuacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.Navigation("Cliente");
 
                     b.Navigation("Habitacao");
 
                     b.Navigation("Locador");
+
+                    b.Navigation("Pontuacao");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.CheckIn", b =>
@@ -822,9 +842,8 @@ namespace HabitAqui.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
-                        .WithMany("Pontuacoes")
-                        .HasForeignKey("HabitacaoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("HabitacaoId");
 
                     b.Navigation("ApplicationUser");
 
@@ -917,8 +936,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Fotografias");
 
                     b.Navigation("Itens");
-
-                    b.Navigation("Pontuacoes");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Itens", b =>
@@ -935,6 +952,11 @@ namespace HabitAqui.Migrations
                     b.Navigation("GestoresFuncionarios");
 
                     b.Navigation("Habitacoes");
+                });
+
+            modelBuilder.Entity("HabitAqui.Models.Pontuacao", b =>
+                {
+                    b.Navigation("Aluguer");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.ApplicationUser", b =>

@@ -34,10 +34,10 @@ namespace HabitAqui.Controllers
                 var clientAlugueres = await _context.Alugueres
                     .Where(a => a.ClienteId == User.FindFirstValue(ClaimTypes.NameIdentifier))
                     .Include(a => a.Habitacao)
-                    .Include(a => a.Habitacao.Pontuacoes)
                     .Include(a => a.Locador)
                     .Include(a => a.CheckIn)
                     .Include(a => a.CheckOut)
+                    .Include(a => a.Pontuacao)
                     .ToListAsync();
 
                 return View(clientAlugueres);
