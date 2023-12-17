@@ -1,4 +1,4 @@
-﻿using HabitAqui.Models;
+using HabitAqui.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace HabitAqui.ViewModels
