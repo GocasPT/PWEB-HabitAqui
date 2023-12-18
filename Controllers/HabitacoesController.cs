@@ -361,7 +361,7 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes/Search
         [AllowAnonymous]
         [Authorize(Roles = "Cliente")]
-        public async Task<IActionResult> Search([Bind("TextoAPesquisar,CheckIn,CheckOut,OrdemPreco,OrdemRating")] SearchViewModel search)
+        public async Task<IActionResult> Search([Bind("TextoAPesquisar,CategoriaId,LocadorId,CheckIn,CheckOut,OrdemPreco,OrdemRating")] SearchViewModel search)
         {
             var categorias = await _context.Categorias
                 .Select(c => new { Id = c.Id, Nome = c.Nome })
@@ -390,6 +390,11 @@ namespace HabitAqui.Controllers
 
                 search.Habitacoes = await _context.Habitacoes
                     .Include(h => h.Alugueres)
+                        .ThenInclude(a => a.CheckIn)
+                    .Include(h => h.Alugueres)
+                        .ThenInclude(a => a.CheckOut)
+                    .Include(h => h.Alugueres)
+                        .ThenInclude(a => a.Pontuacao)
                     .Include(h => h.Categoria)
                     .Include(h => h.Locador)
                     .Include(h => h.Tipologia)
@@ -414,6 +419,14 @@ namespace HabitAqui.Controllers
                         search.Habitacoes = search.Habitacoes.OrderBy(h => h.CustoPorNoite).ToList();
                     else
                         search.Habitacoes = search.Habitacoes.OrderByDescending(h => h.CustoPorNoite).ToList();
+                }
+
+                if (search.OrdemRating != null)
+                {
+                    if (search.OrdemRating == "Ascendente")
+                        search.Habitacoes = search.Habitacoes.OrderBy(h => h.Alugueres.Average(a => a.Pontuacao.MediaPontuacao)).ToList();
+                    else
+                        search.Habitacoes = search.Habitacoes.OrderByDescending(h => h.Alugueres.Average(a => a.Pontuacao.MediaPontuacao)).ToList();
                 }
 
                 //TODO
