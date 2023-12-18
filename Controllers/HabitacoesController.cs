@@ -429,6 +429,7 @@ namespace HabitAqui.Controllers
                         search.Habitacoes = search.Habitacoes.OrderByDescending(h => h.Alugueres.Average(a => a.Pontuacao.MediaPontuacao)).ToList();
                 }
 
+
                 //TODO
                 //if (search.OrdemRating != null)
                 //    if (search.OrdemRating == "Ascendente")
