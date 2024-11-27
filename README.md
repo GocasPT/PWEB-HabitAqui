@@ -6,4 +6,4 @@ Trabalho prático feita por:
 - Bruno Amado
 - Tiago Figueiredo
 
-Nota: 73,875% (5.91)
+Nota: 73,875%
